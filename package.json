@@ -3,10 +3,39 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "build:frontend": "bun build apps/frontend/__init__/App.tsx --outdir apps/frontend/shared/public/dist --target browser --entry-naming App.js --minify",
+    "build": "bun run build:frontend",
+    "dev:backend": "bun run apps/backend/index.ts",
+    "dev:frontend:watch": "bun build apps/frontend/__init__/App.tsx --outdir apps/frontend/shared/public/dist --target browser --entry-naming App.[ext] --watch",
+    "dev": "concurrently \"bunx @tailwindcss/cli -i ./dev/tailwind.css -o ./apps/frontend/shared/public/dist/style.css --watch\" \"bun run dev:frontend:watch\" \"bun run dev:backend\"",
+    "start": "bunx @tailwindcss/cli -i ./dev/tailwind.css -o ./apps/frontend/__init__/style.css --watch && bun run build && bun run dev:backend",
+    "clean": "rm -rf apps/frontend/shared/public/dist/*"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@fontsource/montserrat": "^5.2.8",
+    "@fontsource/saira-stencil-one": "^5.2.8",
+    "@types/bun": "latest",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.8",
+    "@heroicons/react": "^2.2.0",
+    "@heroui/react": "^2.8.4",
+    "concurrently": "^9.2.1",
+    "fontsource": "^0.0.1-security",
+    "framer-motion": "^12.23.13",
+    "headlessui": "^0.0.0",
+    "heroicons": "^2.2.0",
+    "hono": "^4.9.7",
+    "lucide-react": "^0.544.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.1",
+    "tailwindcss": "^4.1.13"
   }
 }
