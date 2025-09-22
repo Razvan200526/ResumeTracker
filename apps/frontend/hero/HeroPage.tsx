@@ -4,6 +4,7 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { HeroNavbar } from "./components/HeroNavbar";
 import { Button } from "@common/components/button";
 import { Link } from "react-router";
+import { H1 } from "@common/components/typography";
 
 export const navigation = [
   { name: "Product", href: "#" },
@@ -18,7 +19,7 @@ export const HeroPage = () => {
       style={{
         background: "radial-gradient(at center center, #844ed9, #221239)",
       }}
-      className=" dark:bg-gray-900 min-h-screen overflow-y-scroll"
+      className=" dark:bg-gray-900 h-[calc(100dvh)] overflow-y-scroll"
     >
       <header className="sticky inset-x-0 top-0 z-50">
         <HeroNavbar />
@@ -26,10 +27,11 @@ export const HeroPage = () => {
 
       <div className="py-24 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h1 className="text-5xl font-primary font-bold tracking-tight text-balance text-light-300 sm:text-7xl dark:text-light">
-              The way to up your resume game
-            </h1>
+          <div className="mx-auto max-w-2xl text-center opacity-0 animate-[fadeInUp_1s_ease-out_0.2s_both]">
+            <H1 className="text-5xl font-primary font-bold tracking-tight text-balance text-light-300 sm:text-7xl dark:text-light">
+              The way to up your resume{" "}
+              <span className="text-secondary">game</span>
+            </H1>
             <p className="mt-8 text-lg font-primary text-pretty text-light sm:text-xl/8 dark:text-gray-400">
               Analize,review, and optimize your resume to stand out in the job
               market.
@@ -67,7 +69,7 @@ export const HeroPage = () => {
             src="https://tailwindcss.com/plus-assets/img/component-images/dark-project-app-screenshot.png"
             width={2432}
             height={1442}
-            className="mt-16 rounded-md bg-light/5 shadow-2xl ring-1 ring-light/10 not-dark:hidden sm:mt-24"
+            className="mt-16 rounded-md bg-light/5 shadow-2xl ring-1 ring-light/10 not-dark:hidden sm:mt-24  opacity-0 animate-[fadeInUp_1s_ease-out_0.2s_both]"
           />
         </div>
       </div>
