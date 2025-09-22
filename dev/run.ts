@@ -13,7 +13,7 @@ const { result } = concurrently(
       name: "frontend:islands",
     },
     {
-      command: "bun run --watch ./out/index.html",
+      command: "bun run ./apps/frontend/index.html",
       name: "frontend:app",
     },
   ],
