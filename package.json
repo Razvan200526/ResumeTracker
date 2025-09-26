@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "bun --bun run dev/run.ts",
     "fmt": "bunx @biomejs/biome check --write .",
-    "lint": "tsc --noEmit && bunx @biomejs/biome check ."
+    "lint": "tsc --noEmit && bunx @biomejs/biome check .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
