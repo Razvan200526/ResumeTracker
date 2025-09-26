@@ -37,6 +37,12 @@ export class UserEntity {
   @Column({ name: 'last_name', type: 'varchar', length: 100 })
   lastName: string;
 
+  @Column({ name: 'is_email_verified', type: 'boolean', default: false })
+  isEmailVerified: boolean;
+
+  @Column({ name: 'image', type: 'text', nullable: true })
+  image?: string;
+
   @OneToMany('UserSessionEntity', 'user')
   sessions: UserSessionEntity[];
 

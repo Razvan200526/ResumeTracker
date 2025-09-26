@@ -1,7 +1,7 @@
 import { ErrorFallback } from '@common/components/ErrorFallback';
 import { HeroPage } from '@frontend/hero/HeroPage';
 import { SigninPage } from '@frontend/signin/SignInPage';
-import { SignUpPage } from '@frontend/signup/SignUpPage';
+import { SignupPage } from '@frontend/signup/SignUpPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, Outlet } from 'react-router';
 export const ErrorBoundaryLayout = () => (
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/signup',
-        element: <SignUpPage />,
+        element: <SignupPage />,
       },
     ],
   },

@@ -12,6 +12,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
     "@types/bun": "latest",
+    "@types/nodemailer": "^7.0.1",
     "@types/pg": "^8.15.5",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
@@ -21,6 +22,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.896.0",
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/rammetto-one": "^5.2.7",
     "@fontsource/saira-stencil-one": "^5.2.8",
@@ -35,20 +37,21 @@
     "concurrently": "^9.2.1",
     "framer-motion": "^12.23.16",
     "hono": "^4.9.8",
+    "husky": "^9.1.7",
     "nodemailer": "^7.0.6",
     "nuqs": "^2.6.0",
     "pg": "^8.16.3",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-error-boundary": "^6.0.0",
+    "react-image-crop": "^11.0.10",
     "react-router": "^7.9.1",
     "resend": "^6.1.0",
     "tailwindcss": "^4.1.13",
     "typeorm": "^0.3.27",
     "zod": "^4.1.11",
-    "zustand": "^5.0.8",
-    "husky": "^9.1.7",
-    "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.14"
+    "zustand": "^5.0.8"
   }
 }

@@ -34,7 +34,7 @@ export const Input = (props: InputPropsType) => {
       labelPlacement="outside"
       autoComplete="off"
       classNames={{
-        base: cn('w-full shadow-none border-none', className),
+        base: cn('w-full border-none shadow-none', className),
         input: [
           'bg-light text-lg font-primary font-medium shadow-none placeholder:font-normal placeholder:text-xs',
           'selection:bg-primary selection:text-primary-50 placeholder:text-muted/70 border-none',
@@ -44,7 +44,7 @@ export const Input = (props: InputPropsType) => {
           inputClassName,
         ],
         inputWrapper: cn(
-          'border border-border-hover rounded relative shadow-none data-[hover=true]:border-primary',
+          'relative rounded border border-border-hover shadow-none data-[hover=true]:border-primary',
           'flex items-center gap-2',
           inputWrapperClassName,
         ),

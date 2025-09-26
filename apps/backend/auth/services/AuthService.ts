@@ -1,20 +1,15 @@
+import { ForgetPasswordEmailCheckMailer } from '@backend/auth/mailers/ForgetPasswordEmailCheckMailer';
+import { SignupEmailCheckMailer } from '@backend/auth/mailers/SignupEmailCheckMailer';
 import { betterAuth } from 'better-auth';
-import { Pool } from 'node_modules/@types/pg';
-import type { SignInModel } from '../models/SignInModel';
+import { emailOTP } from 'better-auth/plugins';
+import { Pool } from 'pg';
+
+export const AUTH_SESSION_TOKEN_NAME = 'auth-session-token';
+
 export class AuthService {
-  private readonly databaseUrl: string;
+  constructor(private readonly databaseUrl: string) {}
 
-  public async signIn(data: SignInModel, headers?: Headers) {
-    const auth = this.getAuth();
-
-    return await auth.api.signInEmail({
-      returnHeaders: true,
-      body: data,
-      headers,
-    });
-  }
-
-  public getAuth() {
+  public getAuth(lang?: string) {
     return betterAuth({
       database: new Pool({
         connectionString: this.databaseUrl,
@@ -25,7 +20,8 @@ export class AuthService {
         },
         cookies: {
           session_token: {
-            name: 'session-token',
+            name: AUTH_SESSION_TOKEN_NAME,
+            attributes: {},
           },
         },
         useSecureCookies: true,
@@ -33,37 +29,36 @@ export class AuthService {
       emailAndPassword: {
         enabled: true,
         autoSignIn: false,
-        requireEmailVerification: false, //todo add otp verification
+        requireEmailVerification: false,
       },
       user: {
-        modelName: 'user',
+        modelName: 'users',
         fields: {
           name: 'name',
           email: 'email',
-          password: 'password',
-          createdAt: 'createdAt',
-          updatedAt: 'updatedAt',
-          deletedAt: 'deletedAt',
+          emailVerified: 'is_email_verified',
+          image: 'image',
+          createdAt: 'created_at',
+          updatedAt: 'updated_at',
         },
         additionalFields: {
-          firstname: {
+          firstName: {
             fieldName: 'first_name',
             type: 'string',
             required: true,
           },
-          lastname: {
-            fieldName: 'last_name',
-            type: 'string',
-            required: true,
-          },
+          lastName: { fieldName: 'last_name', type: 'string', required: true },
+          // You can add more optional fields later as your schema supports them
         },
       },
       session: {
-        modelName: 'user-session',
+        modelName: 'user_sessions',
         fields: {
           userId: 'user_id',
           token: 'token',
           expiresAt: 'expires_at',
+          ipAddress: 'ip_address',
+          userAgent: 'user_agent',
           createdAt: 'created_at',
           updatedAt: 'updated_at',
         },
@@ -72,6 +67,7 @@ export class AuthService {
         modelName: 'user_accounts',
         fields: {
           userId: 'user_id',
+          providerId: 'provider_id',
           accountId: 'account_id',
           password: 'password',
           accessToken: 'access_token',
@@ -85,6 +81,121 @@ export class AuthService {
           updatedAt: 'updated_at',
         },
       },
+      verification: {
+        modelName: 'user_verifications',
+        fields: {
+          identifier: 'identifier',
+          value: 'value',
+          expiresAt: 'expires_at',
+          createdAt: 'created_at',
+          updatedAt: 'updated_at',
+        },
+      },
+      plugins: [
+        emailOTP({
+          otpLength: 6,
+          expiresIn: 3600,
+          allowedAttempts: 5,
+          overrideDefaultEmailVerification: true,
+          sendVerificationOTP: async ({ email, otp, type }) => {
+            try {
+              if (type === 'email-verification') {
+                const mailer = new SignupEmailCheckMailer();
+                await mailer.send({ to: email, otp, lang: 'en' });
+              } else if (type === 'sign-in') {
+                // optional: send sign-in OTP via email if you enable that flow
+                // For now, no action (parity with azurite's comment)
+              } else {
+                const mailer = new ForgetPasswordEmailCheckMailer();
+                await mailer.send({ to: email, otp, lang: 'en' });
+              }
+            } catch (e) {
+              if (process.env.NODE_ENV !== 'production') {
+                console.error('Failed to send OTP email:', e);
+              }
+            }
+          },
+        }),
+      ],
     });
+  }
+
+  public async signup(data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    roles?: string[];
+    country?: string;
+    field?: string;
+    university?: string;
+    year?: string;
+    image?: string;
+  }) {
+    const auth = this.getAuth();
+    return await auth.api.signUpEmail({
+      body: {
+        name: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        // Optional fields only if your schema supports them
+        image: data.image,
+      },
+    });
+  }
+
+  public async sendVerificationEmail(email: string, lang: string) {
+    const auth = this.getAuth(lang);
+    return await auth.api.sendVerificationOTP({
+      body: { email, type: 'email-verification' },
+    });
+  }
+
+  public async verifyEmailOTP(email: string, otp: string) {
+    const auth = this.getAuth();
+    return await auth.api.verifyEmailOTP({ body: { email, otp } });
+  }
+
+  public async sendForgetPasswordEmail(email: string, lang: string) {
+    const auth = this.getAuth(lang);
+    return await auth.api.forgetPasswordEmailOTP({ body: { email } });
+  }
+
+  public async resetPassword(data: {
+    email: string;
+    otp: string;
+    password: string;
+  }) {
+    const auth = this.getAuth();
+    return await auth.api.resetPasswordEmailOTP({ body: data });
+  }
+
+  public async signInEmail(
+    data: { email: string; password: string },
+    headers?: Headers,
+  ) {
+    const auth = this.getAuth();
+    return await auth.api.signInEmail({
+      returnHeaders: true,
+      body: data,
+      headers,
+    });
+  }
+
+  public async signOut(headers: Headers) {
+    const auth = this.getAuth();
+    return await auth.api.signOut({ headers });
+  }
+
+  public async getSession(headers: Headers) {
+    const auth = this.getAuth();
+    try {
+      return await auth.api.getSession({ headers });
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
   }
 }

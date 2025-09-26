@@ -30,6 +30,7 @@ export class SignUpController {
       entity.name = userData.email.split('@')[0];
       entity.firstName = userData.email.split('@')[0];
       entity.lastName = userData.email.split('@')[0];
+      entity.isEmailVerified = true;
       try {
         const newUser = await userRepository.create(entity);
         return c.json({ newUser, success: true }, 201);

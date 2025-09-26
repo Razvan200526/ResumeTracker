@@ -16,11 +16,11 @@ export const EmailIcon = ({ title = 'badge 13', ...props }: IconProps) => {
       {...props}
     >
       <title>{title}</title>
-      <g fill="#212121" strokeLinecap="butt" strokeLinejoin="miter">
+      <g fill="#ffffff" strokeLinecap="butt" strokeLinejoin="miter">
         <polyline
           fill="none"
           points="2 8 12 13 22 8"
-          stroke="#212121"
+          stroke={props.color}
           strokeMiterlimit="10"
           strokeWidth="2"
         />
@@ -30,7 +30,7 @@ export const EmailIcon = ({ title = 'badge 13', ...props }: IconProps) => {
           fill="none"
           rx="2"
           ry="2"
-          stroke="#212121"
+          stroke={props.color}
           strokeLinecap="square"
           strokeMiterlimit="10"
           strokeWidth="2"

@@ -256,6 +256,7 @@ export class Fetcher {
       headers,
       body,
       signal: combinedController.signal,
+      credentials: 'include',
     };
 
     return requestOptions;

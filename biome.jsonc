@@ -29,6 +29,7 @@
         "noExplicitAny": "off",
         "noUnknownAtRules": "off",
         "noShadowRestrictedNames": "off",
+        "noTsIgnore": "off",
         // "noArrayIndexKey": "off",
         "noConsole": {
           "level": "error",

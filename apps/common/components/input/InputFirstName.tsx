@@ -1,17 +1,17 @@
-import { EmailIcon } from '@common/icons/EmailIcon';
-import { isEmailValid } from '@common/validators/isEmailValid';
+import { ProfileIcon } from '@common/icons/ProfileIcon';
+import { isNameValid } from '@common/validators/isNameValid';
 import { cn } from '@heroui/react';
 import { useImperativeHandle, useState } from 'react';
 import { Input } from './Input';
 
-export type InputEmailRefType = {
+export type InputFirstNameRefType = {
   getValue: () => string;
   setValue: (value: string) => void;
   isValid: () => boolean;
   getErrorMessage: () => string;
 };
 
-export type InputEmailProps = {
+export type InputFirstNameProps = {
   name?: string;
   size?: 'sm' | 'md';
   placeholder?: string;
@@ -21,32 +21,31 @@ export type InputEmailProps = {
   isRequired?: boolean;
   className?: string;
   onChange?: (value: string) => void;
-  ref?: React.RefObject<InputEmailRefType | null>;
+  ref?: React.RefObject<InputFirstNameRefType | null>;
 };
 
-export const InputEmail = ({
+export const InputFirstName = ({
   name,
   size,
-  placeholder = 'Enter your email',
-  label = 'Email',
+  placeholder = 'Enter your first name',
+  label = 'First Name',
   value,
   required,
   isRequired,
   className,
   onChange,
   ref,
-}: InputEmailProps) => {
+}: InputFirstNameProps) => {
   const [initialValue, setValue] = useState(value || '');
   const [isFocused, setIsFocused] = useState(false);
 
   const icon = (
-    <EmailIcon
-      color={isFocused || initialValue.length > 0 ? '#007ab7' : '#97caea'}
+    <ProfileIcon
       className={cn(
         'size-4.5',
         isFocused || initialValue.length > 0
           ? 'text-primary'
-          : 'text-primary-400',
+          : 'text-border-hover',
       )}
     />
   );
@@ -60,14 +59,16 @@ export const InputEmail = ({
         setValue(value);
       },
       isValid() {
-        return isEmailValid(initialValue);
+        return isNameValid(initialValue);
       },
       getErrorMessage() {
         if (!initialValue.trim()) {
-          return 'errors.email.required';
+          return 'errors.firstName.required';
         }
 
-        return isEmailValid(initialValue) ? '' : 'errors.email.notValidFormat';
+        return isNameValid(initialValue)
+          ? ''
+          : 'errors.firstName.notValidFormat';
       },
     };
   }, [initialValue]);
@@ -77,7 +78,7 @@ export const InputEmail = ({
       size={size}
       name={name}
       startContent={icon}
-      type="email"
+      type="text"
       placeholder={placeholder}
       label={label}
       className={className}

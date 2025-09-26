@@ -23,3 +23,50 @@ export type ResponseType<T = any> = {
     url: string;
   };
 };
+
+export type UserAccountType = {
+  id: string;
+  user: UserType;
+  providerId: string;
+  accountId: string;
+  password?: string;
+  accessToken?: string;
+  accessTokenExpiresAt?: Date;
+  refreshToken?: string;
+  refreshTokenExpiresAt?: Date;
+  expiresAt?: Date;
+  scope?: string;
+  idToken?: string;
+  createdAt: Date;
+};
+
+export type UserShareType = {
+  id: string;
+  sharedUser: UserType;
+  user: UserType;
+  createdAt: Date;
+};
+
+export type UserSessionType = {
+  id: string;
+  user: UserType;
+  token: string;
+  expiresAt: Date;
+  ipAddress?: string;
+  userAgent?: string;
+  createdAt: Date;
+};
+
+export type UserVerificationType = {
+  id: string;
+  user: UserType;
+  identifier: string;
+  value: string;
+  expiresAt: Date;
+  createdAt: Date;
+};
+
+export type UserTypeType = {
+  id: string;
+  name: string;
+};

@@ -11,7 +11,9 @@ export class PrimaryDatabase {
   private source: DataSource;
   private url: string;
   constructor() {
-    this.url = 'postgres://resai:resai@localhost:5432/resai';
+    // Prefer environment variable, fallback to a sensible local default
+    this.url =
+      process.env.DATABASE_URL || 'postgres://resai:resai@localhost:5432/resai';
   }
 
   public getSource(): DataSource {
@@ -26,7 +28,6 @@ export class PrimaryDatabase {
       entities: PrimaryEntities,
       extra: {
         max: 10,
-        // idleTimeoutMillis: 30000,
       },
     });
 

@@ -1,17 +1,17 @@
-import { EmailIcon } from '@common/icons/EmailIcon';
-import { isEmailValid } from '@common/validators/isEmailValid';
+import { PasswordIcon } from '@common/icons/PasswordIcon';
+import { isUserPasswordValid } from '@common/validators/isUserPasswordValid';
 import { cn } from '@heroui/react';
 import { useImperativeHandle, useState } from 'react';
 import { Input } from './Input';
 
-export type InputEmailRefType = {
+export type InputConfirmPasswordRefType = {
   getValue: () => string;
   setValue: (value: string) => void;
   isValid: () => boolean;
   getErrorMessage: () => string;
 };
 
-export type InputEmailProps = {
+export type InputConfirmPasswordProps = {
   name?: string;
   size?: 'sm' | 'md';
   placeholder?: string;
@@ -20,33 +20,34 @@ export type InputEmailProps = {
   required?: boolean;
   isRequired?: boolean;
   className?: string;
+  password: string;
   onChange?: (value: string) => void;
-  ref?: React.RefObject<InputEmailRefType | null>;
+  ref?: React.RefObject<InputConfirmPasswordRefType | null>;
 };
 
-export const InputEmail = ({
+export const InputConfirmPassword = ({
   name,
   size,
-  placeholder = 'Enter your email',
-  label = 'Email',
+  placeholder = 'Confirm your password',
+  label = 'Confirm Password',
   value,
   required,
   isRequired,
   className,
+  password,
   onChange,
   ref,
-}: InputEmailProps) => {
+}: InputConfirmPasswordProps) => {
   const [initialValue, setValue] = useState(value || '');
   const [isFocused, setIsFocused] = useState(false);
 
   const icon = (
-    <EmailIcon
-      color={isFocused || initialValue.length > 0 ? '#007ab7' : '#97caea'}
+    <PasswordIcon
       className={cn(
         'size-4.5',
         isFocused || initialValue.length > 0
           ? 'text-primary'
-          : 'text-primary-400',
+          : 'text-border-hover',
       )}
     />
   );
@@ -60,24 +61,28 @@ export const InputEmail = ({
         setValue(value);
       },
       isValid() {
-        return isEmailValid(initialValue);
+        return isUserPasswordValid(initialValue) && initialValue === password;
       },
       getErrorMessage() {
         if (!initialValue.trim()) {
-          return 'errors.email.required';
+          return 'errors.password.confirm.required';
         }
 
-        return isEmailValid(initialValue) ? '' : 'errors.email.notValidFormat';
+        if (initialValue !== password) {
+          return 'errors.password.confirm.notMatching';
+        }
+
+        return '';
       },
     };
-  }, [initialValue]);
+  }, [initialValue, password]);
 
   return (
     <Input
       size={size}
       name={name}
       startContent={icon}
-      type="email"
+      type="password"
       placeholder={placeholder}
       label={label}
       className={className}

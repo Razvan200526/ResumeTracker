@@ -17,9 +17,9 @@ export const Link = (props: RouterLinkProps) => {
     <RouterLink
       {...props}
       className={cn(
-        'cursor-pointer select-none tracking-wide text-primary decoration-none underline-offset-4 outline-0 disabled:cursor-not-allowed disabled:opacity-50',
-        "relative before:content-[''] before:absolute before:block before:w-full before:h-[2px] before:bottom-[-2px] before:left-0",
-        'before:scale-x-0 before:bg-secondary-text before:transition-transform before:duration-300 hover:before:scale-x-100',
+        'decoration-none cursor-pointer tracking-wide text-primary underline-offset-4 outline-0 select-none disabled:cursor-not-allowed disabled:opacity-50',
+        "relative before:absolute before:bottom-[-2px] before:left-0 before:block before:h-[2px] before:w-full before:content-['']",
+        'before:bg-secondary-text before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100',
         'font-medium',
         props.className,
       )}
