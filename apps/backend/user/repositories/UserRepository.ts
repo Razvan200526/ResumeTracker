@@ -1,4 +1,5 @@
-import { PrimaryDatabase } from "@backend/shared/database/PrimaryDatabase";
+import { NotFoundException } from '@backend/middleware/exceptions/exceptions';
+import { PrimaryDatabase } from '@backend/shared/database/PrimaryDatabase';
 import type {
   FindManyOptions,
   FindOneOptions,
@@ -6,9 +7,8 @@ import type {
   Repository,
   SaveOptions,
   UpdateResult,
-} from "typeorm";
-import { UserEntity } from "../entities/UserEntity";
-import { NotFoundException } from "@backend/middleware/exceptions/exceptions";
+} from 'typeorm';
+import { UserEntity } from '../entities/UserEntity';
 
 export class UserRepository {
   private database: PrimaryDatabase;
@@ -90,7 +90,7 @@ export class UserRepository {
     const entity = await this.findOne(id);
 
     if (!entity) {
-      throw new NotFoundException("User not found");
+      throw new NotFoundException('User not found');
     }
 
     return entity;
@@ -102,7 +102,7 @@ export class UserRepository {
     const entity = await this.findOneBy(criteria);
 
     if (!entity) {
-      throw new NotFoundException("User not found");
+      throw new NotFoundException('User not found');
     }
 
     return entity;
@@ -116,7 +116,7 @@ export class UserRepository {
     const entity = await this.findByEmail(email);
 
     if (!entity) {
-      throw new NotFoundException("User not found");
+      throw new NotFoundException('User not found');
     }
 
     return entity;

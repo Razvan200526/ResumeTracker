@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 const passwordSchema = z.object({
   password: z.string().min(8).max(100),

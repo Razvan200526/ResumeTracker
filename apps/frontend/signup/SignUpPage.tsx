@@ -16,7 +16,7 @@ import type React from 'react';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-export const SigninPage = () => {
+export const SignUpPage = () => {
   const navigate = useNavigate();
   const emailRef = useRef<InputEmailRefType | null>(null);
   const passwordRef = useRef<InputPasswordRefType | null>(null);
@@ -42,7 +42,7 @@ export const SigninPage = () => {
 
     setIsLoading(true);
 
-    const response = await backend.auth.signin.email({
+    const response = await backend.auth.signup.email({
       email,
       password,
     });
@@ -50,7 +50,7 @@ export const SigninPage = () => {
     setTimeout(() => {
       setIsLoading(false);
 
-      if (!response) {
+      if (!response.success) {
         Toast.error({
           description: 'Invalid email or password',
         });

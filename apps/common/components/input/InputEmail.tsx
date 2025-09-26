@@ -1,8 +1,8 @@
-import { EmailIcon } from "@common/icons/EmailIcon";
-import { isEmailValid } from "@common/validators/isEmailValid";
-import { cn } from "@heroui/react";
-import { useImperativeHandle, useState } from "react";
-import { Input } from "./Input";
+import { EmailIcon } from '@common/icons/EmailIcon';
+import { isEmailValid } from '@common/validators/isEmailValid';
+import { cn } from '@heroui/react';
+import { useImperativeHandle, useState } from 'react';
+import { Input } from './Input';
 
 export type InputEmailRefType = {
   getValue: () => string;
@@ -13,7 +13,7 @@ export type InputEmailRefType = {
 
 export type InputEmailProps = {
   name?: string;
-  size?: "sm" | "md";
+  size?: 'sm' | 'md';
   placeholder?: string;
   label?: string;
   value?: string;
@@ -27,8 +27,8 @@ export type InputEmailProps = {
 export const InputEmail = ({
   name,
   size,
-  placeholder = "Enter your email",
-  label = "Email",
+  placeholder = 'Enter your email',
+  label = 'Email',
   value,
   required,
   isRequired,
@@ -36,16 +36,16 @@ export const InputEmail = ({
   onChange,
   ref,
 }: InputEmailProps) => {
-  const [initialValue, setValue] = useState(value || "");
+  const [initialValue, setValue] = useState(value || '');
   const [isFocused, setIsFocused] = useState(false);
 
   const icon = (
     <EmailIcon
       className={cn(
-        "size-4.5",
+        'size-4.5',
         isFocused || initialValue.length > 0
-          ? "text-primary"
-          : "text-primary-400",
+          ? 'text-primary'
+          : 'text-primary-400',
       )}
     />
   );
@@ -63,10 +63,10 @@ export const InputEmail = ({
       },
       getErrorMessage() {
         if (!initialValue.trim()) {
-          return "errors.email.required";
+          return 'errors.email.required';
         }
 
-        return isEmailValid(initialValue) ? "" : "errors.email.notValidFormat";
+        return isEmailValid(initialValue) ? '' : 'errors.email.notValidFormat';
       },
     };
   }, [initialValue]);

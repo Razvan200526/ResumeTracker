@@ -1,10 +1,10 @@
-import { Toast } from "@common/components/toast";
-import { Backend } from "@sdk/backend";
-import { Fetcher, type FetcherConfigType } from "@sdk/Fetcher";
+import { Toast } from '@common/components/toast';
+import { Backend } from '@sdk/backend';
+import { Fetcher, type FetcherConfigType } from '@sdk/Fetcher';
 
 const fetcher = new Fetcher({
-  baseURL: "http://localhost:2000",
-  headers: { "Content-Type": "application/json" },
+  baseURL: 'http://localhost:2000',
+  headers: { 'Content-Type': 'application/json' },
   beforeSend: (config: FetcherConfigType) => ({
     ...config,
     headers: {
@@ -13,7 +13,7 @@ const fetcher = new Fetcher({
   }),
   onServerError: (message: string) => {
     Toast.error({
-      title: "Server Error",
+      title: 'Server Error',
       description: message,
     });
   },

@@ -4,14 +4,14 @@ import {
   type EntityTarget,
   type ObjectLiteral,
   type Repository,
-} from "typeorm";
-import { PrimaryEntities } from "./entities";
+} from 'typeorm';
+import { PrimaryEntities } from './entities';
 
 export class PrimaryDatabase {
   private source: DataSource;
   private url: string;
   constructor() {
-    this.url = "postgres://resai:resai@localhost:5432/resai";
+    this.url = 'postgres://resai:resai@localhost:5432/resai';
   }
 
   public getSource(): DataSource {
@@ -20,7 +20,7 @@ export class PrimaryDatabase {
     }
 
     this.source = new DataSource({
-      type: "postgres",
+      type: 'postgres',
       url: this.url,
       synchronize: true,
       entities: PrimaryEntities,

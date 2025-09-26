@@ -1,6 +1,6 @@
-import type { UserType } from "@sdk/types";
-import * as z from "zod";
-import { ValidationException } from "@backend/middleware/exceptions/exceptions";
+import { ValidationException } from '@backend/middleware/exceptions/exceptions';
+import type { UserType } from '@sdk/types';
+import * as z from 'zod';
 export type CreateUserModel = {
   email: string;
   password: string;
@@ -11,7 +11,7 @@ export const CreateUserModelSchema = z.object({
 });
 
 export const validateUserModel = (
-  data: Partial<Omit<UserType, "id" | "createdAt" | "updatedAt" | "image">>,
+  data: Partial<Omit<UserType, 'id' | 'createdAt' | 'updatedAt' | 'image'>>,
 ) => {
   try {
     if (!CreateUserModelSchema.safeParse(data).success) {
@@ -21,7 +21,7 @@ export const validateUserModel = (
     }
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };

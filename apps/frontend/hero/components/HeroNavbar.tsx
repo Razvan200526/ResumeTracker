@@ -1,12 +1,12 @@
-import { Link } from "@common/components/Link";
-import { H6 } from "@common/components/typography";
-import { Logo } from "@common/icons/Logo";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Link } from '@common/components/Link';
+import { H6 } from '@common/components/typography';
+import { Logo } from '@common/icons/Logo';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 export const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
+  { name: 'Product', href: '#' },
+  { name: 'Features', href: '#' },
+  { name: 'Marketplace', href: '#' },
+  { name: 'Company', href: '#' },
 ];
 
 export const HeroNavbar = () => {

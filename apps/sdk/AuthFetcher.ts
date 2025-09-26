@@ -1,5 +1,5 @@
-import type { Fetcher } from "./Fetcher";
-import type { ResponseType, UserType } from "./types";
+import type { Fetcher } from './Fetcher';
+import type { ResponseType, UserType } from './types';
 
 export class AuthFetcher {
   constructor(private readonly fetcher: Fetcher) {}
@@ -8,16 +8,14 @@ export class AuthFetcher {
     email: async (payload: {
       email: string;
       password: string;
-      firstName: string;
-      lastName: string;
     }): Promise<ResponseType<{ success: boolean }>> => {
-      return await this.fetcher.post("/auth/signup/email", payload);
+      return await this.fetcher.post('/auth/signup', payload);
     },
     checkOtp: async (payload: {
       email: string;
       otp: string;
     }): Promise<ResponseType<{ status: boolean }>> => {
-      return await this.fetcher.post("/auth/signup/check-otp", payload);
+      return await this.fetcher.post('/auth/signup/check-otp', payload);
     },
   };
   public readonly signin = {
@@ -25,7 +23,7 @@ export class AuthFetcher {
       email: string;
       password: string;
     }): Promise<ResponseType<{ user: UserType; success: boolean }>> => {
-      return await this.fetcher.post("/auth/signin/email", payload);
+      return await this.fetcher.post('/auth/signin/email', payload);
     },
   };
 
@@ -33,7 +31,7 @@ export class AuthFetcher {
     email: async (
       email: string,
     ): Promise<ResponseType<{ success: boolean }>> => {
-      return await this.fetcher.post("/auth/forget-password/email", { email });
+      return await this.fetcher.post('/auth/forget-password/email', { email });
     },
   };
 
@@ -42,16 +40,16 @@ export class AuthFetcher {
     otp: string;
     password: string;
   }): Promise<ResponseType<{ success: boolean }>> => {
-    return await this.fetcher.post("/auth/reset-password", payload);
+    return await this.fetcher.post('/auth/reset-password', payload);
   };
 
   public readonly retrieve = async (): Promise<
     ResponseType<{ user: UserType | null }>
   > => {
-    return await this.fetcher.get("/auth/session");
+    return await this.fetcher.get('/auth/session');
   };
 
   public async signout(): Promise<ResponseType<{ success: boolean }>> {
-    return await this.fetcher.get("/auth/signout");
+    return await this.fetcher.get('/auth/signout');
   }
 }

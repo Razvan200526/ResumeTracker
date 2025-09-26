@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 const InputEmailSchema = z.object({
   email: z.email(),

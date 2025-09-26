@@ -1,8 +1,9 @@
-import { createBrowserRouter, Outlet } from "react-router";
-import { ErrorBoundary } from "react-error-boundary";
-import { ErrorFallback } from "@common/components/ErrorFallback";
-import { HeroPage } from "@frontend/hero/HeroPage";
-import { SigninPage } from "@frontend/signin/SignInPage";
+import { ErrorFallback } from '@common/components/ErrorFallback';
+import { HeroPage } from '@frontend/hero/HeroPage';
+import { SigninPage } from '@frontend/signin/SignInPage';
+import { SignUpPage } from '@frontend/signup/SignUpPage';
+import { ErrorBoundary } from 'react-error-boundary';
+import { createBrowserRouter, Outlet } from 'react-router';
 export const ErrorBoundaryLayout = () => (
   <ErrorBoundary FallbackComponent={ErrorFallback}>
     <Outlet />
@@ -14,12 +15,16 @@ export const router = createBrowserRouter([
     element: <ErrorBoundaryLayout />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <HeroPage />,
       },
       {
-        path: "/signin",
+        path: '/signin',
         element: <SigninPage />,
+      },
+      {
+        path: '/signup',
+        element: <SignUpPage />,
       },
     ],
   },

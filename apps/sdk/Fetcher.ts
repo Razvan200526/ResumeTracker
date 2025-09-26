@@ -17,7 +17,7 @@ export class Fetcher {
     this.config = {
       ...config,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...config.headers,
       },
     };
@@ -44,7 +44,7 @@ export class Fetcher {
    */
   public setAuthToken(
     token: string,
-    type: "Bearer" | "Basic" = "Bearer",
+    type: 'Bearer' | 'Basic' = 'Bearer',
   ): void {
     this.config.headers.Authorization = `${type} ${token}`;
   }
@@ -57,11 +57,11 @@ export class Fetcher {
   }
 
   public clearContentType(): void {
-    delete this.config.headers["Content-Type"];
+    delete this.config.headers['Content-Type'];
   }
 
   public setContentType(): void {
-    this.config.headers["Content-Type"] = "application/json";
+    this.config.headers['Content-Type'] = 'application/json';
   }
 
   /**
@@ -87,7 +87,7 @@ export class Fetcher {
     path: string,
     options?: FetcherRequestOptionsType,
   ): Promise<T> {
-    return this.request<T>("GET", path, undefined, options);
+    return this.request<T>('GET', path, undefined, options);
   }
 
   /**
@@ -98,7 +98,7 @@ export class Fetcher {
     data?: any,
     options?: FetcherRequestOptionsType,
   ): Promise<T> {
-    return this.request<T>("POST", path, data, options);
+    return this.request<T>('POST', path, data, options);
   }
 
   /**
@@ -109,7 +109,7 @@ export class Fetcher {
     data?: any,
     options?: FetcherRequestOptionsType,
   ): Promise<T> {
-    return this.request<T>("PUT", path, data, options);
+    return this.request<T>('PUT', path, data, options);
   }
 
   /**
@@ -120,7 +120,7 @@ export class Fetcher {
     data?: any,
     options?: FetcherRequestOptionsType,
   ): Promise<T> {
-    return this.request<T>("PATCH", path, data, options);
+    return this.request<T>('PATCH', path, data, options);
   }
 
   /**
@@ -130,7 +130,7 @@ export class Fetcher {
     path: string,
     options?: FetcherRequestOptionsType,
   ): Promise<T> {
-    return this.request<T>("DELETE", path, undefined, options);
+    return this.request<T>('DELETE', path, undefined, options);
   }
 
   /**
@@ -140,7 +140,7 @@ export class Fetcher {
     path: string,
     options?: FetcherRequestOptionsType,
   ): Promise<T> {
-    return this.request<T>("HEAD", path, undefined, options);
+    return this.request<T>('HEAD', path, undefined, options);
   }
 
   /**
@@ -170,9 +170,9 @@ export class Fetcher {
   public async upload<T = any>(
     path: string,
     file: File | Blob,
-    name = "file",
-    options?: Omit<FetcherRequestOptionsType, "headers"> & {
-      headers?: Omit<Record<string, string>, "Content-Type">;
+    name = 'file',
+    options?: Omit<FetcherRequestOptionsType, 'headers'> & {
+      headers?: Omit<Record<string, string>, 'Content-Type'>;
     },
   ): Promise<T> {
     const formData = new FormData();
@@ -186,23 +186,23 @@ export class Fetcher {
       },
     };
 
-    return this.request<T>("POST", path, formData, requestOptions);
+    return this.request<T>('POST', path, formData, requestOptions);
   }
 
   private buildURL(url: string): string {
-    if (url.startsWith("http://") || url.startsWith("https://")) {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
 
     // Normalize path to always go through API surface
-    let path = url.startsWith("/") ? url : `/${url}`;
+    let path = url.startsWith('/') ? url : `/${url}`;
 
     // If the path isn't already API-prefixed, add /api
-    if (!path.startsWith("/api/")) {
+    if (!path.startsWith('/api/')) {
       path = `/api${path}`;
     }
 
-    const baseURL = this.config.baseURL.endsWith("/")
+    const baseURL = this.config.baseURL.endsWith('/')
       ? this.config.baseURL.slice(0, -1)
       : this.config.baseURL;
 
@@ -222,12 +222,12 @@ export class Fetcher {
 
     let body: BodyInit | undefined;
 
-    if (data !== undefined && method !== "GET" && method !== "HEAD") {
+    if (data !== undefined && method !== 'GET' && method !== 'HEAD') {
       if (data instanceof FormData) {
         body = data;
         // Remove Content-Type header for FormData
-        delete headers["Content-Type"];
-      } else if (typeof data === "string") {
+        delete headers['Content-Type'];
+      } else if (typeof data === 'string') {
         body = data;
       } else if (data instanceof Blob || data instanceof ArrayBuffer) {
         body = data;
@@ -240,13 +240,13 @@ export class Fetcher {
     const combinedController = new AbortController();
 
     // Listen to instance abort controller
-    this.abortController.signal.addEventListener("abort", () => {
+    this.abortController.signal.addEventListener('abort', () => {
       combinedController.abort();
     });
 
     // Listen to optional provided signal
     if (options?.signal) {
-      options.signal.addEventListener("abort", () => {
+      options.signal.addEventListener('abort', () => {
         combinedController.abort();
       });
     }

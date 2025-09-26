@@ -1,4 +1,4 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from 'react';
 
 type IconProps = SVGProps<SVGSVGElement> & {
   secondaryfill?: string;
@@ -6,7 +6,7 @@ type IconProps = SVGProps<SVGSVGElement> & {
   title?: string;
 };
 
-export const Logo = ({ title = "badge 13", ...props }: IconProps) => {
+export const Logo = ({ title = 'badge 13', ...props }: IconProps) => {
   return (
     <svg
       height="48"

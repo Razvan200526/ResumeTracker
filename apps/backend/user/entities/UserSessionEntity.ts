@@ -8,38 +8,38 @@ import {
   PrimaryColumn,
   type Relation,
   UpdateDateColumn,
-} from "typeorm";
-import { UserEntity } from "./UserEntity";
+} from 'typeorm';
+import { UserEntity } from './UserEntity';
 
 @Entity({
-  name: "user_sessions",
+  name: 'user_sessions',
 })
 export class UserSessionEntity {
-  @PrimaryColumn({ name: "id", type: "varchar" })
+  @PrimaryColumn({ name: 'id', type: 'varchar' })
   id: string = crypto.randomUUID();
 
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: "user_id", referencedColumnName: "id" })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: Relation<UserEntity>;
 
-  @Column({ name: "token", type: "varchar", length: 255, unique: true })
+  @Column({ name: 'token', type: 'varchar', length: 255, unique: true })
   token: string;
 
-  @Column({ name: "expires_at", type: "timestamptz" })
+  @Column({ name: 'expires_at', type: 'timestamptz' })
   expiresAt: Date;
 
-  @Column({ name: "ip_address", type: "varchar", length: 45, nullable: true })
+  @Column({ name: 'ip_address', type: 'varchar', length: 45, nullable: true })
   ipAddress?: string;
 
-  @Column({ name: "user_agent", type: "text", nullable: true })
+  @Column({ name: 'user_agent', type: 'text', nullable: true })
   userAgent?: string;
 
-  @CreateDateColumn({ name: "created_at", type: "timestamptz" })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: "updated_at", type: "timestamptz", nullable: true })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', nullable: true })
   updatedAt?: Date | null;
 
-  @DeleteDateColumn({ name: "deleted_at", type: "timestamptz", nullable: true })
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamptz', nullable: true })
   deletedAt?: Date | null;
 }

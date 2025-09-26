@@ -1,5 +1,5 @@
-import { HeroUIProvider } from "@heroui/react";
-import { ToastProvider as HeroToastProvider } from "@heroui/toast";
+import { HeroUIProvider } from '@heroui/react';
+import { ToastProvider as HeroToastProvider } from '@heroui/toast';
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   return (

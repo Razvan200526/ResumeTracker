@@ -1,14 +1,14 @@
-import { Icon } from "@iconify/react";
-import * as Sentry from "@sentry/react";
-import { useState } from "react";
-import { Button } from "./button";
-import { Card } from "./card";
-import { H3, H6 } from "./typography";
+import { Icon } from '@iconify/react';
+import * as Sentry from '@sentry/react';
+import { useState } from 'react';
+import { Button } from './button';
+import { Card } from './card';
+import { H3, H6 } from './typography';
 
 Sentry.init({
-  dsn: "",
+  dsn: '',
   sendDefaultPii: true,
-  environment: "local",
+  environment: 'local',
   integrations: [],
 });
 
@@ -56,8 +56,8 @@ export const ErrorFallback = ({ error }: { error: Error }) => {
               <Icon
                 icon={
                   showDetails
-                    ? "iconamoon:arrow-up-2-duotone"
-                    : "iconamoon:arrow-down-2-duotone"
+                    ? 'iconamoon:arrow-up-2-duotone'
+                    : 'iconamoon:arrow-down-2-duotone'
                 }
                 width="24"
                 height="24"

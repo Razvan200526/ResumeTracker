@@ -1,4 +1,4 @@
-import { cn } from "@heroui/react";
+import { cn } from '@heroui/react';
 
 export const Card = ({
   children,
@@ -10,7 +10,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-lg bg-light p-4 shadow-none border border-primary-100 w-full",
+        'rounded-lg bg-light p-4 shadow-none border border-primary-100 w-full',
         className,
       )}
     >

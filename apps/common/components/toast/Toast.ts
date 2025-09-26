@@ -1,16 +1,16 @@
-import { addToast, cn } from "@heroui/react";
+import { addToast, cn } from '@heroui/react';
 
 const classNames = {
-  base: cn(["bg-light shadow-none"]),
+  base: cn(['bg-light shadow-none']),
 };
 
 export const Toast = {
   success: (config: { title?: string; description?: string }) => {
     addToast({
       ...config,
-      color: "success",
-      variant: "flat",
-      radius: "sm",
+      color: 'success',
+      variant: 'flat',
+      radius: 'sm',
       classNames: {
         ...classNames,
       },
@@ -19,9 +19,9 @@ export const Toast = {
   error: (config: { title?: string; description?: string }) => {
     addToast({
       ...config,
-      color: "danger",
-      variant: "bordered",
-      radius: "sm",
+      color: 'danger',
+      variant: 'bordered',
+      radius: 'sm',
       classNames: {
         ...classNames,
       },
@@ -30,9 +30,9 @@ export const Toast = {
   warning: (config: { title?: string; description?: string }) => {
     addToast({
       ...config,
-      color: "warning",
-      variant: "flat",
-      radius: "sm",
+      color: 'warning',
+      variant: 'flat',
+      radius: 'sm',
       classNames: {
         ...classNames,
       },
