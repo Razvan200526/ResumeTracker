@@ -10,6 +10,8 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import type { UserAccountEntity, UserSessionEntity } from "./index";
+
+console.log("UserEntity");
 @Entity({
   name: "users",
 })
