@@ -14,15 +14,10 @@ export class SignupEmailController {
       lastName: payload.lastName || payload.email?.split('@')[0] || 'User',
       email: payload.email,
       password: payload.password,
-      roles: payload.roles || ['ROLE_USER'],
-      country: payload.country,
-      field: payload.field,
-      university: payload.university,
-      year: payload.year,
       image: payload.image,
     });
 
-    const result = await authService.sendVerificationEmail(payload.email, 'en');
+    const result = await authService.sendVerificationEmail(payload.email);
 
     return c.json({ success: true, data: result ?? null });
   }

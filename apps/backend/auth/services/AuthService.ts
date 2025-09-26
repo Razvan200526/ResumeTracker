@@ -9,7 +9,7 @@ export const AUTH_SESSION_TOKEN_NAME = 'auth-session-token';
 export class AuthService {
   constructor(private readonly databaseUrl: string) {}
 
-  public getAuth(lang?: string) {
+  public getAuth() {
     return betterAuth({
       database: new Pool({
         connectionString: this.databaseUrl,
@@ -125,11 +125,6 @@ export class AuthService {
     lastName: string;
     email: string;
     password: string;
-    roles?: string[];
-    country?: string;
-    field?: string;
-    university?: string;
-    year?: string;
     image?: string;
   }) {
     const auth = this.getAuth();
@@ -146,8 +141,8 @@ export class AuthService {
     });
   }
 
-  public async sendVerificationEmail(email: string, lang: string) {
-    const auth = this.getAuth(lang);
+  public async sendVerificationEmail(email: string) {
+    const auth = this.getAuth();
     return await auth.api.sendVerificationOTP({
       body: { email, type: 'email-verification' },
     });
@@ -158,8 +153,8 @@ export class AuthService {
     return await auth.api.verifyEmailOTP({ body: { email, otp } });
   }
 
-  public async sendForgetPasswordEmail(email: string, lang: string) {
-    const auth = this.getAuth(lang);
+  public async sendForgetPasswordEmail(email: string) {
+    const auth = this.getAuth();
     return await auth.api.forgetPasswordEmailOTP({ body: { email } });
   }
 
