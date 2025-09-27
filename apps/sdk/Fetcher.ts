@@ -38,7 +38,9 @@ export class Fetcher {
       },
     };
   }
-
+  public getHeaders(): Record<string, string> {
+    return this.config.headers;
+  }
   /**
    * Set authorization header
    */
@@ -85,9 +87,10 @@ export class Fetcher {
    */
   public async get<T = any>(
     path: string,
+    filter?: string,
     options?: FetcherRequestOptionsType,
   ): Promise<T> {
-    return this.request<T>('GET', path, undefined, options);
+    return this.request<T>('GET', path, filter, options);
   }
 
   /**

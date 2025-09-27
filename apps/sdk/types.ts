@@ -2,6 +2,7 @@ export type UserType = {
   id: string;
   email: string;
   password: string;
+  image: string;
   name: string;
   fistName: string;
   lastName: string;
@@ -27,6 +28,7 @@ export type ResponseType<T = any> = {
 export type UserAccountType = {
   id: string;
   user: UserType;
+  image: string;
   providerId: string;
   accountId: string;
   password?: string;

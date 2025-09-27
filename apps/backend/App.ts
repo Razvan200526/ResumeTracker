@@ -1,8 +1,15 @@
-import { SignupEmailController } from '@backend/auth/controllers/SignupEmailController';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+// import { jwt } from 'hono/jwt'; // Import jwt
 import { logger } from 'hono/logger';
-
+import { CreateUserSessionController } from './auth/controllers/CreateUserSessionControllers';
+import { RetrieveSessionController } from './auth/controllers/RetrieveSessionController';
+import { SignInController } from './auth/controllers/SigninController';
+import { SignupCheckOtpController } from './auth/controllers/SignupCheckOtpController';
+import { SignupEmailController } from './auth/controllers/SignupEmailController';
+import { UploadAvatarController } from './controllers/UploadAvatarController';
+import { CheckUserExistsController } from './controllers/UserExistsController';
+import { registerController } from './shared/registerController';
 export const app = new Hono();
 app.use(logger());
 app.use(
@@ -17,9 +24,23 @@ app.use(
   }),
 );
 
+// Register auth routes mirroring azurite
+registerController(app, SignupEmailController);
+registerController(app, SignupCheckOtpController);
+registerController(app, SignInController);
+registerController(app, CheckUserExistsController);
+
+//@ts-ignore trust-me
+registerController(app, UploadAvatarController);
+registerController(app, RetrieveSessionController);
+registerController(app, CreateUserSessionController);
 app.post('/api/auth/signup', async (c) => {
   const ctrl = new SignupEmailController();
   return await ctrl.handler(c);
+});
+
+app.onError((err, c) => {
+  return c.json({ success: false, error: err.message }, 500);
 });
 
 app.get('/health', (c) => c.json({ status: 'ok' }));

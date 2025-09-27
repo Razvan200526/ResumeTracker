@@ -1,8 +1,6 @@
-import { AuthService } from '@backend/auth/services/AuthService';
 import { Route } from '@backend/decorators/Route';
 import type { Context } from 'hono';
-
-const authService = new AuthService(process.env.DATABASE_URL || '');
+import { authService } from '../services/AuthService';
 
 @Route('POST', '/api/auth/signup/check-otp', 'Check OTP on signup')
 export class SignupCheckOtpController {

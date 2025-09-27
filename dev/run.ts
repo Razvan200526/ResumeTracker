@@ -3,6 +3,10 @@ import concurrently from 'concurrently';
 const { result } = concurrently(
   [
     {
+      command: 'cd dev && docker compose up --build',
+      name: 'dev:docker',
+    },
+    {
       command:
         'bunx @tailwindcss/cli -i ./dev/tailwind.css -o ./apps/frontend/shared/public/dist/style.css --watch',
       name: 'tailwindcss',
@@ -22,7 +26,7 @@ const { result } = concurrently(
     },
   ],
   {
-    hide: ['tailwindcss'],
+    hide: ['tailwindcss', 'dev:docker'],
   },
 );
 

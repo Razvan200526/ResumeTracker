@@ -1,5 +1,6 @@
 import { ForgetPasswordEmailCheckMailer } from '@backend/auth/mailers/ForgetPasswordEmailCheckMailer';
 import { SignupEmailCheckMailer } from '@backend/auth/mailers/SignupEmailCheckMailer';
+import { random } from '@common/utils';
 import { betterAuth } from 'better-auth';
 import { emailOTP } from 'better-auth/plugins';
 import { Pool } from 'pg';
@@ -16,7 +17,7 @@ export class AuthService {
       }),
       advanced: {
         database: {
-          generateId: () => crypto.randomUUID(),
+          generateId: () => random.nanoid(15),
         },
         cookies: {
           session_token: {
@@ -36,6 +37,7 @@ export class AuthService {
         fields: {
           name: 'name',
           email: 'email',
+          password: 'password',
           emailVerified: 'is_email_verified',
           image: 'image',
           createdAt: 'created_at',
@@ -120,15 +122,19 @@ export class AuthService {
     });
   }
 
-  public async signup(data: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    image?: string;
-  }) {
+  public async signup(
+    data: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
+      image?: string;
+    },
+    headers?: Headers,
+  ) {
     const auth = this.getAuth();
     return await auth.api.signUpEmail({
+      returnHeaders: true,
       body: {
         name: `${data.firstName} ${data.lastName}`,
         email: data.email,
@@ -138,33 +144,51 @@ export class AuthService {
         // Optional fields only if your schema supports them
         image: data.image,
       },
+      headers,
     });
   }
 
-  public async sendVerificationEmail(email: string) {
+  public async sendVerificationEmail(email: string, headers?: Headers) {
     const auth = this.getAuth();
     return await auth.api.sendVerificationOTP({
+      returnHeaders: true,
       body: { email, type: 'email-verification' },
+      headers,
     });
   }
 
-  public async verifyEmailOTP(email: string, otp: string) {
+  public async verifyEmailOTP(email: string, otp: string, headers?: Headers) {
     const auth = this.getAuth();
-    return await auth.api.verifyEmailOTP({ body: { email, otp } });
+    return await auth.api.verifyEmailOTP({
+      returnHeaders: true,
+      body: { email, otp },
+      headers,
+    });
   }
 
-  public async sendForgetPasswordEmail(email: string) {
+  public async sendForgetPasswordEmail(email: string, headers?: Headers) {
     const auth = this.getAuth();
-    return await auth.api.forgetPasswordEmailOTP({ body: { email } });
+    return await auth.api.forgetPasswordEmailOTP({
+      returnHeaders: true,
+      body: { email },
+      headers,
+    });
   }
 
-  public async resetPassword(data: {
-    email: string;
-    otp: string;
-    password: string;
-  }) {
+  public async resetPassword(
+    data: {
+      email: string;
+      otp: string;
+      password: string;
+    },
+    headers?: Headers,
+  ) {
     const auth = this.getAuth();
-    return await auth.api.resetPasswordEmailOTP({ body: data });
+    return await auth.api.resetPasswordEmailOTP({
+      returnHeaders: true,
+      body: data,
+      headers,
+    });
   }
 
   public async signInEmail(
@@ -194,3 +218,5 @@ export class AuthService {
     }
   }
 }
+
+export const authService = new AuthService(Bun.env.DATABASE_URL || '');

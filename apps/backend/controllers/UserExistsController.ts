@@ -4,7 +4,7 @@ import { isEmailValid } from '@common/validators/isEmailValid';
 
 import type { Context } from 'hono';
 
-const url = 'http:/localhost:2000';
+const url = 'http://localhost:2000';
 
 @Route('POST', '/api/user-exists', 'Checks if a user exists')
 export class CheckUserExistsController {
@@ -31,7 +31,17 @@ export class CheckUserExistsController {
         400,
       );
     }
-    const user = await userRepository.findByEmail(email);
+    let user: any;
+    try {
+      user = await userRepository.findByEmail(email);
+    } catch (e: any) {
+      console.error('Error in findByEmail:', e);
+      return c.json(
+        { error: 'Failed to check user existence', details: e.message },
+        500,
+      );
+    }
+
     if (user) {
       return c.json(
         {

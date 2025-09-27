@@ -1,3 +1,4 @@
+import { random } from '@common/utils';
 import {
   Column,
   CreateDateColumn,
@@ -15,7 +16,7 @@ import { UserEntity } from './UserEntity';
 })
 export class UserVerificationEntity {
   @PrimaryColumn({ name: 'id', type: 'varchar', length: 15 })
-  id: string = crypto.randomUUID();
+  id: string = random.nanoid(15);
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })

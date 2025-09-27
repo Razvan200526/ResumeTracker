@@ -57,3 +57,5 @@ export class PrimaryDatabase {
     return this.getSource().manager;
   }
 }
+
+export const primaryDatabase = new PrimaryDatabase();

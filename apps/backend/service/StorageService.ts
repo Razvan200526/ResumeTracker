@@ -24,7 +24,7 @@ export class StorageService {
   }
 
   getAvatarBucket() {
-    return 'https://pub-6858952ca1f64c08a3e778080d6e2ee6.r2.dev/avatars/';
+    return 'https://pub-6858952ca1f64c08a3e778080d6e2ee6.r2.dev/';
   }
   async uploadAvatar(file: File): Promise<string> {
     const s3 = this.getS3Client();

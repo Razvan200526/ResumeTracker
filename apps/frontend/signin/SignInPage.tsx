@@ -50,14 +50,14 @@ export const SigninPage = () => {
     setTimeout(() => {
       setIsLoading(false);
 
-      if (!response) {
+      if (!response || !response.success) {
         Toast.error({
           description: 'Invalid email or password',
         });
         return;
       }
 
-      navigate('/');
+      navigate('/home');
     }, 1000);
   };
 

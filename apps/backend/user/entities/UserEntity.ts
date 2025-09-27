@@ -1,3 +1,4 @@
+import { random } from '@common/utils';
 import {
   Column,
   CreateDateColumn,
@@ -19,14 +20,12 @@ export class UserEntity {
   @PrimaryColumn({
     name: 'id',
     type: 'varchar',
+    length: 15,
   })
-  id: string = crypto.randomUUID();
+  id: string = random.nanoid(15);
 
   @Column({ name: 'email', type: 'varchar', length: 255 })
   email: string;
-
-  @Column({ name: 'password', type: 'varchar', length: 255 })
-  password: string;
 
   @Column({ name: 'name', type: 'varchar', length: 200 })
   name: string;

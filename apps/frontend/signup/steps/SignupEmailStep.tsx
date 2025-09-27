@@ -24,6 +24,7 @@ export const SignupEmailStep = () => {
     setIsLoading(true);
 
     const response = await backend.users.exists(data.email);
+
     setIsLoading(false);
 
     if (!response.success && response.message) {

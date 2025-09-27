@@ -18,5 +18,11 @@ const fetcher = new Fetcher({
     });
   },
 });
+fetcher.configure({
+  headers: {
+    Authorization: 'Bearer auth-session-token',
+  },
+});
+fetcher.setAuthToken('auth-session-token');
 
 export const backend = new Backend(fetcher);

@@ -8,14 +8,22 @@ export class AuthFetcher {
     email: async (payload: {
       email: string;
       password: string;
+      firstName: string;
+      lastName: string;
+      image: string;
     }): Promise<ResponseType<{ success: boolean }>> => {
-      return await this.fetcher.post('/auth/signup', payload);
+      return await this.fetcher.post('/auth/signup/email', payload);
     },
     checkOtp: async (payload: {
       email: string;
       otp: string;
     }): Promise<ResponseType<{ status: boolean }>> => {
       return await this.fetcher.post('/auth/signup/check-otp', payload);
+    },
+    sendOTP: async (payload: {
+      email: string;
+    }): Promise<ResponseType<{ success: boolean }>> => {
+      return await this.fetcher.post('/auth/signup/send-otp', payload);
     },
   };
   public readonly signin = {

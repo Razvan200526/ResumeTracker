@@ -1,5 +1,8 @@
 import { NotFoundException } from '@backend/middleware/exceptions/exceptions';
-import { PrimaryDatabase } from '@backend/shared/database/PrimaryDatabase';
+import {
+  type PrimaryDatabase,
+  primaryDatabase,
+} from '@backend/shared/database/PrimaryDatabase';
 import type {
   FindManyOptions,
   FindOneOptions,
@@ -13,7 +16,7 @@ import { UserEntity } from '../entities/UserEntity';
 export class UserRepository {
   private database: PrimaryDatabase;
   constructor() {
-    this.database = new PrimaryDatabase();
+    this.database = primaryDatabase;
   }
 
   public async open(): Promise<Repository<UserEntity>> {
@@ -30,7 +33,6 @@ export class UserRepository {
         id: true,
         email: true,
         name: true,
-        password: true,
         firstName: true,
         lastName: true,
         createdAt: true,
