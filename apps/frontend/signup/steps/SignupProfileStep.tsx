@@ -12,10 +12,11 @@ import { useSignupStore } from '../signUpStore';
 export const SignupProfileStep = () => {
   const { data, setStep, setData } = useSignupStore();
   const [isLoading, setIsLoading] = useState(false);
+  const a = 5;
 
   const goBack = () => {
     setData({ ...data, password: '' });
-    setStep(1);
+    setStep(a);
   };
 
   const handleSignup = async () => {
