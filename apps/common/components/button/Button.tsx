@@ -25,7 +25,6 @@ export const Button = (props: ButtonPropsType) => {
       className={cn(
         'font-medium tracking-wide min-w-3 min-h-0 py-0 flex items-center justify-center',
         'data-[focus=true]:outline-2 data-[focus=true]:outline-offset-2',
-        'data-[focus=true]:outline-primary',
         size === 'sm' ? 'text-xs h-7.5' : 'text-sm',
         variant === 'bordered' ? 'border-small' : '',
         color === 'primary' && variant === 'light'

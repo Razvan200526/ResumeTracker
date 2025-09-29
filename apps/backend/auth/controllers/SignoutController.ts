@@ -1,27 +1,22 @@
-// import { Route } from '@backend/decorators/Route';
-// import type { Context } from 'hono';
+import { Route } from '@backend/decorators/Route';
+import type { Context } from 'hono';
+import { authService } from '../services/AuthService';
 
-// @Route('GET', '/api/auth/signout', 'Logout the current user')
-// export class SignoutController {
-//   private readonly sessionService: SessionService;
+@Route('GET', '/api/auth/signout', 'Logout the current user')
+export class SignoutController {
+  async handler(c: Context) {
+    try {
+      const result = await authService.signOut(c.req.raw.headers);
 
-//   constructor() {
-//     this.sessionService = sessionService;
-//   }
+      c.header(
+        'Set-Cookie',
+        'auth-session-token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure',
+      );
 
-//   async handler(c: Context) {
-//     const sessionToken = c.req.cookie('session_token');
-
-//     if (sessionToken) {
-//       await this.sessionService.deleteSession(sessionToken);
-//       c.cookie('session_token', '', {
-//         httpOnly: true,
-//         secure: process.env.NODE_ENV === 'production',
-//         sameSite: 'Lax',
-//         expires: new Date(0), // Expire the cookie immediately
-//       });
-//     }
-
-//     return c.json({ success: true, data: null });
-//   }
-// }
+      return c.json({ success: result.success, data: null });
+    } catch (e) {
+      console.error('Signout error:', e);
+      return c.json({ success: false, error: 'Signout failed' }, 500);
+    }
+  }
+}

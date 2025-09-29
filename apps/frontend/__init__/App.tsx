@@ -1,5 +1,6 @@
 import { ToastProvider } from '@common/components/toast';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { NuqsAdapter } from 'nuqs/adapters/react-router/v7';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router';
@@ -26,7 +27,9 @@ try {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ToastProvider>
-          <RouterProvider router={router} />
+          <NuqsAdapter>
+            <RouterProvider router={router} />
+          </NuqsAdapter>
         </ToastProvider>
       </QueryClientProvider>
     </StrictMode>,

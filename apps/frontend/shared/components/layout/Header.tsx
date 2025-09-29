@@ -1,5 +1,6 @@
 import { Button } from '@common/components/button';
 import { Tooltip } from '@common/components/Tooltip';
+import { Logo } from '@common/icons/Logo';
 import { NotificationIcon } from '@common/icons/NotificationIcon';
 import { useAppSidebarStore } from '@frontend/appStore';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -9,7 +10,6 @@ export const Header = () => {
     close: closeSidebar,
     isMinimized,
     minimize: minimizeSidebar,
-    expand: expandSidebar,
   } = useAppSidebarStore();
 
   const items = [
@@ -22,10 +22,8 @@ export const Header = () => {
   return (
     <div className="flex items-center justify-between pt-2 pr-2">
       <div className="flex items-center gap-2 px-2">
-        <div className="bg-foreground flex h-8 w-8 items-center justify-center rounded-full">
-          {/*<Link to={'/'}>
-            <AcmeIcon />
-          </Link>*/}
+        <div className="bg-light flex h-8 w-8 items-center justify-center rounded-full">
+          <Logo className="size-7 text-primary " />
         </div>
       </div>
       <div className="flex items-center justify-end gap-1.5">
@@ -38,10 +36,10 @@ export const Header = () => {
               color="primary"
               onPress={() => {
                 closeSidebar();
-                expandSidebar();
+                // expandSidebar();
               }}
             >
-              <ChevronRightIcon className="size-4" />
+              <ChevronRightIcon className="size-4 rotate-180" />
             </Button>
           </Tooltip>
         ) : (

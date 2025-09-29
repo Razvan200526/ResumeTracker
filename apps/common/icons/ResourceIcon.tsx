@@ -16,45 +16,11 @@ export const ResourceIcon = ({ title = 'badge 13', ...props }: IconProps) => {
       {...props}
     >
       <title>{title}</title>
-      <g fill="#212121" strokeLinecap="butt" strokeLinejoin="miter">
+      <g fill="currentColor">
         <path
-          d="M36.0011 45C38.7626 45 41 42.7626 41 40.0012C41 30.0149 41 17.9851 41 7.99883C41 5.2374 38.7614 3 36 3H20.2426C19.447 3 18.6839 3.31607 18.1213 3.87868L7.87868 14.1213C7.31607 14.6839 7 15.447 7 16.2426C7 24.1618 7.00001 32.0809 7.00001 40C7 42.7614 9.23744 45 11.9989 45C19.4778 45 28.5222 45 36.0011 45Z"
-          fill="none"
-          stroke="#212121"
-          strokeLinecap="square"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-        />
-        <path
-          d="M20 3V16H7"
-          fill="none"
-          stroke="#212121"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-        />
-        <path
-          d="M14 24H34"
-          fill="none"
-          stroke="#212121"
-          strokeLinecap="square"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-        />
-        <path
-          d="M34 16H27"
-          fill="none"
-          stroke="#212121"
-          strokeLinecap="square"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-        />
-        <path
-          d="M14 32H34"
-          fill="none"
-          stroke="#212121"
-          strokeLinecap="square"
-          strokeMiterlimit="10"
-          strokeWidth="2"
+          d="M12 2C8.68629 2 6 4.68629 6 8V40C6 43.3137 8.68629 46 12 46H36C39.3137 46 42 43.3137 42 40V8C42 4.68629 39.3137 2 36 2H12ZM12 8H36V22H12V8ZM36 25H12V28H36V25ZM12 31H36V34H12V31ZM26 37H12V40H26V37Z"
+          fill="currentColor"
+          fillRule="evenodd"
         />
       </g>
     </svg>

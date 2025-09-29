@@ -17,7 +17,7 @@ export const HeroPage = () => {
   return (
     <div
       style={{
-        background: 'radial-gradient(at center center, #3B82F6, #1E3A8A)',
+        background: 'radial-gradient(at center center, #38056d, #6115b4)',
       }}
       className="scrollbar-hide h-[calc(100dvh)] overflow-y-scroll dark:bg-gray-900"
     >
@@ -52,7 +52,8 @@ export const HeroPage = () => {
               </Button>
               <Button
                 size="lg"
-                className="mt-10 flex items-center justify-center gap-x-6 rounded-3xl bg-hero"
+                variant="light"
+                className="mt-10 flex items-center justify-center gap-x-6 rounded-3xl"
               >
                 <Link
                   to="/"

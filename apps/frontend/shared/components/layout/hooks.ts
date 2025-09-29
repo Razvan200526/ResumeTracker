@@ -8,20 +8,20 @@ export const useSideBarItems = () => {
 
   const mainItems = [
     {
-      key: 'resources',
-      href: '/',
+      key: 'Resources',
       icon: ResourceIcon,
+      href: 'resources',
       title: 'Resources',
     },
     {
-      key: 'folders',
-      href: '',
+      key: 'applications',
+      href: 'applications',
       icon: FolderIcon,
-      title: 'Folders',
+      title: 'Applications',
     },
     {
       key: 'settings',
-      href: '',
+      href: 'settings',
       icon: SettingsIcon,
       title: 'Settings',
     },
@@ -30,7 +30,7 @@ export const useSideBarItems = () => {
   const secondaryItems = [
     {
       key: 'ask',
-      href: '',
+      href: '/ask',
       icon: AiChatIcon,
       title: 'ask',
     },

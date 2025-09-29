@@ -205,7 +205,13 @@ export class AuthService {
 
   public async signOut(headers: Headers) {
     const auth = this.getAuth();
-    return await auth.api.signOut({ headers });
+    try {
+      const result = await auth.api.signOut({ headers });
+      return result;
+    } catch (e) {
+      console.error('Sign out failed:', e);
+      throw e;
+    }
   }
 
   public async getSession(headers: Headers) {

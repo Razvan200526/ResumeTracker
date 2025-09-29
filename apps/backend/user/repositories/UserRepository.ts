@@ -37,6 +37,7 @@ export class UserRepository {
         lastName: true,
         createdAt: true,
         updatedAt: true,
+        image: true,
         sessions: {
           id: true,
           expiresAt: true,

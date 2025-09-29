@@ -13,7 +13,7 @@ export class DevMailer implements Mailer {
     fromEmail,
     fromName,
   }: SendMailParams): Promise<void> {
-    const from = `${fromName || 'Resume Tracker'} <${fromEmail || process.env.MAIL_FROM || 'no-reply@localhost'}>`;
+    const from = `${fromName || 'Resume Tracker'} <${fromEmail || process.env.MAIL_FROM || 'no-reply@resai'}>`;
 
     await this.transporter.sendMail({
       from,

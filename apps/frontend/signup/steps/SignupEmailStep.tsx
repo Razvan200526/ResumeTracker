@@ -2,6 +2,7 @@ import { Button } from '@common/components/button';
 import { InputEmail } from '@common/components/input';
 import { Link } from '@common/components/Link';
 import { Toast } from '@common/components/toast';
+import { H6 } from '@common/components/typography';
 import { isEmailValid } from '@common/validators/isEmailValid';
 import { backend } from '@frontend/shared/backend';
 import { Form } from '@heroui/react';
@@ -64,10 +65,12 @@ export const SignupEmailStep = () => {
         </Button>
       </Form>
 
-      <p className="flex items-center justify-center gap-2 pt-4 text-small">
+      <H6 className="flex items-center justify-center gap-2 pt-4 text-small">
         Already have an account?
-        <Link to="/signin">Sign In</Link>
-      </p>
+        <Link className="text-secondary-text" to="/signin">
+          Sign In
+        </Link>
+      </H6>
     </div>
   );
 };

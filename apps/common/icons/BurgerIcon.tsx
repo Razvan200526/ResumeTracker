@@ -1,56 +1,18 @@
 import type { SVGProps } from 'react';
 
-type IconProps = SVGProps<SVGSVGElement> & {
-  secondaryfill?: string;
-  strokewidth?: number;
-  title?: string;
-};
-
-export const BurgerIcon = ({ title = 'badge 13', ...props }: IconProps) => {
+export const BurgerIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      height="32"
-      width="32"
-      viewBox="0 0 32 32"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <title>{title}</title>
-      <g fill="#212121" strokeLinecap="butt" strokeLinejoin="miter">
-        <line
-          fill="none"
-          stroke="#212121"
-          strokeLinecap="square"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-          x1="2"
-          x2="30"
-          y1="16"
-          y2="16"
-        />
-        <line
-          fill="none"
-          stroke="#212121"
-          strokeLinecap="square"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-          x1="2"
-          x2="30"
-          y1="7"
-          y2="7"
-        />
-        <line
-          fill="none"
-          stroke="#212121"
-          strokeLinecap="square"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-          x1="2"
-          x2="30"
-          y1="25"
-          y2="25"
-        />
-      </g>
+      <path
+        fill="currentColor"
+        d="M3 8h18a1 1 0 0 0 0-2H3a1 1 0 0 0 0 2m18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2m0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2"
+      />
     </svg>
   );
 };

@@ -14,7 +14,7 @@ export const ButtonCancel = ({
   return (
     <Button
       color="danger"
-      variant="light"
+      variant="solid"
       size="sm"
       className={className}
       onPress={onPress}

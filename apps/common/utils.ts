@@ -35,7 +35,7 @@ function getSecureRandomBytes(size: number): Uint8Array {
 
   // Node fallback for older versions
   try {
-    const nodeCrypto: typeof import('crypto') = require('crypto');
+    const nodeCrypto: typeof import('crypto') = require('node:crypto');
     if (typeof nodeCrypto.randomBytes === 'function') {
       return new Uint8Array(nodeCrypto.randomBytes(size));
     }

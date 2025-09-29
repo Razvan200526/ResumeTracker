@@ -24,16 +24,21 @@ app.use(
   }),
 );
 
+import { SignoutController } from './auth/controllers/SignoutController';
+import { authMiddleware } from './middleware/authMiddleware';
+
 // Register auth routes mirroring azurite
 registerController(app, SignupEmailController);
 registerController(app, SignupCheckOtpController);
 registerController(app, SignInController);
 registerController(app, CheckUserExistsController);
 
-//@ts-ignore trust-me
-registerController(app, UploadAvatarController);
+app.use('/api/auth/session', authMiddleware);
 registerController(app, RetrieveSessionController);
 registerController(app, CreateUserSessionController);
+registerController(app, SignoutController);
+//@ts-ignore trust-me
+registerController(app, UploadAvatarController);
 app.post('/api/auth/signup', async (c) => {
   const ctrl = new SignupEmailController();
   return await ctrl.handler(c);

@@ -1,6 +1,8 @@
+import { EyelashClosedIcon } from '@common/icons/EyelashClosedIcon';
+import { EyeOpenIcon } from '@common/icons/EyeOpenIcon';
 import { PasswordIcon } from '@common/icons/PasswordIcon';
 import { isUserPasswordValid } from '@common/validators/isUserPasswordValid';
-import { cn } from '@heroui/react';
+import { Button, cn } from '@heroui/react';
 import { useImperativeHandle, useState } from 'react';
 import { Input } from './Input';
 
@@ -38,6 +40,11 @@ export const InputPassword = ({
 }: InputPasswordProps) => {
   const [initialValue, setValue] = useState(value || '');
   const [isFocused, setIsFocused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleClick = () => {
+    setIsVisible(!isVisible);
+  };
 
   const icon = (
     <PasswordIcon
@@ -78,7 +85,21 @@ export const InputPassword = ({
       size={size}
       name={name}
       startContent={icon}
-      type="password"
+      endContent={
+        <Button
+          size="sm"
+          variant="light"
+          isIconOnly={true}
+          onPress={() => handleClick()}
+        >
+          {isVisible ? (
+            <EyeOpenIcon className="size-3.5" />
+          ) : (
+            <EyelashClosedIcon className="size-3.5" />
+          )}
+        </Button>
+      }
+      type={isVisible ? 'text' : 'password'}
       placeholder={placeholder}
       label={label}
       className={className}

@@ -1,4 +1,3 @@
-import { SigninIllustration } from '@common/assets/SignInIllustration';
 import { Button } from '@common/components/button';
 import { Card } from '@common/components/card';
 import {
@@ -63,9 +62,6 @@ export const SigninPage = () => {
 
   return (
     <div className="bg-background h-[calc(100dvh)] flex flex-col gap-8 items-center justify-center px-4 sm:px-6 pt-8">
-      <div className="hidden sm:block">
-        <SigninIllustration />
-      </div>
       <H3>Sign In</H3>
       <Card className="w-full max-w-[480px] p-8 flex flex-col gap-8">
         <Form

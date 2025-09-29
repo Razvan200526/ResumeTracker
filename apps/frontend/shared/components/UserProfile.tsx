@@ -11,11 +11,12 @@ import {
 } from '@heroui/react';
 import { Icon } from '@iconify/react';
 import { NavLink } from 'react-router';
+import { backend } from '../backend';
 import { useAuth } from '../hooks';
 
 export const UserProfile = () => {
   const { data: user } = useAuth();
-
+  // console.log(user?.image);
   const items = [
     {
       key: 'profile',
@@ -27,7 +28,7 @@ export const UserProfile = () => {
 
     {
       key: 'signout',
-      href: '/signout',
+      href: '/',
       icon: SignoutIcon,
       title: 'Logout',
       className: 'text-danger',
@@ -81,6 +82,9 @@ export const UserProfile = () => {
             key={item.key}
             textValue={item.title}
             className={cn('font-medium w-full p-0', item.className)}
+            onClick={async () => {
+              item.key === 'signout' && (await backend.auth.signout());
+            }}
           >
             <NavLink
               to={item.href}

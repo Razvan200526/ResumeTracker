@@ -5,11 +5,10 @@ import { retrieveCurrentUserService } from '../services/RetrieveCurrentUserServi
 @Route('GET', '/api/auth/session', 'Retrieve the current session')
 export class RetrieveSessionController {
   async handler(c: Context) {
-    const jwtPayload = c.get('jwtPayload'); // Assuming jwtPayload is set by middleware
-    if (!jwtPayload || !jwtPayload.userId) {
+    const userId = c.get('userId');
+    if (!userId) {
       return c.json({ error: 'Unauthorized' }, 401);
     }
-    const userId = jwtPayload.userId;
 
     var u: any;
     try {

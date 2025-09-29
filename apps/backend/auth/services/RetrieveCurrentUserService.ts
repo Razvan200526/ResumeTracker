@@ -9,7 +9,7 @@ export class RetrieveCurrentUserService {
   }
 
   public async retrieve(id: string) {
-    const user = this.userRepository.findOne(id);
+    const user = await this.userRepository.findOne(id);
     if (!user) {
       return {
         user: null,
