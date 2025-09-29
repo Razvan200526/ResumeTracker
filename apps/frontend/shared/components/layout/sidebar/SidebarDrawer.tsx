@@ -12,7 +12,7 @@ export const SidebarDrawer = () => {
     <>
       <div
         className={cn(
-          'flex-col items-center gap-4 border-r border-primary-300 p-2',
+          'flex-col items-center gap-4 border-r border-primary-300 p-2 bg-background',
           isMinimized ? 'flex' : 'flex 2xl:hidden',
         )}
       >
@@ -39,7 +39,7 @@ export const SidebarDrawer = () => {
         hideCloseButton={true}
         className="w-60"
       >
-        <DrawerContent className="rounded-tr-none rounded-br-none flex w-72 flex-col gap-8 p-2">
+        <DrawerContent className="bg-background rounded-tr-none rounded-br-none flex w-72 flex-col gap-8 p-2">
           <Sidebar />
         </DrawerContent>
       </Drawer>

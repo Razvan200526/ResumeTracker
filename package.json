@@ -39,6 +39,7 @@
     "framer-motion": "^12.23.22",
     "hono": "^4.9.9",
     "husky": "^9.1.7",
+    "iconify": "^1.4.0",
     "nodemailer": "^7.0.6",
     "nuqs": "^2.6.0",
     "pdfjs-dist": "3.11.174",

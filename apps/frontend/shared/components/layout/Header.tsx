@@ -22,7 +22,7 @@ export const Header = () => {
   return (
     <div className="flex items-center justify-between pt-2 pr-2">
       <div className="flex items-center gap-2 px-2">
-        <div className="bg-light flex h-8 w-8 items-center justify-center rounded-full">
+        <div className="bg-background flex h-8 w-8 items-center justify-center rounded-full">
           <Logo className="size-7 text-primary " />
         </div>
       </div>

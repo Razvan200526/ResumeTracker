@@ -1,9 +1,9 @@
 import { ErrorFallback } from '@common/components/ErrorFallback';
 import { HeroPage } from '@frontend/hero/HeroPage';
-import { CoverLettersPage } from '@frontend/resumes/cover-letter/CoverLettersPage';
-import { PortfolioPage } from '@frontend/resumes/portfolio/PortfolioPage';
-import { ResourceLayout } from '@frontend/resumes/ResumeLayout';
-import { ResumePage } from '@frontend/resumes/resumes/ResumePage';
+import { CoverLettersPage } from '@frontend/resources/cover-letter/CoverLettersPage';
+import { PortfolioPage } from '@frontend/resources/portfolio/PortfolioPage';
+import { ResourceLayout } from '@frontend/resources/ResourceLayout';
+import { ResumePage } from '@frontend/resources/resumes/ResumePage';
 import { AuthLayout } from '@frontend/shared/components/layout/AuthLayout';
 import { SigninPage } from '@frontend/signin/SignInPage';
 import { SignupPage } from '@frontend/signup/SignUpPage';

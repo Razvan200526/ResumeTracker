@@ -78,4 +78,58 @@ export const mockResumes: Resume[] = [
     url: 'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
     uploadedAt: '2024-05-20',
   },
+  {
+    id: '10',
+    name: 'John Doe Resume',
+    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    uploadedAt: '2024-06-01',
+  },
+  {
+    id: '11',
+    name: 'Jane Smith Resume',
+    url: 'https://www.africau.edu/images/default/sample.pdf',
+    uploadedAt: '2024-05-28',
+  },
+  {
+    id: '12',
+    name: 'Alex Johnson Resume',
+    url: 'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
+    uploadedAt: '2024-05-20',
+  },
+  {
+    id: '10',
+    name: 'John Doe Resume',
+    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    uploadedAt: '2024-06-01',
+  },
+  {
+    id: '11',
+    name: 'Jane Smith Resume',
+    url: 'https://www.africau.edu/images/default/sample.pdf',
+    uploadedAt: '2024-05-28',
+  },
+  {
+    id: '12',
+    name: 'Alex Johnson Resume',
+    url: 'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
+    uploadedAt: '2024-05-20',
+  },
+  {
+    id: '10',
+    name: 'John Doe Resume',
+    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    uploadedAt: '2024-06-01',
+  },
+  {
+    id: '11',
+    name: 'Jane Smith Resume',
+    url: 'https://www.africau.edu/images/default/sample.pdf',
+    uploadedAt: '2024-05-28',
+  },
+  {
+    id: '12',
+    name: 'Alex Johnson Resume',
+    url: 'https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf',
+    uploadedAt: '2024-05-20',
+  },
 ];

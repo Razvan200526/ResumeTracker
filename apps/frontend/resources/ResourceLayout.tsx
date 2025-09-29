@@ -1,40 +1,46 @@
+import { NumberChip } from '@common/components/chips/NumberChip';
 import { H6 } from '@common/components/typography';
+
 import { cn, Tab, Tabs } from '@heroui/react';
 import { useQueryState } from 'nuqs';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
+import { CreateResourceDropdown } from './CreateResourceDropdown';
 
 export const ResourceLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [tab, setTab] = useQueryState('chatTab', {
-    defaultValue: 'Resume',
+  const [tab, setTab] = useQueryState('resourceTab', {
+    defaultValue: 'resume',
   });
 
   const fakeItems = [
     {
-      key: 'Resume',
+      key: 'resume',
       label: 'Resume',
       href: '.',
       content: 'Resume content',
-      classname: 'text-primary data-[hover=true]:bg-primary/10',
-      activeClassName: 'bg-primary/15 border-primary',
+      classname: 'text-resume data-[hover=true]:bg-resume/10',
+      activeClassName: 'bg-resume/15 border-resume',
+      count: 10,
     },
     {
-      key: 'Cover Letter',
+      key: 'cover',
       label: 'Cover Letter',
       href: 'cover-letter',
       content: 'Cover Letter content',
-      classname: 'text-primary data-[hover=true]:bg-primary/10',
-      activeClassName: 'bg-primary/15 border-primary',
+      classname: 'text-cover data-[hover=true]:bg-cover/10',
+      activeClassName: 'bg-cover/15 border-cover',
+      count: 5,
     },
     {
-      key: 'Portfolio',
+      key: 'portfolio',
       label: 'Portfolio',
       href: 'portfolio',
       content: 'Portfolio content',
-      classname: 'text-primary data-[hover=true]:bg-primary/10',
-      activeClassName: 'bg-primary/15 border-border',
+      classname: 'text-portfolio data-[hover=true]:bg-portfolio/10',
+      activeClassName: 'bg-portfolio/15 border-portfolio',
+      count: 3,
     },
   ];
 
@@ -57,14 +63,14 @@ export const ResourceLayout = () => {
 
   const activeTabItem = fakeItems.find((item) => item.key === tab);
   return (
-    <div className="h-[calc(100dvh)] bg-background flex flex-col">
-      <div className="px-4 bg-background flex flex-row items-center justify-between h-full border-b border-border">
+    <div className="h-[calc(100dvh)] flex flex-col">
+      <nav className="px-4 py-2 bg-background flex flex-row items-center justify-between w-full border-b border-border">
         <H6 className="text-base font-primary">Resources</H6>
         <Tabs
           onSelectionChange={handleSelectionChange}
           selectedKey={activeTabKey}
           classNames={{
-            base: 'w-full px-2 py-1',
+            base: 'w-full px-4 py-1',
             tabContent: 'text-primary',
             cursor: cn('rounded border-none', activeTabItem?.activeClassName),
             tab: cn(
@@ -89,14 +95,20 @@ export const ResourceLayout = () => {
                   )}
                 >
                   <NavLink to={item.href}>{item.label}</NavLink>
+                  {item.count && (
+                    <NumberChip
+                      className={cn(item.activeClassName, `text-${item.key}`)}
+                      value={item.count}
+                    />
+                  )}
                 </div>
               }
-              className="font-primary"
             />
           ))}
         </Tabs>
-      </div>
-      <div className="h-[calc(100dvh-5rem)]">
+        <CreateResourceDropdown />
+      </nav>
+      <div className="flex-1 min-h-0">
         <Outlet />
       </div>
     </div>
