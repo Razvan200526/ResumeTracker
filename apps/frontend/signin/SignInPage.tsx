@@ -55,7 +55,9 @@ export const SigninPage = () => {
         });
         return;
       }
-
+      if (response.data.data?.token && response.data.data.user) {
+        backend.auth.setAuthToken(response.data.data?.token);
+      }
       navigate('/home');
     }, 1000);
   };

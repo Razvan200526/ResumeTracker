@@ -1,9 +1,9 @@
 import { Card } from '@common/components/card';
 import { PdfPreviewImage } from '@common/components/PDFPreviewImage';
-import type { Resume } from './fakedata';
+import type { ResumeType } from '@sdk/types';
 
 interface ResumeCardProps {
-  resume: Resume;
+  resume: ResumeType;
 }
 
 export const ResumeCard = ({ resume }: ResumeCardProps) => {

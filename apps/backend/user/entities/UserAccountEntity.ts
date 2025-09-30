@@ -32,25 +32,8 @@ export class UserAccountEntity {
   @Column({ name: 'password', type: 'varchar', length: 255, nullable: true })
   password?: string; // Used for credential provider (email/password)
 
-  @Column({ name: 'access_token', type: 'text', nullable: true })
-  accessToken?: string;
-
-  @Column({
-    name: 'access_token_expires_at',
-    type: 'timestamptz',
-    nullable: true,
-  })
-  accessTokenExpiresAt?: Date;
-
   @Column({ name: 'refresh_token', type: 'text', nullable: true })
   refreshToken?: string;
-
-  @Column({
-    name: 'refresh_token_expires_at',
-    type: 'timestamptz',
-    nullable: true,
-  })
-  refreshTokenExpiresAt?: Date;
 
   @Column({ name: 'expires_at', type: 'timestamptz', nullable: true })
   expiresAt?: Date;

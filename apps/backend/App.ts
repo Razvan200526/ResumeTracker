@@ -25,6 +25,8 @@ app.use(
 );
 
 import { SignoutController } from './auth/controllers/SignoutController';
+import { GetUserResumeController } from './controllers/GetUserResumesController';
+import { UploadResumeController } from './controllers/UploadResumeController';
 import { authMiddleware } from './middleware/authMiddleware';
 
 // Register auth routes mirroring azurite
@@ -39,6 +41,8 @@ registerController(app, CreateUserSessionController);
 registerController(app, SignoutController);
 //@ts-ignore trust-me
 registerController(app, UploadAvatarController);
+registerController(app, UploadResumeController);
+registerController(app, GetUserResumeController);
 app.post('/api/auth/signup', async (c) => {
   const ctrl = new SignupEmailController();
   return await ctrl.handler(c);

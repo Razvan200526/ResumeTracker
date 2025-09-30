@@ -20,3 +20,5 @@ export class StorageValidator {
     });
   }
 }
+
+export const storageValidator = new StorageValidator();

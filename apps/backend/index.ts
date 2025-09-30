@@ -14,7 +14,6 @@ async function initializeDatabase() {
 
 async function startServer() {
   await initializeDatabase();
-
   try {
     Bun.serve({
       port: 2000,

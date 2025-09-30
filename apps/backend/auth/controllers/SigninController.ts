@@ -33,7 +33,10 @@ export class SignInController {
         c.header('Set-Cookie', setCookieHeader);
       }
 
-      return c.json({ data: { user: result.response.user }, success: true });
+      return c.json({
+        data: { user: result.response.user, token: result.response.token },
+        success: true,
+      });
     } catch (e: any) {
       return c.json({ error: e.message }, 400);
     }

@@ -4,7 +4,8 @@ import { H6 } from '@common/components/typography';
 import { cn, Tab, Tabs } from '@heroui/react';
 import { useQueryState } from 'nuqs';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
-import { CreateResourceDropdown } from './CreateResourceDropdown';
+// import { CreateResourceDropdown } from './CreateResourceDropdown';
+import { CreateResourceModal } from './shared/CreateResourceModal';
 
 export const ResourceLayout = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export const ResourceLayout = () => {
       label: 'Resume',
       href: '.',
       content: 'Resume content',
-      classname: 'text-resume data-[hover=true]:bg-resume/10',
+      className: 'text-resume data-[hover=true]:bg-resume/10',
       activeClassName: 'bg-resume/15 border-resume',
       count: 10,
     },
@@ -29,8 +30,8 @@ export const ResourceLayout = () => {
       label: 'Cover Letter',
       href: 'cover-letter',
       content: 'Cover Letter content',
-      classname: 'text-cover data-[hover=true]:bg-cover/10',
-      activeClassName: 'bg-cover/15 border-cover',
+      className: 'text-coverletter data-[hover=true]:bg-coverletter/10 ',
+      activeClassName: 'bg-coverletter/15 border-coverletter',
       count: 5,
     },
     {
@@ -38,7 +39,7 @@ export const ResourceLayout = () => {
       label: 'Portfolio',
       href: 'portfolio',
       content: 'Portfolio content',
-      classname: 'text-portfolio data-[hover=true]:bg-portfolio/10',
+      className: 'text-portfolio data-[hover=true]:bg-portfolio/10',
       activeClassName: 'bg-portfolio/15 border-portfolio',
       count: 3,
     },
@@ -63,8 +64,8 @@ export const ResourceLayout = () => {
 
   const activeTabItem = fakeItems.find((item) => item.key === tab);
   return (
-    <div className="h-[calc(100dvh)] flex flex-col">
-      <nav className="px-4 py-2 bg-background flex flex-row items-center justify-between w-full border-b border-border">
+    <div className="h-[calc(100dvh)] bg-background flex flex-col">
+      <nav className="px-4 py-2  flex flex-row items-center justify-between w-full border-b border-border">
         <H6 className="text-base font-primary">Resources</H6>
         <Tabs
           onSelectionChange={handleSelectionChange}
@@ -91,7 +92,7 @@ export const ResourceLayout = () => {
                 <div
                   className={cn(
                     'flex items-center space-x-1 font-medium',
-                    item.classname,
+                    item.className,
                   )}
                 >
                   <NavLink to={item.href}>{item.label}</NavLink>
@@ -106,9 +107,9 @@ export const ResourceLayout = () => {
             />
           ))}
         </Tabs>
-        <CreateResourceDropdown />
+        <CreateResourceModal />
       </nav>
-      <div className="flex-1 min-h-0">
+      <div className="flex-1">
         <Outlet />
       </div>
     </div>

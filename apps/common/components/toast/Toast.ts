@@ -38,4 +38,15 @@ export const Toast = {
       },
     });
   },
+  info: (config: { title?: string; description?: string }) => {
+    addToast({
+      ...config,
+      color: 'primary',
+      variant: 'flat',
+      radius: 'sm',
+      classNames: {
+        ...classNames,
+      },
+    });
+  },
 };

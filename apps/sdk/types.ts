@@ -1,3 +1,5 @@
+import type { ResourceReadyState } from '@common/types';
+
 export type UserType = {
   id: string;
   email: string;
@@ -71,4 +73,12 @@ export type UserVerificationType = {
 export type UserTypeType = {
   id: string;
   name: string;
+};
+
+export type ResumeType = {
+  id: string;
+  url: string;
+  isReady: boolean;
+  state: ResourceReadyState;
+  createdAt: Date;
 };

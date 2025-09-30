@@ -1,21 +1,14 @@
 import { Route } from '@backend/decorators/Route';
-import { StorageService } from '@backend/service/StorageService';
-import { StorageValidator } from '@common/validators/envValidator';
+import {
+  type StorageService,
+  storageService,
+} from '@backend/service/StorageService';
 import type { Context } from 'hono';
-
 @Route('POST', '/api/uploads/images/avatars', 'Upload user avatar')
 export class UploadAvatarController {
-  constructor(
-    private storageValidator: StorageValidator,
-    public storageService: StorageService,
-  ) {
-    this.storageValidator = new StorageValidator();
-    this.storageService = new StorageService(
-      this.storageValidator.vars.R2_ACCESS_KEY,
-      this.storageValidator.vars.R2_SECRET_ACCESS_KEY,
-      this.storageValidator.vars.R2_ENDPOINT,
-      this.storageValidator.vars.R2_BUCKET_NAME,
-    );
+  private storageService: StorageService;
+  constructor() {
+    this.storageService = storageService;
   }
   async handler(c: Context) {
     try {

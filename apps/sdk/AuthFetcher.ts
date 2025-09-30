@@ -4,6 +4,9 @@ import type { ResponseType, UserType } from './types';
 export class AuthFetcher {
   constructor(private readonly fetcher: Fetcher) {}
 
+  public setAuthToken(token: string) {
+    this.fetcher.setAuthToken(token);
+  }
   public readonly signup = {
     email: async (payload: {
       email: string;
@@ -11,7 +14,7 @@ export class AuthFetcher {
       firstName: string;
       lastName: string;
       image: string;
-    }): Promise<ResponseType<{ success: boolean }>> => {
+    }): Promise<ResponseType<{ success: boolean; user: UserType }>> => {
       return await this.fetcher.post('/auth/signup/email', payload);
     },
     checkOtp: async (payload: {
@@ -30,7 +33,12 @@ export class AuthFetcher {
     email: async (payload: {
       email: string;
       password: string;
-    }): Promise<ResponseType<{ user: UserType; success: boolean }>> => {
+    }): Promise<
+      ResponseType<{
+        data: { user: UserType; token: string };
+        success: boolean;
+      }>
+    > => {
       return await this.fetcher.post('/auth/signin/email', payload);
     },
   };

@@ -1,3 +1,4 @@
+import { ResumeEntity } from '@backend/resources/resumes/ResumeEntity';
 import { random } from '@common/utils';
 import {
   Column,
@@ -23,6 +24,12 @@ export class UserEntity {
     length: 15,
   })
   id: string = random.nanoid(15);
+
+  @OneToMany(
+    () => ResumeEntity,
+    (resume) => resume.user,
+  )
+  resumes: ResumeEntity[];
 
   @Column({ name: 'email', type: 'varchar', length: 255 })
   email: string;
