@@ -1,5 +1,5 @@
 import type { Fetcher } from './Fetcher';
-import type { ResponseType, UserType } from './types';
+import type { ResponseType } from './types';
 
 export class UploadFetcher {
   constructor(private readonly fetcher: Fetcher) {}
