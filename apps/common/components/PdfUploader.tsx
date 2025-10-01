@@ -1,5 +1,6 @@
 import { PdfIcon } from '@common/icons/PdfIcon';
-import { backend } from '@frontend/shared/backend';
+import { useAddResume } from '@frontend/resources/resumes/hooks';
+
 import { useAuth } from '@frontend/shared/hooks';
 import { cn, Progress, ScrollShadow } from '@heroui/react';
 import * as React from 'react';
@@ -43,6 +44,9 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
     const [isLoading, setIsLoading] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const { data: user } = useAuth();
+    // biome-ignore lint/style/noNonNullAssertion: <trust me but fix later>
+    const { mutateAsync: addResume } = useAddResume(user!.id);
+
     if (!user || !user.id) {
       Toast.error({ description: 'Please login to upload files' });
       return null;
@@ -115,7 +119,10 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
             // }
             // TODO : add cover letter support
 
-            const data = await backend.upload.resume.uploadResume(formData);
+            const data = await addResume(formData);
+            if (data.success) {
+              Toast.success({ description: 'Resume uploaded successfully' });
+            }
             return data.data.url;
           });
 

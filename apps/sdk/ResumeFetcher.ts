@@ -11,6 +11,15 @@ export class ResumeFetcher {
     retrieve: async (payload: { userId: string }): Promise<ResponseType> => {
       return this.fetcher.get(`/api/resumes/${payload.userId}`);
     },
+    // upload: async (payload: {
+    //   userId: string;
+    //   url: string;
+    // }): Promise<ResponseType> => {
+    //   return this.fetcher.post(
+    //     `/api/resumes/${payload.userId}/upload`,
+    //     payload,
+    //   );
+    // },
   };
 
   public readonly create = (payload: { url: string }) => {

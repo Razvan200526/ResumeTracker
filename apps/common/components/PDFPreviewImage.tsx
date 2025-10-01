@@ -1,8 +1,11 @@
 import { PdfIcon } from '@common/icons/PdfIcon';
 import { Image } from '@heroui/react';
-import { getDocument } from 'pdfjs-dist';
+import { GlobalWorkerOptions, getDocument } from 'pdfjs-dist';
 import { useEffect, useRef, useState } from 'react';
 
+const workerSrc =
+  'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+GlobalWorkerOptions.workerSrc = workerSrc;
 export const PdfPreviewImage = ({ src }: { src: string }) => {
   const canvasRef = useRef(null);
   const [imageUrl, setImageUrl] = useState(null);

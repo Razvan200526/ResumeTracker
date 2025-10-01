@@ -10,6 +10,13 @@ export const dataURLtoFile = (dataurl: string, filename: string) => {
   }
   return new File([u8arr], filename, { type: mime });
 };
+export const formatRelativeNumber = (num: number, precision = 1): string => {
+  return new Intl.NumberFormat('en-GB', {
+    notation: 'compact',
+    compactDisplay: 'short',
+    maximumFractionDigits: precision,
+  }).format(num);
+};
 
 // random.ts
 

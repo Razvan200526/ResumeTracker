@@ -37,6 +37,12 @@
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["**/*.ts", "**/*.test.ts", "**/*.tsx", "**/*.test.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.ts",
+    "**/*.test.ts",
+    "**/*.tsx",
+    "**/*.test.tsx",
+    "apps/common/types",
+    "apps/common/components"
+  ]
 }

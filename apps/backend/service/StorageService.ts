@@ -6,7 +6,7 @@ export class StorageService {
     private readonly accessKey: string,
     private readonly secretKey: string,
     private readonly endpoint: string,
-    private readonly bucketName: string,
+    private bucketName: string,
   ) {}
 
   private getS3Client() {
@@ -20,12 +20,15 @@ export class StorageService {
     });
   }
 
-  getImageBucket() {
-    return 'https://pub-6858952ca1f64c08a3e778080d6e2ee6.r2.dev/images/';
+  setBucket(bucket: string) {
+    this.bucketName = bucket;
   }
+  // getImageBucket() {
+  //   return 'https://pub-6858952ca1f64c08a3e778080d6e2ee6.r2.dev/';
+  // } TODO : Implement image uploading as well
 
   getResumeBucket() {
-    return 'https://pub-6858952ca1f64c08a3e778080d6e2ee6.r2.dev/resumes/';
+    return 'https://pub-6182cabd0dc4482a88462c9d6bd62c4f.r2.dev/';
   }
   getAvatarBucket() {
     return 'https://pub-6858952ca1f64c08a3e778080d6e2ee6.r2.dev/';
@@ -33,6 +36,7 @@ export class StorageService {
   async uploadAvatar(file: File): Promise<string> {
     const s3 = this.getS3Client();
     const key = `${Date.now()}-${file.name}`;
+    this.setBucket('avatars');
 
     const command = new PutObjectCommand({
       Bucket: this.bucketName,
@@ -49,6 +53,7 @@ export class StorageService {
   async uploadResume(file: File): Promise<string> {
     const s3 = this.getS3Client();
     const key = `${Date.now()}-${file.name}`;
+    this.setBucket('resumes');
 
     const command = new PutObjectCommand({
       Bucket: this.bucketName,

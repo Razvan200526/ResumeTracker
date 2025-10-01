@@ -5,6 +5,12 @@ import { useResumes } from './hooks';
 import { NoResumes } from './NoResumes';
 import { ResumeCard } from './ResumeCard';
 
+// type DeleteContextType = {
+//   deleteState: 'isDeleting' | 'isNotDeleting';
+//   deletingResumeIds: string[];
+//   startDeleting: (ids: string[]) => void;
+//   stopDeleting: () => void;
+// };
 export const ResumePage = () => {
   const { data: user } = useAuth();
   const {

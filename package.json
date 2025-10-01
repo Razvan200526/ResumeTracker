@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "bun --bun run dev/run.ts",
     "fmt": "bunx @biomejs/biome check --write .",
-    "db": "cd dev && docker compose up -d",
+    "db:build": "cd dev && docker compose up -d",
+    "db:drop": "cd dev && docker compose down -v",
+    "db:seed": "bun run apps/backend/shared/database/seedCommand.ts",
+    "db": "bun run db:drop && bun run db:build && sleep 2 && bun run db:seed",
     "lint": "tsc --noEmit && bunx @biomejs/biome check .",
     "prepare": "husky"
   },

@@ -1,15 +1,23 @@
+import { Button } from '@common/components/button';
 import { NumberChip } from '@common/components/chips/NumberChip';
 import { H6 } from '@common/components/typography';
-
+import { useAuth } from '@frontend/shared/hooks';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { cn, Tab, Tabs } from '@heroui/react';
 import { useQueryState } from 'nuqs';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 // import { CreateResourceDropdown } from './CreateResourceDropdown';
+import { useResumes } from './resumes/hooks';
 import { CreateResourceModal } from './shared/CreateResourceModal';
-
+import { deleteStore } from './store';
 export const ResourceLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { data: user } = useAuth();
+  // biome-ignore lint/style/noNonNullAssertion: <trust me>
+  const { data: resumes } = useResumes(user!.id);
+  const { state, deletingResumeIds, startDeleting, stopDeleting } =
+    deleteStore();
 
   const [tab, setTab] = useQueryState('resourceTab', {
     defaultValue: 'resume',
@@ -23,7 +31,7 @@ export const ResourceLayout = () => {
       content: 'Resume content',
       className: 'text-resume data-[hover=true]:bg-resume/10',
       activeClassName: 'bg-resume/15 border-resume',
-      count: 10,
+      count: resumes?.length || 0,
     },
     {
       key: 'cover',
@@ -32,7 +40,7 @@ export const ResourceLayout = () => {
       content: 'Cover Letter content',
       className: 'text-coverletter data-[hover=true]:bg-coverletter/10 ',
       activeClassName: 'bg-coverletter/15 border-coverletter',
-      count: 5,
+      count: 4,
     },
     {
       key: 'portfolio',
@@ -96,7 +104,7 @@ export const ResourceLayout = () => {
                   )}
                 >
                   <NavLink to={item.href}>{item.label}</NavLink>
-                  {item.count && (
+                  {item.count !== undefined && item.count !== null && (
                     <NumberChip
                       className={cn(item.activeClassName, `text-${item.key}`)}
                       value={item.count}
@@ -107,10 +115,30 @@ export const ResourceLayout = () => {
             />
           ))}
         </Tabs>
+        {resumes?.length ? (
+          <Button
+            variant="light"
+            isIconOnly={true}
+            color="danger"
+            radius="full"
+            onPress={() => {
+              startDeleting(resumes.map((r) => r.id));
+            }}
+          >
+            <TrashIcon className="size-3.5" />
+          </Button>
+        ) : null}
         <CreateResourceModal />
       </nav>
       <div className="flex-1">
-        <Outlet />
+        <Outlet
+          context={{
+            deleteState: state,
+            deletingResumeIds,
+            startDeleting,
+            stopDeleting,
+          }}
+        />
       </div>
     </div>
   );

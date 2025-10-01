@@ -1,3 +1,4 @@
+import { formatRelativeNumber } from '@common/utils';
 import { Chip, cn } from '@heroui/react';
 
 type NumberChipProps = {
@@ -18,7 +19,7 @@ export const NumberChip = ({ value, className }: NumberChipProps) => {
         className,
       )}
     >
-      <span className="font-semibold">{value}</span>
+      <span className="font-semibold">{formatRelativeNumber(value)}</span>
     </Chip>
   );
 };
