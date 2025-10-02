@@ -5,10 +5,15 @@ import { logger } from 'hono/logger';
 import { CreateUserSessionController } from './auth/controllers/CreateUserSessionControllers';
 import { RetrieveSessionController } from './auth/controllers/RetrieveSessionController';
 import { SignInController } from './auth/controllers/SigninController';
+import { SignoutController } from './auth/controllers/SignoutController';
 import { SignupCheckOtpController } from './auth/controllers/SignupCheckOtpController';
 import { SignupEmailController } from './auth/controllers/SignupEmailController';
+import { DeleteResumeController } from './controllers/DeleteResumesController';
+import { GetUserResumeController } from './controllers/GetUserResumesController';
 import { UploadAvatarController } from './controllers/UploadAvatarController';
+import { UploadResumeController } from './controllers/UploadResumeController';
 import { CheckUserExistsController } from './controllers/UserExistsController';
+import { authMiddleware } from './middleware/authMiddleware';
 import { registerController } from './shared/registerController';
 export const app = new Hono();
 app.use(logger());
@@ -24,11 +29,6 @@ app.use(
   }),
 );
 
-import { SignoutController } from './auth/controllers/SignoutController';
-import { GetUserResumeController } from './controllers/GetUserResumesController';
-import { UploadResumeController } from './controllers/UploadResumeController';
-import { authMiddleware } from './middleware/authMiddleware';
-
 // Register auth routes mirroring azurite
 registerController(app, SignupEmailController);
 registerController(app, SignupCheckOtpController);
@@ -43,6 +43,7 @@ registerController(app, SignoutController);
 registerController(app, UploadAvatarController);
 registerController(app, UploadResumeController);
 registerController(app, GetUserResumeController);
+registerController(app, DeleteResumeController);
 app.post('/api/auth/signup', async (c) => {
   const ctrl = new SignupEmailController();
   return await ctrl.handler(c);

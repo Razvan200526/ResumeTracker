@@ -16,8 +16,10 @@ export async function seedUserAccount(user: UserEntity) {
     accountId: user.email,
     password: hashedPassword,
   });
-  await userAccountRepo.save(userAccount);
-  // biome-ignore lint/suspicious/noConsole: <local development>
-  console.log('Seeded user account for:', user.email);
+  try {
+    await userAccountRepo.save(userAccount);
+  } catch (e) {
+    console.error(e);
+  }
   return userAccount;
 }

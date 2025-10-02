@@ -14,8 +14,10 @@ export async function seedUserSession(user: UserEntity) {
     ipAddress: '127.0.0.1',
     userAgent: 'seed-script',
   });
-  await userSessionRepo.save(userSession);
-  // biome-ignore lint/suspicious/noConsole: <local development>
-  console.log('Seeded user session for:', user.email);
+  try {
+    await userSessionRepo.save(userSession);
+  } catch (e) {
+    console.error(e);
+  }
   return userSession;
 }

@@ -1,7 +1,6 @@
 import { ResumeEntity } from '@backend/resources/resumes/ResumeEntity';
 import type { UserEntity } from '@backend/user/entities/UserEntity';
 import { primaryDatabase } from '../PrimaryDatabase';
-
 export async function seedResume(user: UserEntity) {
   const resumeRepo = await primaryDatabase.open(ResumeEntity);
   const resumePromises = [];
@@ -16,8 +15,9 @@ export async function seedResume(user: UserEntity) {
     });
     resumePromises.push(resumeRepo.save(resume));
   }
-
-  await Promise.all(resumePromises);
-  // biome-ignore lint/suspicious/noConsole: <local development>
-  console.log(`Seeded 20 resumes for: ${user.email}`);
+  try {
+    await Promise.all(resumePromises);
+  } catch (e) {
+    console.error(e);
+  }
 }

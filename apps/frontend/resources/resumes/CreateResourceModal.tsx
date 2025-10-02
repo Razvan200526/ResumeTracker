@@ -2,7 +2,7 @@ import { Button } from '@common/components/button';
 import { Modal, type ModalRefType } from '@common/components/Modal';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useRef } from 'react';
-import { CreateResumeCard } from '../resumes/CreateResumeCard';
+import { CreateResumeCard } from './CreateResumeCard';
 
 export const CreateResourceModal = () => {
   const ref = useRef<ModalRefType | null>(null);

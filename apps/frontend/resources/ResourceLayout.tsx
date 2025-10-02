@@ -1,23 +1,27 @@
 import { Button } from '@common/components/button';
 import { NumberChip } from '@common/components/chips/NumberChip';
+import type { ModalRefType } from '@common/components/Modal';
 import { H6 } from '@common/components/typography';
 import { useAuth } from '@frontend/shared/hooks';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { cn, Tab, Tabs } from '@heroui/react';
 import { useQueryState } from 'nuqs';
+import { useRef } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
+import { CreateResourceModal } from './resumes/CreateResourceModal';
+import { DeleteResourceModal } from './resumes/DeleteResourceModal';
 // import { CreateResourceDropdown } from './CreateResourceDropdown';
 import { useResumes } from './resumes/hooks';
-import { CreateResourceModal } from './shared/CreateResourceModal';
-import { deleteStore } from './store';
+import { useDeleteStore } from './store';
 export const ResourceLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { data: user } = useAuth();
+  const deleteModalRef = useRef<ModalRefType | null>(null);
   // biome-ignore lint/style/noNonNullAssertion: <trust me>
   const { data: resumes } = useResumes(user!.id);
-  const { state, deletingResumeIds, startDeleting, stopDeleting } =
-    deleteStore();
+  const { state, startDeleting, stopDeleting, deletingResumeIds } =
+    useDeleteStore();
 
   const [tab, setTab] = useQueryState('resourceTab', {
     defaultValue: 'resume',
@@ -115,6 +119,20 @@ export const ResourceLayout = () => {
             />
           ))}
         </Tabs>
+
+        {deletingResumeIds.length > 0 ? (
+          <Button
+            variant="solid"
+            color="danger"
+            className="px-4 m-2"
+            onPress={() => {
+              deleteModalRef.current?.open();
+            }}
+          >
+            Delete {deletingResumeIds.length}
+            {deletingResumeIds.length === 1 ? ' item' : ' items'}
+          </Button>
+        ) : null}
         {resumes?.length ? (
           <Button
             variant="light"
@@ -122,7 +140,7 @@ export const ResourceLayout = () => {
             color="danger"
             radius="full"
             onPress={() => {
-              startDeleting(resumes.map((r) => r.id));
+              state ? stopDeleting() : startDeleting();
             }}
           >
             <TrashIcon className="size-3.5" />
@@ -131,15 +149,9 @@ export const ResourceLayout = () => {
         <CreateResourceModal />
       </nav>
       <div className="flex-1">
-        <Outlet
-          context={{
-            deleteState: state,
-            deletingResumeIds,
-            startDeleting,
-            stopDeleting,
-          }}
-        />
+        <Outlet />
       </div>
+      <DeleteResourceModal modalRef={deleteModalRef} />
     </div>
   );
 };

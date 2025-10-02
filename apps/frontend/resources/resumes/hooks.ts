@@ -26,3 +26,24 @@ export const useAddResume = (userId: string) => {
     },
   });
 };
+
+export const useDeleteResumes = (userId: string) => {
+  return useMutation({
+    mutationFn: async (ids: string[]) => {
+      // Convert string IDs to numbers for the backend
+      const resumeIds = ids.map((id) => Number.parseInt(id, 10));
+      return backend.resume.resumes.delete({
+        resumeIds: resumeIds,
+        userId: userId,
+      });
+    },
+    onSuccess: (response) => {
+      if (response.success) {
+        // Invalidate the resumes query to refresh the list
+        queryClient.invalidateQueries({
+          queryKey: ['resumes', userId],
+        });
+      }
+    },
+  });
+};

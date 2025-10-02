@@ -20,6 +20,12 @@ export class ResumeFetcher {
     //     payload,
     //   );
     // },
+    delete: async (payload: {
+      resumeIds: number[];
+      userId: string;
+    }): Promise<ResponseType> => {
+      return this.fetcher.delete('/api/resumes/delete', payload);
+    },
   };
 
   public readonly create = (payload: { url: string }) => {

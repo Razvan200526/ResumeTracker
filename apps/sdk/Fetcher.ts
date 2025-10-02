@@ -131,9 +131,10 @@ export class Fetcher {
    */
   public async delete<T = any>(
     path: string,
+    data?: any,
     options?: FetcherRequestOptionsType,
   ): Promise<T> {
-    return this.request<T>('DELETE', path, undefined, options);
+    return this.request<T>('DELETE', path, data, options);
   }
 
   /**

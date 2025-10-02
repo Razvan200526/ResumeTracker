@@ -14,8 +14,10 @@ export async function seedUser(index: number) {
     lastName: `User${index}`,
     isEmailVerified: true,
   });
-  await userRepo.save(user);
-  // biome-ignore lint/suspicious/noConsole: <local development>
-  console.log('Seeded user:', user.email);
+  try {
+    await userRepo.save(user);
+  } catch (e) {
+    console.error(e);
+  }
   return user;
 }

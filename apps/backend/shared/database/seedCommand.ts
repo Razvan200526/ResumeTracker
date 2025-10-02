@@ -1,3 +1,4 @@
+import { green } from 'console-log-colors';
 import { primaryDatabase } from './PrimaryDatabase';
 import { seedResume } from './seeds/seedResume';
 import { seedUser } from './seeds/seedUser';
@@ -6,7 +7,6 @@ import { seedUserSession } from './seeds/seedUserSession';
 import { seedUserVerification } from './seeds/seedUserVerification';
 
 async function seed() {
-  // Initialize the database connection and synchronize the schema once.
   const source = primaryDatabase.getSource();
   if (!source.isInitialized) {
     await source.initialize();
@@ -35,7 +35,7 @@ async function seed() {
 seed()
   .then(() => {
     // biome-ignore lint/suspicious/noConsole: <local development>
-    console.log('Seeding complete!');
+    console.log(green('Seeding complete!'));
     process.exit(0);
   })
   .catch((err) => {

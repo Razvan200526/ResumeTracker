@@ -2,15 +2,23 @@
 import { create } from 'zustand';
 
 type DeleteStoreType = {
-  state: 'isDeleting' | 'isNotDeleting';
+  state: boolean;
   deletingResumeIds: string[];
-  startDeleting: (ids: string[]) => void;
+  startDeleting: () => void;
+  addToDelete: (id: string) => void;
+  removeFromDelete: (id: string) => void;
   stopDeleting: () => void;
 };
 
-export const deleteStore = create<DeleteStoreType>((set) => ({
-  state: 'isNotDeleting',
+export const useDeleteStore = create<DeleteStoreType>((set) => ({
+  state: false,
   deletingResumeIds: [],
-  startDeleting: (ids) => set({ state: 'isDeleting', deletingResumeIds: ids }),
-  stopDeleting: () => set({ state: 'isNotDeleting', deletingResumeIds: [] }),
+  startDeleting: () => set({ state: true }),
+  addToDelete: (id: string) =>
+    set((state) => ({ deletingResumeIds: [...state.deletingResumeIds, id] })),
+  removeFromDelete: (id: string) =>
+    set((state) => ({
+      deletingResumeIds: state.deletingResumeIds.filter((item) => item !== id),
+    })),
+  stopDeleting: () => set({ state: false, deletingResumeIds: [] }),
 }));
