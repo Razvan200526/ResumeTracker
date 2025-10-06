@@ -56,25 +56,6 @@ export class DeleteResumeController {
       // First, find the resumes and verify they belong to the user
       const resumes = await this.resumeRepository.findByIds(resumeIds);
 
-      if (resumes.length !== resumeIds.length) {
-        return c.json(
-          {
-            data: { success: false, deletedCount: 0 },
-            message: 'Some resumes not found',
-            success: false,
-            status: 404,
-            isClientError: true,
-            isServerError: false,
-            isNotFound: true,
-            isUnauthorized: false,
-            isForbidden: false,
-            debug: false,
-            app: { url: c.req.url },
-          },
-          404,
-        );
-      }
-
       // Verify all resumes belong to the requesting user
       const unauthorized = resumes.some((resume) => resume.user.id !== userId);
       if (unauthorized) {

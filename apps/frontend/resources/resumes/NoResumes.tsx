@@ -8,8 +8,10 @@ export const NoResumes = () => {
       <div className="flex items-center justify-center h-full border border-border rounded">
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center">
-            <ResumeIcon className="size-7 m-2 text-primary" />
-            <H6>Get started by adding your first resume!</H6>
+            <ResumeIcon className="size-7 m-2 text-resume" />
+            <H6 className="text-resume text-base">
+              Get started by adding your first resume!
+            </H6>
           </div>
           <CreateResumeButton />
         </div>

@@ -1,5 +1,5 @@
 import { Route } from '@backend/decorators/Route';
-import { userRepository } from '@backend/user/repositories/UserRepository';
+import { userRepository } from '@backend/repositories/UserRepository';
 import { isEmailValid } from '@common/validators/isEmailValid';
 
 import type { Context } from 'hono';

@@ -4,21 +4,36 @@ import { create } from 'zustand';
 type DeleteStoreType = {
   state: boolean;
   deletingResumeIds: string[];
+  deletingCoverletterIds: string[];
   startDeleting: () => void;
-  addToDelete: (id: string) => void;
-  removeFromDelete: (id: string) => void;
+  addToDeleteResumes: (id: string) => void;
+  addToDeleteCoverletters: (id: string) => void;
+  removeFromDeleteResumes: (id: string) => void;
+  removeFromDeleteCoverletters: (id: string) => void;
   stopDeleting: () => void;
 };
 
 export const useDeleteStore = create<DeleteStoreType>((set) => ({
   state: false,
   deletingResumeIds: [],
+  deletingCoverletterIds: [],
   startDeleting: () => set({ state: true }),
-  addToDelete: (id: string) =>
+  addToDeleteResumes: (id: string) =>
     set((state) => ({ deletingResumeIds: [...state.deletingResumeIds, id] })),
-  removeFromDelete: (id: string) =>
+  addToDeleteCoverletters: (id: string) =>
+    set((state) => ({
+      deletingCoverletterIds: [...state.deletingCoverletterIds, id],
+    })),
+  removeFromDeleteResumes: (id: string) =>
     set((state) => ({
       deletingResumeIds: state.deletingResumeIds.filter((item) => item !== id),
     })),
-  stopDeleting: () => set({ state: false, deletingResumeIds: [] }),
+  removeFromDeleteCoverletters: (id: string) =>
+    set((state) => ({
+      deletingCoverletterIds: state.deletingCoverletterIds.filter(
+        (item) => item !== id,
+      ),
+    })),
+  stopDeleting: () =>
+    set({ state: false, deletingResumeIds: [], deletingCoverletterIds: [] }),
 }));

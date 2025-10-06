@@ -33,6 +33,9 @@ export class StorageService {
   getAvatarBucket() {
     return 'https://pub-6858952ca1f64c08a3e778080d6e2ee6.r2.dev/';
   }
+  getCoverletterBucket() {
+    return 'https://pub-90ee65adbb154d74ba77693fbb4f7a8f.r2.dev/';
+  }
   async uploadAvatar(file: File): Promise<string> {
     const s3 = this.getS3Client();
     const key = `${Date.now()}-${file.name}`;
@@ -64,6 +67,22 @@ export class StorageService {
 
     await s3.send(command);
     const bucketUrl = this.getResumeBucket();
+    return `${bucketUrl}${key}`;
+  }
+  async uploadCoverletter(file: File): Promise<string> {
+    const s3 = this.getS3Client();
+    const key = `${Date.now()}-${file.name}`;
+    this.setBucket('coverletters');
+
+    const command = new PutObjectCommand({
+      Bucket: this.bucketName,
+      Key: key,
+      Body: new Uint8Array(await file.arrayBuffer()),
+      ContentType: file.type,
+    });
+
+    await s3.send(command);
+    const bucketUrl = this.getCoverletterBucket();
     return `${bucketUrl}${key}`;
   }
 }

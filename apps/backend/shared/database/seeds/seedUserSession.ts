@@ -1,5 +1,4 @@
-import type { UserEntity } from '@backend/user/entities/UserEntity';
-import { UserSessionEntity } from '@backend/user/entities/UserSessionEntity';
+import { type UserEntity, UserSessionEntity } from '@backend/entities';
 import { random } from '@common/utils';
 import { primaryDatabase } from '../PrimaryDatabase';
 

@@ -1,5 +1,5 @@
+import type { UserEntity } from '@backend/entities/UserEntity';
 import { ResumeEntity } from '@backend/resources/resumes/ResumeEntity';
-import type { UserEntity } from '@backend/user/entities/UserEntity';
 import { primaryDatabase } from '../PrimaryDatabase';
 export async function seedResume(user: UserEntity) {
   const resumeRepo = await primaryDatabase.open(ResumeEntity);

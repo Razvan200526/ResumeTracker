@@ -33,4 +33,14 @@ export class UploadFetcher {
       return response;
     },
   };
+
+  public readonly coverLetter = {
+    upload: async (data: FormData): Promise<ResponseType<{ url: string }>> => {
+      this.fetcher.clearContentType();
+      const response = await this.fetcher.post('/uploads/coverletters', data);
+      this.fetcher.setContentType();
+
+      return response;
+    },
+  };
 }

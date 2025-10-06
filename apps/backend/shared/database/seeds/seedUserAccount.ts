@@ -1,5 +1,5 @@
-import { UserAccountEntity } from '@backend/user/entities/UserAccountEntity';
-import type { UserEntity } from '@backend/user/entities/UserEntity';
+import { UserAccountEntity } from '@backend/entities/UserAccountEntity';
+import type { UserEntity } from '@backend/entities/UserEntity';
 import { random } from '@common/utils';
 import { hashPassword } from 'better-auth/crypto';
 import { primaryDatabase } from '../PrimaryDatabase';

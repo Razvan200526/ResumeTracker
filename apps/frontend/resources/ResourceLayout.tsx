@@ -11,7 +11,7 @@ import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import { CreateResourceModal } from './resumes/CreateResourceModal';
 import { DeleteResourceModal } from './resumes/DeleteResourceModal';
 // import { CreateResourceDropdown } from './CreateResourceDropdown';
-import { useResumes } from './resumes/hooks';
+import { useCoverLetters, useResumes } from './resumes/hooks';
 import { useDeleteStore } from './store';
 export const ResourceLayout = () => {
   const navigate = useNavigate();
@@ -20,8 +20,14 @@ export const ResourceLayout = () => {
   const deleteModalRef = useRef<ModalRefType | null>(null);
   // biome-ignore lint/style/noNonNullAssertion: <trust me>
   const { data: resumes } = useResumes(user!.id);
-  const { state, startDeleting, stopDeleting, deletingResumeIds } =
-    useDeleteStore();
+  const { data: coverletters } = useCoverLetters(user!.id);
+  const {
+    state,
+    startDeleting,
+    stopDeleting,
+    deletingResumeIds,
+    deletingCoverletterIds,
+  } = useDeleteStore();
 
   const [tab, setTab] = useQueryState('resourceTab', {
     defaultValue: 'resume',
@@ -44,7 +50,7 @@ export const ResourceLayout = () => {
       content: 'Cover Letter content',
       className: 'text-coverletter data-[hover=true]:bg-coverletter/10 ',
       activeClassName: 'bg-coverletter/15 border-coverletter',
-      count: 4,
+      count: coverletters?.length || 0,
     },
     {
       key: 'portfolio',
@@ -120,7 +126,7 @@ export const ResourceLayout = () => {
           ))}
         </Tabs>
 
-        {deletingResumeIds.length > 0 ? (
+        {deletingResumeIds.length + deletingCoverletterIds.length > 0 ? (
           <Button
             variant="solid"
             color="danger"
@@ -129,11 +135,13 @@ export const ResourceLayout = () => {
               deleteModalRef.current?.open();
             }}
           >
-            Delete {deletingResumeIds.length}
-            {deletingResumeIds.length === 1 ? ' item' : ' items'}
+            Delete {deletingResumeIds.length + deletingCoverletterIds.length}
+            {deletingResumeIds.length + deletingCoverletterIds.length === 1
+              ? ' item'
+              : ' items'}
           </Button>
         ) : null}
-        {resumes?.length ? (
+        {resumes?.length || coverletters?.length ? (
           <Button
             variant="light"
             isIconOnly={true}

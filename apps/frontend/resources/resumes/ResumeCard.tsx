@@ -8,7 +8,8 @@ type ResumeCardProps = {
   resume: ResumeType;
 };
 export const ResumeCard = ({ resume }: ResumeCardProps) => {
-  const { state, addToDelete, removeFromDelete } = useDeleteStore();
+  const { state, addToDeleteResumes, removeFromDeleteResumes } =
+    useDeleteStore();
   return (
     <Card className="relative flex flex-col hover:border-book w-full gap-4">
       <div className="h-[250px] w-full border border-border-hover rounded p-2 flex items-center justify-center">
@@ -18,9 +19,9 @@ export const ResumeCard = ({ resume }: ResumeCardProps) => {
             color="danger"
             onValueChange={(isSelected) => {
               if (isSelected) {
-                addToDelete(resume.id);
+                addToDeleteResumes(resume.id);
               } else {
-                removeFromDelete(resume.id);
+                removeFromDeleteResumes(resume.id);
               }
             }}
           />

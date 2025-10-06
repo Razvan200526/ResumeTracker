@@ -1,4 +1,4 @@
-import type { UserEntity } from '@backend/user/entities/UserEntity';
+import type { UserEntity } from '@backend/entities';
 import {
   Column,
   CreateDateColumn,

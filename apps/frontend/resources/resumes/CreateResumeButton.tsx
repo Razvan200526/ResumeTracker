@@ -20,7 +20,7 @@ export const CreateResumeButton = () => {
     <>
       <Button
         color="primary"
-        variant="solid"
+        className="bg-resume"
         size="sm"
         startContent={<ResumeIcon className="size-3.5" />}
         onPress={() => modalRef.current?.open()}

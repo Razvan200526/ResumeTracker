@@ -1,6 +1,8 @@
 import { PdfIcon } from '@common/icons/PdfIcon';
-import { useAddResume } from '@frontend/resources/resumes/hooks';
-
+import {
+  useAddCoverLetter,
+  useAddResume,
+} from '@frontend/resources/resumes/hooks';
 import { useAuth } from '@frontend/shared/hooks';
 import { cn, Progress, ScrollShadow } from '@heroui/react';
 import * as React from 'react';
@@ -46,7 +48,8 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
     const { data: user } = useAuth();
     // biome-ignore lint/style/noNonNullAssertion: <trust me but fix later>
     const { mutateAsync: addResume } = useAddResume(user!.id);
-
+    // biome-ignore lint/style/noNonNullAssertion: <trust me but fix later>
+    const { mutateAsync: addCoverLetter } = useAddCoverLetter(user!.id);
     if (!user || !user.id) {
       Toast.error({ description: 'Please login to upload files' });
       return null;
@@ -109,21 +112,29 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
       timeout = setTimeout(async () => {
         try {
           const uploadPromises = files.map(async (file) => {
-            const formData = new FormData();
-            formData.append('resume', file);
-            formData.append('userId', user.id);
-
-            // if (type === 'note') {
-            //   const data = await backend.upload.note.note(formData);
-            //   return data.data.url;
-            // }
-            // TODO : add cover letter support
-
-            const data = await addResume(formData);
-            if (data.success) {
-              Toast.success({ description: 'Resume uploaded successfully' });
+            if (type === 'resume') {
+              const formData = new FormData();
+              formData.append('resume', file);
+              formData.append('userId', user.id);
+              const data = await addResume(formData);
+              if (data.success) {
+                Toast.success({ description: 'Resume uploaded successfully' });
+                return data.data.url;
+              }
             }
-            return data.data.url;
+
+            if (type === 'coverLetter') {
+              const formData = new FormData();
+              formData.append('coverletter', file);
+              formData.append('userId', user.id);
+              const data = await addCoverLetter(formData);
+              if (data.success) {
+                Toast.success({
+                  description: 'Cover Letter uploaded successfully',
+                });
+              }
+              return data.data.url;
+            }
           });
 
           const urls = await Promise.all(uploadPromises);
@@ -131,7 +142,7 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
           setTimeout(() => {
             setIsLoading(false);
             onUpload?.(
-              urls,
+              urls as string[],
               files.reduce((total, file) => total + file.size / 1024, 0),
             );
           }, 500);

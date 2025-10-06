@@ -1,5 +1,7 @@
-import type { UserRepository } from '@backend/user/repositories/UserRepository';
-import { userRepository } from '@backend/user/repositories/UserRepository';
+import {
+  type UserRepository,
+  userRepository,
+} from '@backend/repositories/UserRepository';
 
 export class RetrieveCurrentUserService {
   private readonly userRepository: UserRepository;

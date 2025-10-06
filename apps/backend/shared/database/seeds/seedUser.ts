@@ -1,4 +1,4 @@
-import { UserEntity } from '@backend/user/entities/UserEntity';
+import { UserEntity } from '@backend/entities/UserEntity';
 import { random } from '@common/utils';
 import { primaryDatabase } from '../PrimaryDatabase';
 

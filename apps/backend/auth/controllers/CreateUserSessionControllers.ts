@@ -1,13 +1,14 @@
 import { Route } from '@backend/decorators/Route';
-import { UserSessionEntity } from '@backend/user/entities/UserSessionEntity';
+import { UserSessionEntity } from '@backend/entities';
 import {
   type UserRepository,
   userRepository,
-} from '@backend/user/repositories/UserRepository';
+} from '@backend/repositories/UserRepository';
 import {
   type UserSessionRepository,
   userSessionRepository,
-} from '@backend/user/repositories/UserSessionRepository';
+} from '@backend/repositories/UserSessionRepository';
+
 import type { Context } from 'hono';
 
 @Route('POST', '/api/user-sessions', 'Create User Session')

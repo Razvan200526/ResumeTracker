@@ -1,6 +1,6 @@
 import { AuthService } from '@backend/auth/services/AuthService';
 import { Route } from '@backend/decorators/Route';
-import type { CreateUserModel } from '@backend/user/models/CreateUserModel';
+import type { CreateUserModel } from '@backend/models/CreateUserModel';
 import type { Context } from 'hono';
 
 const authService = new AuthService(process.env.DATABASE_URL || '');

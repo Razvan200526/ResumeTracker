@@ -1,4 +1,5 @@
 import { AuthFetcher } from './AuthFetcher';
+import { CoverLetterFetcher } from './CoverLetterFetcher';
 import type { Fetcher } from './Fetcher';
 import { ResumeFetcher } from './ResumeFetcher';
 import { UploadFetcher } from './UploadFetcher';
@@ -9,10 +10,13 @@ export class Backend {
   public readonly users: UserFetcher;
   public readonly upload: UploadFetcher;
   public readonly resume: ResumeFetcher;
+  public readonly coverLetter: CoverLetterFetcher;
+
   constructor(private readonly fetcher: Fetcher) {
     this.auth = new AuthFetcher(this.fetcher);
     this.users = new UserFetcher(this.fetcher);
     this.upload = new UploadFetcher(this.fetcher);
     this.resume = new ResumeFetcher(this.fetcher);
+    this.coverLetter = new CoverLetterFetcher(this.fetcher);
   }
 }
