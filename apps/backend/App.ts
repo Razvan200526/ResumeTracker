@@ -10,6 +10,7 @@ import { SignupCheckOtpController } from './auth/controllers/SignupCheckOtpContr
 import { SignupEmailController } from './auth/controllers/SignupEmailController';
 import { DeleteCoverletterController } from './controllers/DeleteCoverletterController';
 import { DeleteResumeController } from './controllers/DeleteResumesController';
+import { GetCoverletterController } from './controllers/GetCoverletterController';
 import { GetUserCoverlettersController } from './controllers/GetUserCoverlettersController';
 import { GetUserResumeController } from './controllers/GetUserResumesController';
 import { UploadAvatarController } from './controllers/UploadAvatarController';
@@ -50,6 +51,7 @@ registerController(app, DeleteResumeController);
 registerController(app, GetUserCoverlettersController);
 registerController(app, UploadCoverLetterController);
 registerController(app, DeleteCoverletterController);
+registerController(app, GetCoverletterController);
 app.post('/api/auth/signup', async (c) => {
   const ctrl = new SignupEmailController();
   return await ctrl.handler(c);

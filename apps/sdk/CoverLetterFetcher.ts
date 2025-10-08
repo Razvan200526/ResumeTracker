@@ -9,7 +9,7 @@ export class CoverLetterFetcher {
 
   public readonly coverletter = {
     retrieve: async (payload: { userId: string }): Promise<ResponseType> => {
-      return this.fetcher.get(`/api/coverletter/${payload.userId}`);
+      return this.fetcher.get(`/api/coverletters/${payload.userId}`);
     },
     // upload: async (payload: {
     //   userId: string;
@@ -20,8 +20,11 @@ export class CoverLetterFetcher {
     //     payload,
     //   );
     // },
+    get: async (payload: { id: string }): Promise<ResponseType> => {
+      return this.fetcher.get(`/api/coverletter/${payload.id}`);
+    },
     delete: async (payload: {
-      coverletterIds: number[];
+      coverletterIds: string[];
       userId: string;
     }): Promise<ResponseType> => {
       return this.fetcher.delete('/api/coverletter/delete', payload);

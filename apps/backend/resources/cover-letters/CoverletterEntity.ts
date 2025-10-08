@@ -1,19 +1,23 @@
 import type { UserEntity } from '@backend/entities';
+import { random } from '@common/utils';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from 'typeorm';
 
 @Entity('coverletter')
 export class CoverletterEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  id: string = random.nanoid(15);
 
   @ManyToOne('UserEntity', 'coverletter')
   user: UserEntity;
+
+  @Column()
+  name: string;
 
   @Column()
   filename: string;

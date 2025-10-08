@@ -61,7 +61,7 @@ export class CoverletterRepository {
     });
   }
 
-  public async findOne(id: number): Promise<CoverletterEntity | null> {
+  public async findOne(id: string): Promise<CoverletterEntity | null> {
     const repository = await this.open();
 
     return await repository.findOne({
@@ -81,7 +81,7 @@ export class CoverletterRepository {
     });
   }
 
-  public async findOneOrFail(id: number): Promise<CoverletterEntity> {
+  public async findOneOrFail(id: string): Promise<CoverletterEntity> {
     const entity = await this.findOne(id);
 
     if (!entity) {
@@ -112,7 +112,7 @@ export class CoverletterRepository {
     });
   }
 
-  public async findByIds(ids: number[]): Promise<CoverletterEntity[]> {
+  public async findByIds(ids: string[]): Promise<CoverletterEntity[]> {
     const repository = await this.open();
 
     return await repository.find({

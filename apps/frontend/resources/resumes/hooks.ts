@@ -2,6 +2,7 @@ import { backend } from '@frontend/shared/backend';
 import { queryClient } from '@frontend/shared/QueryClient';
 import type { CoverLetterType, ResumeType } from '@sdk/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router';
 
 export const useResumes = (userId: string) => {
   return useQuery({
@@ -29,12 +30,24 @@ export const useAddResume = (userId: string) => {
 
 export const useCoverLetters = (userId: string) => {
   return useQuery({
-    queryKey: ['coverletter', userId],
+    queryKey: ['coverletters', userId],
     queryFn: async () => {
       const response = await backend.coverLetter.coverletter.retrieve({
         userId,
       });
       return response.data as CoverLetterType[];
+    },
+  });
+};
+export const useGetCoverLetter = (userId: string) => {
+  const { id } = useParams<{ id: string }>();
+  return useQuery({
+    queryKey: ['coverletter', userId],
+    queryFn: async () => {
+      const response = await backend.coverLetter.coverletter.get({
+        id: id || '',
+      });
+      return response.data as CoverLetterType;
     },
   });
 };
@@ -45,11 +58,12 @@ export const useAddCoverLetter = (userId: string) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['coverletter', userId],
+        queryKey: ['coverletters', userId],
       });
     },
   });
 };
+
 export const useDeleteResumes = (userId: string) => {
   return useMutation({
     mutationFn: async (ids: string[]) => {
@@ -74,16 +88,15 @@ export const useDeleteResumes = (userId: string) => {
 export const useDeleteCoverLetters = (userId: string) => {
   return useMutation({
     mutationFn: async (ids: string[]) => {
-      const coverLetterIds = ids.map((id) => Number.parseInt(id, 10));
       return backend.coverLetter.coverletter.delete({
-        coverletterIds: coverLetterIds,
+        coverletterIds: ids,
         userId: userId,
       });
     },
     onSuccess: (response) => {
       if (response.success) {
         queryClient.invalidateQueries({
-          queryKey: ['coverletter', userId],
+          queryKey: ['coverletters', userId],
         });
       }
     },

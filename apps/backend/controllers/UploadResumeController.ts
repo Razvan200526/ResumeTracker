@@ -25,6 +25,7 @@ export class UploadResumeController {
       const data = (await c.req.formData()) as FormData;
       const resume = data.get('resume') as File;
       const userId = data.get('userId') as string;
+      const name = data.get('name') as string;
 
       // if (!isIdValid(userId)) {
       //   return c.json(
@@ -63,7 +64,6 @@ export class UploadResumeController {
       }
       const url = await this.storageService.uploadResume(resume);
 
-      const filename = resume.name;
       const filesize = resume.size;
 
       if (!userId) {
@@ -86,7 +86,7 @@ export class UploadResumeController {
       const repo = await this.database.open(ResumeEntity);
       const resumeEntity = repo.create({
         user: { id: userId },
-        filename,
+        name,
         url,
         filesize,
       });

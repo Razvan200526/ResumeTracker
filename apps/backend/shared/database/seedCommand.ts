@@ -26,7 +26,6 @@ async function seed() {
       })(),
     );
   }
-
   await Promise.all(seedPromises);
 
   await primaryDatabase.close();

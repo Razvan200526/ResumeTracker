@@ -61,7 +61,7 @@ export class ResumeRepository {
     });
   }
 
-  public async findOne(id: number): Promise<ResumeEntity | null> {
+  public async findOne(id: string): Promise<ResumeEntity | null> {
     const repository = await this.open();
 
     return await repository.findOne({
@@ -81,7 +81,7 @@ export class ResumeRepository {
     });
   }
 
-  public async findOneOrFail(id: number): Promise<ResumeEntity> {
+  public async findOneOrFail(id: string): Promise<ResumeEntity> {
     const entity = await this.findOne(id);
 
     if (!entity) {
@@ -112,7 +112,7 @@ export class ResumeRepository {
     });
   }
 
-  public async findByIds(ids: number[]): Promise<ResumeEntity[]> {
+  public async findByIds(ids: string[]): Promise<ResumeEntity[]> {
     const repository = await this.open();
 
     return await repository.find({

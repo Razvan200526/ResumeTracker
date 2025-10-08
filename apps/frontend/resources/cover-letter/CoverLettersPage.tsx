@@ -1,6 +1,8 @@
+import { PageLoader } from '@frontend/shared/components/PageLoader';
 import { useAuth } from '@frontend/shared/hooks';
 import { ScrollShadow } from '@heroui/react';
 import type { CoverLetterType } from '@sdk/types';
+import { Link } from 'react-router';
 import { useCoverLetters } from '../resumes/hooks';
 import { CoverLetterCard } from './CoverLetterCard';
 import { NoCoverLetters } from './NoCoverLetters';
@@ -9,10 +11,10 @@ export const CoverLettersPage = () => {
   const { data: user } = useAuth();
   const {
     data: coverLetters,
-    isLoading: coverLettersLoading,
+    isLoading,
     error,
   } = useCoverLetters(user ? user.id : '');
-  if (coverLettersLoading) return <div>Loading...</div>;
+  if (isLoading) return <PageLoader />;
   if (error) return <div>Error loading cover letters</div>;
   if (!coverLetters || coverLetters.length === 0) {
     return <NoCoverLetters />;
@@ -24,7 +26,12 @@ export const CoverLettersPage = () => {
     >
       <div className="grid grid-cols-3 gap-4">
         {coverLetters?.map((coverLetter: CoverLetterType) => (
-          <CoverLetterCard key={coverLetter.id} coverLetter={coverLetter} />
+          <Link
+            to={`/home/resources/coverletters/${coverLetter.id}`}
+            key={coverLetter.id}
+          >
+            <CoverLetterCard coverLetter={coverLetter} />
+          </Link>
         ))}
       </div>
     </ScrollShadow>

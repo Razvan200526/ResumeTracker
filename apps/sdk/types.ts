@@ -77,6 +77,7 @@ export type UserTypeType = {
 
 export type ResumeType = {
   id: string;
+  name: string;
   url: string;
   isReady: boolean;
   state: ResourceReadyState;
@@ -85,9 +86,10 @@ export type ResumeType = {
 
 export type CoverLetterType = {
   id: string;
+  name: string;
   url: string;
   user: UserType;
   isReady: boolean;
   state: ResourceReadyState;
-  createdAt: Date;
+  uploadedAt: Date;
 };

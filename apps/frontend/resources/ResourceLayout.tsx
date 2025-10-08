@@ -20,7 +20,7 @@ export const ResourceLayout = () => {
   const deleteModalRef = useRef<ModalRefType | null>(null);
   // biome-ignore lint/style/noNonNullAssertion: <trust me>
   const { data: resumes } = useResumes(user!.id);
-  const { data: coverletters } = useCoverLetters(user!.id);
+  const { data: coverletters } = useCoverLetters(user?.id || '');
   const {
     state,
     startDeleting,
@@ -46,7 +46,7 @@ export const ResourceLayout = () => {
     {
       key: 'cover',
       label: 'Cover Letter',
-      href: 'cover-letter',
+      href: 'coverletter',
       content: 'Cover Letter content',
       className: 'text-coverletter data-[hover=true]:bg-coverletter/10 ',
       activeClassName: 'bg-coverletter/15 border-coverletter',

@@ -1,6 +1,7 @@
 import { ErrorFallback } from '@common/components/ErrorFallback';
 import { HeroPage } from '@frontend/hero/HeroPage';
 import { CoverLettersPage } from '@frontend/resources/cover-letter/CoverLettersPage';
+import { CoverLetterInspectPage } from '@frontend/resources/cover-letter/CoverletterInspectPage';
 import { PortfolioPage } from '@frontend/resources/portfolio/PortfolioPage';
 import { ResourceLayout } from '@frontend/resources/ResourceLayout';
 import { ResumePage } from '@frontend/resources/resumes/ResumePage';
@@ -48,8 +49,12 @@ export const router = createBrowserRouter([
                 element: <ResumePage />,
               },
               {
-                path: 'cover-letter',
+                path: 'coverletter',
                 element: <CoverLettersPage />,
+              },
+              {
+                path: 'coverletters/:id',
+                element: <CoverLetterInspectPage />,
               },
               {
                 path: 'portfolio',
