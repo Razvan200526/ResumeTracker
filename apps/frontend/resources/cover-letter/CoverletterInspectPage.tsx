@@ -23,9 +23,14 @@ export const CoverLetterInspectPage = () => {
   }
   return (
     <div className="m-4 border border-border rounded h-[calc(100dvh-7rem)] flex flex-row">
-      <div className="m-4 rounded-xl flex-1 border border-coverletter/20">
+      <div className="m-4 rounded-xl flex-1">
         {!isFetching ? (
-          <PdfViewer toolbar={true} src={coverLetterData.url} initialPage={0} />
+          <PdfViewer
+            toolbar={true}
+            src={coverLetterData.url}
+            initialPage={0}
+            className="rounded border border-coverletter/20"
+          />
         ) : (
           <PDFPreviewSkeleton />
         )}

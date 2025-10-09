@@ -51,6 +51,19 @@ export const useGetCoverLetter = (userId: string) => {
     },
   });
 };
+
+export const useCoverLetterSuggestions = () => {
+  const { id } = useParams<{ id: string }>();
+  return useQuery({
+    queryKey: ['coverletterSuggestions'],
+    queryFn: async () => {
+      const response = await backend.coverLetter.coverletter.getSuggestions({
+        id: id || '',
+      });
+      return response;
+    },
+  });
+};
 export const useAddCoverLetter = (userId: string) => {
   return useMutation({
     mutationFn: async (data: FormData) => {

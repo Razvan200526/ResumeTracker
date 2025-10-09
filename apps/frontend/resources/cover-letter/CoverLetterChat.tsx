@@ -1,11 +1,13 @@
+import { Button } from '@common/components/button';
 import {
   Dropdown,
   type DropdownItemDataType,
 } from '@common/components/Dropdown';
+import { EmptyChat } from '@common/components/EmptyChat';
 import { InputChat } from '@common/components/input/InputChat';
 
 import { H6 } from '@common/components/typography';
-import { BurgerIcon } from '@common/icons/BurgerIcon';
+import { MoreIcon } from '@common/icons/MoreIcon';
 import { formatDate } from '@common/utils';
 import { ScrollShadow } from '@heroui/react';
 import { Icon } from '@iconify/react';
@@ -38,16 +40,23 @@ const items: DropdownItemDataType[] = [
     shortcut: '⌘⌫',
   },
 ];
+
 export const CoverLetterChat = ({
   coverletter,
 }: {
   coverletter: CoverLetterType;
 }) => {
+  // const {
+  //   data: suggestions,
+  //   isFetching,
+  //   isError,
+  // } = useCoverLetterSuggestions();
+
   return (
     <div className="rounded border border-border h-full flex flex-col">
       <nav className="p-4 rounded sticky top-0 bg-light flex items-center justify-between border-b border-border flex-shrink-0">
         <div className="flex-col items-center">
-          <H6>{coverletter.name}</H6>
+          <H6 className="text-coverletter">{coverletter.name}</H6>
           <p className="text-xs text-muted">
             Uploaded {formatDate(coverletter.uploadedAt)}
           </p>
@@ -56,79 +65,15 @@ export const CoverLetterChat = ({
           <Dropdown
             items={items}
             trigger={
-              <BurgerIcon className="text-primary size-4 cursor-pointer" />
+              <Button variant="light" isIconOnly={true} radius="full">
+                <MoreIcon className="text-coverletter size-4" />
+              </Button>
             }
           />
         </div>
       </nav>
       <ScrollShadow className="flex-1 m-2">
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing. Officia voluptate consectetur velit
-        cillum dolore cillum adipisicing voluptate reprehenderit Lorem ullamco.
-        Labore nulla commodo nulla ad aute ut est elit nostrud ad. Irure
-        occaecat do laborum culpa dolore dolor sit. Id do in adipisicing.
-        Officia voluptate consectetur velit cillum dolore cillum adipisicing
-        voluptate reprehenderit Lorem ullamco. Labore nulla commodo nulla ad
-        aute ut est elit nostrud ad. Irure occaecat do laborum culpa dolore
-        dolor sit. Id do in adipisicing.
+        <EmptyChat classname="text-coverletter" />
       </ScrollShadow>
       <div className="rounded-full m-2 bg-light flex items-center justify start">
         <InputChat />

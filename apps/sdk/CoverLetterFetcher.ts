@@ -29,6 +29,14 @@ export class CoverLetterFetcher {
     }): Promise<ResponseType> => {
       return this.fetcher.delete('/api/coverletter/delete', payload);
     },
+    getSuggestions: async (payload: { id: string }): Promise<ResponseType> => {
+      this.fetcher.config.baseURL = 'http://localhost:8000';
+      const res = this.fetcher.get(
+        `/api/suggestions/coverletter/${payload.id}`,
+      );
+      this.fetcher.config.baseURL = 'http://localhost:3000';
+      return res;
+    },
   };
 
   public readonly create = (payload: { url: string }) => {
