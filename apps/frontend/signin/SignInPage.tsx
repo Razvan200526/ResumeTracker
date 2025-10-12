@@ -8,7 +8,7 @@ import {
 } from '@common/components/input';
 import { Link } from '@common/components/Link';
 import { Toast } from '@common/components/toast';
-import { H3 } from '@common/components/typography';
+import { H3, H6 } from '@common/components/typography';
 import { backend } from '@frontend/shared/backend';
 import { Form } from '@heroui/react';
 import type React from 'react';
@@ -103,12 +103,12 @@ export const SigninPage = () => {
             Sign In
           </Button>
         </Form>
-        <p className="text-center text-small font-primary flex items-center justify-center gap-1">
+        <H6 className="text-center text-sm font-primary font-semibold flex items-center justify-center gap-1">
           Need to create an Account?
-          <Link className="text-secondary-text" to="/signup">
+          <Link className="text-secondary-text font-semibold" to="/signup">
             Sign up
           </Link>
-        </p>
+        </H6>
       </Card>
     </div>
   );

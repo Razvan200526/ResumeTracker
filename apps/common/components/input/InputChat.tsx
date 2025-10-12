@@ -1,85 +1,134 @@
-import { PlusIcon } from '@heroicons/react/24/outline';
+import { Button } from '@common/components/button';
+import { cn, Input as HeroInput, type InputProps } from '@heroui/react';
+import { Icon } from '@iconify/react';
+import { forwardRef } from 'react';
 
-import { useImperativeHandle, useState } from 'react';
-import { Button } from '../button';
-import { Input } from './Input';
-
-export type InputTextRefType = {
-  getValue: () => string;
-  setValue: (value: string) => void;
-  isValid: () => boolean;
-  getErrorMessage: () => string;
-};
-
-export type InputChatProps = {
-  name?: string;
+export type InputChatProps = Omit<
+  InputProps,
+  'variant' | 'radius' | 'size' | 'onChange'
+> & {
   size?: 'sm' | 'md';
-  placeholder?: string;
-  label?: string;
-  value?: string;
-  required?: boolean;
-  isRequired?: boolean;
-  className?: string;
+  inputClassName?: string;
+  inputWrapperClassName?: string;
   onChange?: (value: string) => void;
-  ref?: React.RefObject<InputTextRefType | null>;
+  onSubmit?: () => void;
+  isPending?: boolean;
+  theme?: 'resume' | 'coverletter' | 'portfolio';
 };
 
-export const InputChat = ({
-  name,
-  size,
-  placeholder,
-  label,
-  value,
-  required,
-  isRequired,
-  className,
-  onChange,
-  ref,
-}: InputChatProps) => {
-  const [initialValue, setValue] = useState(value || '');
+export const InputChat = forwardRef<HTMLInputElement, InputChatProps>(
+  (props, ref) => {
+    const {
+      size = 'sm',
+      className,
+      inputClassName,
+      inputWrapperClassName,
+      onChange,
+      onSubmit,
+      isPending = false,
+      theme = 'coverletter',
+      value,
+      ...rest
+    } = props;
 
-  useImperativeHandle(ref, () => {
-    return {
-      getValue() {
-        return initialValue;
+    const themeColors = {
+      resume: {
+        text: 'text-resume',
+        placeholder: 'placeholder-resume/50',
+        border: 'border-resume/20',
+        borderHover: 'data-[hover=true]:border-resume',
+        borderFocus: 'data-[focus=true]:border-resume',
+        button: 'text-resume',
       },
-      setValue(value: string) {
-        setValue(value);
+      coverletter: {
+        text: 'text-coverletter',
+        placeholder: 'placeholder-coverletter/50',
+        border: 'border-coverletter/20',
+        borderHover: 'data-[hover=true]:border-coverletter',
+        borderFocus: 'data-[focus=true]:border-coverletter',
+        button: 'text-coverletter',
       },
-      isValid() {
-        return initialValue.trim() !== '';
-      },
-      getErrorMessage() {
-        if (!initialValue.trim()) {
-          return 'errors.text.required';
-        }
-
-        return '';
+      portfolio: {
+        text: 'text-portfolio',
+        placeholder: 'placeholder-portfolio/50',
+        border: 'border-portfolio/20',
+        borderHover: 'data-[hover=true]:border-portfolio',
+        borderFocus: 'data-[focus=true]:border-portfolio',
+        button: 'text-portfolio',
       },
     };
-  }, [initialValue]);
 
-  return (
-    <>
-      <Button className="ml-2" isIconOnly={true} variant="light" radius="full">
-        <PlusIcon className=" size-3.5 text-primary" />
-      </Button>
-      <Input
-        inputWrapperClassName="border-none"
-        inputClassName="text-primary font-primary text-xs"
-        size={size}
-        name={name}
+    const colors = themeColors[theme];
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        onSubmit?.();
+      }
+    };
+
+    return (
+      <HeroInput
+        ref={ref}
         type="text"
-        placeholder={placeholder}
-        label={label}
-        className={className}
-        value={initialValue}
-        isRequired={isRequired || required}
-        onChange={(value) => {
-          setValue(value);
-          onChange?.(value);
+        {...rest}
+        size={size}
+        radius="lg"
+        variant="bordered"
+        autoComplete="off"
+        value={value}
+        onKeyDown={handleKeyDown}
+        startContent={
+          <Icon
+            icon="heroicons:chat-bubble-oval-left"
+            className={cn('size-4', `${colors.text}/70`)}
+          />
+        }
+        endContent={
+          <Button
+            type="button"
+            isIconOnly
+            size="sm"
+            variant="light"
+            isDisabled={isPending || !value?.toString().trim()}
+            className={colors.button}
+            onPress={onSubmit}
+          >
+            <Icon
+              icon={
+                isPending ? 'heroicons:arrow-path' : 'heroicons:paper-airplane'
+              }
+              className={cn('size-4', isPending && 'animate-spin')}
+            />
+          </Button>
+        }
+        classNames={{
+          base: cn('w-full border-none shadow-none', className),
+          input: [
+            'bg-light font-medium shadow-none placeholder:font-normal',
+            'selection:bg-primary selection:text-primary-50 border-none',
+            size === 'sm' ? 'text-sm' : 'text-base',
+            size === 'sm' ? 'placeholder:text-xs' : 'placeholder:text-sm',
+            colors.text,
+            colors.placeholder,
+            'font-semibold',
+            inputClassName,
+          ],
+          inputWrapper: cn(
+            'relative rounded-xl border bg-light shadow-none',
+            'flex items-center gap-2 px-3 py-2',
+            colors.border,
+            colors.borderHover,
+            colors.borderFocus,
+            inputWrapperClassName,
+          ),
+        }}
+        onChange={(e) => {
+          onChange?.(e.target.value);
         }}
       />
-    </>
-  );
-};
+    );
+  },
+);
+
+InputChat.displayName = 'InputChat';

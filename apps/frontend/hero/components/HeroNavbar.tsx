@@ -17,7 +17,7 @@ export const HeroNavbar = () => {
     >
       <div className="flex lg:flex-1">
         <div className="flex items-center">
-          <Logo />
+          <Logo className="text-primary" />
           <H6 className="text-2xl font-title text-light">ResAI</H6>
         </div>
       </div>

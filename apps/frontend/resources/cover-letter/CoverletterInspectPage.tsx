@@ -1,11 +1,10 @@
-import { PDFPreviewSkeleton } from '@common/components/PDFSkeletion';
 import { PdfViewer } from '@common/components/PDFViewer';
 import { PageLoader } from '@frontend/shared/components/PageLoader';
 import { useAuth } from '@frontend/shared/hooks';
+import { Skeleton } from '@heroui/react';
 import { useGetCoverLetter } from '../resumes/hooks';
 import { CoverLetterChat } from './CoverLetterChat';
 import { NoCoverLetters } from './NoCoverLetters';
-
 export const CoverLetterInspectPage = () => {
   const { data: user } = useAuth();
   const {
@@ -16,7 +15,7 @@ export const CoverLetterInspectPage = () => {
 
   if (isFetching) return <PageLoader />;
   if (isError) {
-    throw Error('There was an error');
+    console.error('There was an error');
   }
   if (!coverLetterData) {
     return <NoCoverLetters />;
@@ -32,7 +31,7 @@ export const CoverLetterInspectPage = () => {
             className="rounded border border-coverletter/20"
           />
         ) : (
-          <PDFPreviewSkeleton />
+          <Skeleton />
         )}
       </div>
       <div className="m-4 flex-1">

@@ -89,6 +89,7 @@ export const InputPassword = ({
         <Button
           size="sm"
           variant="light"
+          radius="full"
           isIconOnly={true}
           onPress={() => handleClick()}
         >

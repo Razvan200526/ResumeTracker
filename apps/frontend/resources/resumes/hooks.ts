@@ -49,19 +49,23 @@ export const useGetCoverLetter = (userId: string) => {
       });
       return response.data as CoverLetterType;
     },
+    enabled: !!id && !!userId,
   });
 };
 
 export const useCoverLetterSuggestions = () => {
   const { id } = useParams<{ id: string }>();
   return useQuery({
-    queryKey: ['coverletterSuggestions'],
+    queryKey: ['coverletterSuggestions', id],
     queryFn: async () => {
       const response = await backend.coverLetter.coverletter.getSuggestions({
         id: id || '',
       });
       return response;
     },
+    enabled: false,
+    staleTime: 5 * 6 * 1000,
+    gcTime: 10 * 60 * 1000,
   });
 };
 export const useAddCoverLetter = (userId: string) => {
@@ -110,6 +114,25 @@ export const useDeleteCoverLetters = (userId: string) => {
       if (response.success) {
         queryClient.invalidateQueries({
           queryKey: ['coverletters', userId],
+        });
+      }
+    },
+  });
+};
+
+export const useSendMessage = () => {
+  const { id } = useParams<{ id: string }>();
+  return useMutation({
+    mutationFn: async (message: string) => {
+      return backend.message.coverletter.message({
+        question: message,
+        id: id || '',
+      });
+    },
+    onSuccess: (response) => {
+      if (response.success) {
+        queryClient.invalidateQueries({
+          queryKey: ['resumes'],
         });
       }
     },

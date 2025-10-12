@@ -6,7 +6,7 @@ export const HeaderMinimize = () => {
     <div className="flex items-center gap-2 px-2">
       <div className="bg-background flex h-8 w-8 items-center justify-center rounded-full">
         <Link to={'/home'}>
-          <Logo className="size-7" />
+          <Logo className="size-8 text-primary" />
         </Link>
       </div>
     </div>

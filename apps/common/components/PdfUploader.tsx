@@ -49,10 +49,8 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [name, setName] = useState<string>('');
     const { data: user } = useAuth();
-    // biome-ignore lint/style/noNonNullAssertion: <trust me but fix later>
-    const { mutateAsync: addResume } = useAddResume(user!.id);
-    // biome-ignore lint/style/noNonNullAssertion: <trust me but fix later>
-    const { mutateAsync: addCoverLetter } = useAddCoverLetter(user!.id);
+    const { mutateAsync: addResume } = useAddResume(user?.id || '');
+    const { mutateAsync: addCoverLetter } = useAddCoverLetter(user?.id || '');
     if (!user || !user.id) {
       Toast.error({ description: 'Please login to upload files' });
       return null;
