@@ -77,7 +77,7 @@ export const CoverLetterChat = ({
     isFetching,
     isError,
   } = useCoverLetterSuggestions();
-  const handleGetSuggestions = async () => {
+  const _handleGetSuggestions = async () => {
     const res = await coverLetterSuggestions();
     setSuggestions(res.data);
   };
