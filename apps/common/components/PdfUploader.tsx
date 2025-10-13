@@ -1,5 +1,6 @@
 import { PdfIcon } from '@common/icons/PdfIcon';
-import { isNameValid } from '@common/validators/isNameValid';
+import { isFileNameValid } from '@common/validators/isFileNameValid';
+
 import {
   useAddCoverLetter,
   useAddResume,
@@ -108,7 +109,7 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
     };
 
     const savePdf = async (files: File[]) => {
-      if (!isNameValid(name)) {
+      if (!isFileNameValid(name)) {
         Toast.error({ description: 'Invalid name' });
         return;
       }

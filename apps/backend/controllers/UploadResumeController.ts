@@ -45,6 +45,23 @@ export class UploadResumeController {
       //   );
       // }
 
+      if (!name) {
+        return c.json(
+          {
+            data: {},
+            success: false,
+            isClientError: true,
+            status: 400,
+            ifNotFound: false,
+            isUnauthorized: false,
+            isForbidden: false,
+            debug: false,
+            isServerError: false,
+            message: 'Name is required',
+          },
+          400,
+        );
+      }
       if (!resume) {
         return c.json(
           {
@@ -65,7 +82,7 @@ export class UploadResumeController {
       const url = await this.storageService.uploadResume(resume);
 
       const filesize = resume.size;
-
+      const filename = resume.name;
       if (!userId) {
         return c.json(
           {
@@ -87,6 +104,7 @@ export class UploadResumeController {
       const resumeEntity = repo.create({
         user: { id: userId },
         name,
+        filename,
         url,
         filesize,
       });

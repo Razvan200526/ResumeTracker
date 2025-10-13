@@ -12,8 +12,10 @@ export type InputChatProps = Omit<
   inputWrapperClassName?: string;
   onChange?: (value: string) => void;
   onSubmit?: () => void;
+  onStop?: () => void;
   isPending?: boolean;
   theme?: 'resume' | 'coverletter' | 'portfolio';
+  showStopButton?: boolean;
 };
 
 export const InputChat = forwardRef<HTMLInputElement, InputChatProps>(
@@ -25,9 +27,10 @@ export const InputChat = forwardRef<HTMLInputElement, InputChatProps>(
       inputWrapperClassName,
       onChange,
       onSubmit,
-      isPending = false,
+      onStop,
       theme = 'coverletter',
       value,
+      showStopButton = false,
       ...rest
     } = props;
 
@@ -63,7 +66,9 @@ export const InputChat = forwardRef<HTMLInputElement, InputChatProps>(
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
-        onSubmit?.();
+        if (!showStopButton) {
+          onSubmit?.();
+        }
       }
     };
 
@@ -85,22 +90,33 @@ export const InputChat = forwardRef<HTMLInputElement, InputChatProps>(
           />
         }
         endContent={
-          <Button
-            type="button"
-            isIconOnly
-            size="sm"
-            variant="light"
-            isDisabled={isPending || !value?.toString().trim()}
-            className={colors.button}
-            onPress={onSubmit}
-          >
-            <Icon
-              icon={
-                isPending ? 'heroicons:arrow-path' : 'heroicons:paper-airplane'
-              }
-              className={cn('size-4', isPending && 'animate-spin')}
-            />
-          </Button>
+          showStopButton ? (
+            <Button
+              type="button"
+              isIconOnly
+              size="sm"
+              variant="light"
+              className={cn(
+                colors.button,
+                'bg-danger/10 text-danger hover:bg-danger/20',
+              )}
+              onPress={onStop}
+            >
+              <Icon icon="heroicons:stop" className="size-4" />
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              isIconOnly
+              size="sm"
+              variant="light"
+              isDisabled={!value?.toString().trim()}
+              className={colors.button}
+              onPress={onSubmit}
+            >
+              <Icon icon="heroicons:paper-airplane" className="size-4" />
+            </Button>
+          )
         }
         classNames={{
           base: cn('w-full border-none shadow-none', className),

@@ -1,6 +1,6 @@
 import { backend } from '@frontend/shared/backend';
 import { queryClient } from '@frontend/shared/QueryClient';
-import type { CoverLetterType, ResumeType } from '@sdk/types';
+import type { CoverLetterType, ResponseType, ResumeType } from '@sdk/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 
@@ -124,10 +124,13 @@ export const useSendMessage = () => {
   const { id } = useParams<{ id: string }>();
   return useMutation({
     mutationFn: async (message: string) => {
-      return backend.message.coverletter.message({
+      const res = await backend.message.coverletter.message({
         question: message,
         id: id || '',
       });
+      return res as ResponseType<{
+        ai_response: { text: string };
+      }>;
     },
     onSuccess: (response) => {
       if (response.success) {
