@@ -82,6 +82,7 @@ export type ResumeType = {
   isReady: boolean;
   state: ResourceReadyState;
   createdAt: Date;
+  uploadedAt: Date;
 };
 
 export type CoverLetterType = {

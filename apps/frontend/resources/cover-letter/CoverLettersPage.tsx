@@ -22,9 +22,9 @@ export const CoverLettersPage = () => {
   return (
     <ScrollShadow
       size={8}
-      className="p-4 bg-background h-full overflow-y-scroll"
+      className="m-4 bg-background h-full overflow-y-scroll border border-border rounded"
     >
-      <div className="grid grid-cols-3 gap-4">
+      <div className="p-4 grid grid-cols-6 gap-4">
         {coverLetters?.map((coverLetter: CoverLetterType) => (
           <Link
             to={`/home/resources/coverletters/${coverLetter.id}`}

@@ -8,6 +8,7 @@ import { cn, Tab, Tabs } from '@heroui/react';
 import { useQueryState } from 'nuqs';
 import { useRef } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
+import { useChatSessions } from './hooks';
 import { CreateResourceModal } from './resumes/CreateResourceModal';
 import { DeleteResourceModal } from './resumes/DeleteResourceModal';
 // import { CreateResourceDropdown } from './CreateResourceDropdown';
@@ -18,9 +19,9 @@ export const ResourceLayout = () => {
   const location = useLocation();
   const { data: user } = useAuth();
   const deleteModalRef = useRef<ModalRefType | null>(null);
-  // biome-ignore lint/style/noNonNullAssertion: <trust me>
-  const { data: resumes } = useResumes(user!.id);
+  const { data: resumes } = useResumes(user?.id || '');
   const { data: coverletters } = useCoverLetters(user?.id || '');
+  const { data: chats } = useChatSessions(user?.id || '');
   const {
     state,
     startDeleting,
@@ -36,7 +37,7 @@ export const ResourceLayout = () => {
   const fakeItems = [
     {
       key: 'resume',
-      label: 'Resume',
+      label: 'Resumes',
       href: '.',
       content: 'Resume content',
       className: 'text-resume data-[hover=true]:bg-resume/10',
@@ -45,7 +46,7 @@ export const ResourceLayout = () => {
     },
     {
       key: 'cover',
-      label: 'Cover Letter',
+      label: 'Cover Letters',
       href: 'coverletter',
       content: 'Cover Letter content',
       className: 'text-coverletter data-[hover=true]:bg-coverletter/10 ',
@@ -53,13 +54,13 @@ export const ResourceLayout = () => {
       count: coverletters?.length || 0,
     },
     {
-      key: 'portfolio',
-      label: 'Portfolio',
-      href: 'portfolio',
-      content: 'Portfolio content',
-      className: 'text-portfolio data-[hover=true]:bg-portfolio/10',
-      activeClassName: 'bg-portfolio/15 border-portfolio',
-      count: 3,
+      key: 'chats',
+      label: 'Chats',
+      href: 'chats',
+      content: 'All chats',
+      className: 'text-chats data-[hover=true]:bg-chats/10',
+      activeClassName: 'bg-chats/15 border-chats',
+      count: chats?.length || 0,
     },
   ];
 

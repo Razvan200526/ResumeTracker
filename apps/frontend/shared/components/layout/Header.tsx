@@ -28,7 +28,7 @@ export const Header = () => {
       </div>
       <div className="flex items-center justify-end gap-1.5">
         {isMinimized ? (
-          <Tooltip content="Expand sidebar">
+          <Tooltip content="Minimize sidebar">
             <Button
               isIconOnly={true}
               className="rounded-full"

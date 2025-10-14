@@ -3,11 +3,11 @@ import { Modal, type ModalRefType } from '@common/components/Modal';
 import { PdfUploader } from '@common/components/PdfUploader';
 import { PdfIcon } from '@common/icons/PdfIcon';
 import { backend } from '@frontend/shared/backend';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
+// import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { useRef } from 'react';
 
 export const CreateCoverLetterButton = () => {
-  const createModalRef = useRef<ModalRefType>(null);
+  // const createModalRef = useRef<ModalRefType>(null);
   const uploadPdfModalRef = useRef<ModalRefType>(null);
 
   const uploadCoverLetter = async (urls: string[]) => {
@@ -27,14 +27,14 @@ export const CreateCoverLetterButton = () => {
       >
         Upload PDF cover letter
       </Button>
-      <Button
+      {/*<Button
         size="sm"
         className="bg-coverletter m-2"
         startContent={<PlusCircleIcon className="size-3.5" />}
         onPress={() => createModalRef.current?.open()}
       >
         Create cover letter
-      </Button>
+      </Button>*/}
       <Modal
         modalRef={uploadPdfModalRef}
         isDismissable={true}

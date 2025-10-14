@@ -85,9 +85,8 @@ export const useDeleteResumes = (userId: string) => {
   return useMutation({
     mutationFn: async (ids: string[]) => {
       // Convert string IDs to numbers for the backend
-      const resumeIds = ids.map((id) => Number.parseInt(id, 10));
       return backend.resume.resumes.delete({
-        resumeIds: resumeIds,
+        resumeIds: ids,
         userId: userId,
       });
     },
@@ -120,11 +119,41 @@ export const useDeleteCoverLetters = (userId: string) => {
   });
 };
 
-export const useSendMessage = () => {
+export const useGetResume = (userId: string) => {
+  const { id } = useParams<{ id: string }>();
+  return useQuery({
+    queryKey: ['resume', id],
+    queryFn: async () => {
+      const response = await backend.resume.resumes.get({
+        id: id || '',
+      });
+      return response.data as ResumeType;
+    },
+    enabled: !!id && !!userId,
+  });
+};
+
+export const useResumeSuggestions = () => {
+  const { id } = useParams<{ id: string }>();
+  return useQuery({
+    queryKey: ['resumeSuggestions', id],
+    queryFn: async () => {
+      const response = await backend.resume.resumes.getSuggestions({
+        id: id || '',
+      });
+      return response;
+    },
+    enabled: false,
+    staleTime: 5 * 6 * 1000,
+    gcTime: 10 * 60 * 1000,
+  });
+};
+
+export const useSendMessage = (type: 'resume' | 'coverletter') => {
   const { id } = useParams<{ id: string }>();
   return useMutation({
     mutationFn: async (message: string) => {
-      const res = await backend.message.coverletter.message({
+      const res = await backend.message[type].message({
         question: message,
         id: id || '',
       });

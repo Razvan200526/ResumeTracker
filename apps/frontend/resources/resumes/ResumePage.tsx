@@ -1,6 +1,7 @@
 import { useAuth } from '@frontend/shared/hooks';
 import { ScrollShadow } from '@heroui/react';
 import type { ResumeType } from '@sdk/types';
+import { Link } from 'react-router';
 import { useResumes } from './hooks';
 import { NoResumes } from './NoResumes';
 import { ResumeCard } from './ResumeCard';
@@ -21,11 +22,13 @@ export const ResumePage = () => {
   return (
     <ScrollShadow
       size={8}
-      className="p-4 bg-background h-full overflow-y-scroll"
+      className="m-4 bg-background h-full overflow-y-scroll border border-border rounded"
     >
-      <div className="grid grid-cols-3 gap-4">
+      <div className="p-4 grid grid-cols-6 gap-4">
         {resumes.map((resume: ResumeType) => (
-          <ResumeCard key={resume.id} resume={resume} />
+          <Link to={`/home/resources/resumes/${resume.id}`} key={resume.id}>
+            <ResumeCard resume={resume} />
+          </Link>
         ))}
       </div>
     </ScrollShadow>

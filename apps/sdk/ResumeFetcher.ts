@@ -21,10 +21,19 @@ export class ResumeFetcher {
     //   );
     // },
     delete: async (payload: {
-      resumeIds: number[];
+      resumeIds: string[];
       userId: string;
     }): Promise<ResponseType> => {
       return this.fetcher.delete('/api/resumes/delete', payload);
+    },
+    get: async (payload: { id: string }): Promise<ResponseType> => {
+      return this.fetcher.get(`/api/resume/${payload.id}`);
+    },
+    getSuggestions: async (payload: { id: string }): Promise<ResponseType> => {
+      this.fetcher.config.baseURL = 'http://localhost:8000';
+      const res = this.fetcher.get(`/api/suggestions/resume/${payload.id}`);
+      this.fetcher.config.baseURL = 'http://localhost:3000';
+      return res;
     },
   };
 

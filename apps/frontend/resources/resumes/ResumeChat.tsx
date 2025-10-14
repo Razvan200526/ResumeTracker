@@ -19,14 +19,14 @@ import { backend } from '@frontend/shared/backend';
 import { useAuth } from '@frontend/shared/hooks';
 import { Avatar, cn, ScrollShadow, Tab, Tabs } from '@heroui/react';
 import { Icon } from '@iconify/react';
-import type { CoverLetterType, ResponseType } from '@sdk/types';
+import type { ResponseType, ResumeType } from '@sdk/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   useChatMessages,
   useCreateChatSession,
   useGetChatSession,
 } from '../hooks';
-import { useCoverLetterSuggestions, useSendMessage } from '../resumes/hooks';
+import { useResumeSuggestions, useSendMessage } from './hooks';
 
 interface ChatMessage {
   id: string;
@@ -35,11 +35,7 @@ interface ChatMessage {
   timestamp: Date;
 }
 
-export const CoverLetterChat = ({
-  coverletter,
-}: {
-  coverletter: CoverLetterType;
-}) => {
+export const ResumeChat = ({ resume }: { resume: ResumeType }) => {
   const [suggestions, setSuggestions] = useState<any | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [message, setMessage] = useState<string>('');
@@ -50,15 +46,12 @@ export const CoverLetterChat = ({
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const hasFetchedSuggestionsRef = useRef(false);
 
-  const { mutateAsync: sendMessage, isPending } = useSendMessage('coverletter');
+  const { mutateAsync: sendMessage, isPending } = useSendMessage('resume');
   const { mutateAsync: createChatSession } = useCreateChatSession();
   const { data: user } = useAuth();
 
-  // Try to get existing chat session for this cover letter
-  const { data: existingSession } = useGetChatSession(
-    'coverletter',
-    coverletter.id,
-  );
+  // Try to get existing chat session for this resume
+  const { data: existingSession } = useGetChatSession('resume', resume.id);
 
   // Get messages for the current session
   const { data: chatMessages, refetch: refetchMessages } = useChatMessages(
@@ -66,10 +59,11 @@ export const CoverLetterChat = ({
   );
 
   const {
-    refetch: coverLetterSuggestions,
+    refetch: resumeSuggestions,
     isFetching,
     isError,
-  } = useCoverLetterSuggestions();
+    isLoadingError,
+  } = useResumeSuggestions();
 
   // Load existing session and messages when component mounts
   useEffect(() => {
@@ -89,9 +83,9 @@ export const CoverLetterChat = ({
     if (!currentSessionId && !existingSession?.id) {
       try {
         const newSession = await createChatSession({
-          resourceType: 'coverletter',
-          resourceId: coverletter.id,
-          resourceName: coverletter.name,
+          resourceType: 'resume',
+          resourceId: resume.id,
+          resourceName: resume.name,
         });
         setCurrentSessionId(newSession.id);
         return newSession.id;
@@ -103,15 +97,19 @@ export const CoverLetterChat = ({
     return currentSessionId || existingSession?.id;
   };
 
+  if (isError || isLoadingError) {
+    Toast.error({ description: 'Failed to load suggestions' });
+  }
+
   const handleGetSuggestions = useCallback(async () => {
     try {
-      const res = await coverLetterSuggestions();
+      const res = await resumeSuggestions();
       setSuggestions(res.data);
     } catch (error) {
       console.error('Failed to fetch suggestions:', error);
       Toast.error({ description: 'Failed to load suggestions' });
     }
-  }, [coverLetterSuggestions]);
+  }, [resumeSuggestions]);
 
   const handleRefresh = () => {
     if (selectedTab === 'suggestions') {
@@ -222,9 +220,6 @@ export const CoverLetterChat = ({
     }
   };
 
-  if (isError) {
-    throw new Error('Failed to fetch cover letter suggestions');
-  }
   const suggestionsText = suggestions?.data?.suggestions?.text;
 
   const items: DropdownItemDataType[] = [
@@ -232,7 +227,7 @@ export const CoverLetterChat = ({
       key: 'edit',
       label: 'Edit',
       className:
-        'text-coverletter data-[hover=true]:bg-coverletter/20 data-[hover=true]:text-coverletter',
+        'text-resume data-[hover=true]:bg-resume/20 data-[hover=true]:text-resume',
       icon: <Icon icon="heroicons:pencil" className="size-4" />,
       shortcut: '⌘E',
     },
@@ -240,7 +235,7 @@ export const CoverLetterChat = ({
       key: 'rename',
       label: 'Rename',
       className:
-        'text-coverletter data-[hover=true]:bg-coverletter/20 data-[hover=true]:text-coverletter',
+        'text-resume data-[hover=true]:bg-resume/20 data-[hover=true]:text-resume',
       icon: <Icon icon="heroicons:cursor-arrow-rays" className="size-4" />,
       shortcut: '⌘R',
     },
@@ -259,27 +254,27 @@ export const CoverLetterChat = ({
       key: 'suggestions',
       label: 'Suggestions',
       icon: MessageIcon,
-      className: 'text-coverletter data-[hover=true]:bg-coverletter/10',
-      activeClassName: 'bg-coverletter/15 border-coverletter',
+      className: 'text-resume data-[hover=true]:bg-resume/10',
+      activeClassName: 'bg-resume/15 border-resume',
     },
     {
       key: 'chat',
       label: 'Chat',
       icon: AiChatIcon,
-      className: 'text-coverletter data-[hover=true]:bg-coverletter/10',
-      activeClassName: 'bg-coverletter/15 border-coverletter',
+      className: 'text-resume data-[hover=true]:bg-resume/10',
+      activeClassName: 'bg-resume/15 border-resume',
     },
   ];
 
   const activeTabItem = tabItems.find((item) => item.key === selectedTab);
 
   return (
-    <ScrollShadow className="rounded border border-coverletter/20 h-full flex flex-col overflow-y-scroll">
-      <nav className="px-4 py-2 rounded sticky top-0 z-10 bg-light flex items-center justify-between border-b border-coverletter/20 flex-shrink-0">
+    <ScrollShadow className="rounded border border-resume/20 h-full flex flex-col overflow-y-scroll">
+      <nav className="px-4 py-2 rounded sticky top-0 z-10 bg-light flex items-center justify-between border-b border-resume/20 flex-shrink-0">
         <div className="flex-col items-center">
-          <H6 className="text-coverletter truncate">{coverletter.name}</H6>
+          <H6 className="text-resume truncate">{resume.name}</H6>
           <p className="text-xs text-muted">
-            Uploaded {formatDate(coverletter.uploadedAt)}
+            Uploaded {formatDate(resume.uploadedAt)}
           </p>
         </div>
 
@@ -296,7 +291,7 @@ export const CoverLetterChat = ({
             ),
             panel: 'p-0',
           }}
-          aria-label="coverletter-tabs"
+          aria-label="resume-tabs"
           variant="light"
           radius="sm"
           size="sm"
@@ -326,7 +321,7 @@ export const CoverLetterChat = ({
             radius="full"
             onPress={handleRefresh}
             isLoading={selectedTab === 'suggestions' && isFetching}
-            className="text-coverletter hover:bg-coverletter/10"
+            className="text-resume hover:bg-resume/10"
           >
             <Icon icon="heroicons:arrow-path" className="size-4" />
           </Button>
@@ -334,7 +329,7 @@ export const CoverLetterChat = ({
             items={items}
             trigger={
               <Button variant="light" isIconOnly={true} radius="full">
-                <MoreIcon className="text-coverletter size-4" />
+                <MoreIcon className="text-resume size-4" />
               </Button>
             }
           />
@@ -349,7 +344,7 @@ export const CoverLetterChat = ({
             ) : suggestionsText ? (
               <SuggestionsList text={suggestionsText} />
             ) : (
-              <EmptyChat classname="text-coverletter" />
+              <EmptyChat classname="text-resume" />
             )}
           </ScrollShadow>
         )}
@@ -374,7 +369,7 @@ export const CoverLetterChat = ({
                         className={cn(
                           'p-3 border border-red-300 text-sm rounded-lg max-w-[80%] break-words overflow-wrap-anywhere',
                           msg.sender === 'user'
-                            ? 'bg-coverletter text-white border-coverletter'
+                            ? 'bg-resume text-white border-resume'
                             : 'bg-light border border-border text-primary',
                         )}
                       >
@@ -404,7 +399,7 @@ export const CoverLetterChat = ({
                   <MessageSkeleton className="text-primary" />
                 </div>
               ) : (
-                <EmptyChat classname="text-coverletter" />
+                <EmptyChat classname="text-resume" />
               )}
             </ScrollShadow>
             <div className="mx-2 sticky bottom-4 z-10">
@@ -412,7 +407,7 @@ export const CoverLetterChat = ({
                 value={message}
                 onChange={setMessage}
                 placeholder="Ask here..."
-                theme="coverletter"
+                theme="resume"
                 isPending={isGeneratingResponse || isPending}
                 disabled={false}
                 onSubmit={async () => {
