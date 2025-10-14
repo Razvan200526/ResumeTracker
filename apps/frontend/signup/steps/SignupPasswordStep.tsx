@@ -3,8 +3,12 @@ import { InputPassword } from '@common/components/input';
 import { InputConfirmPassword } from '@common/components/input/InputConfirmPassword';
 import { Toast } from '@common/components/toast';
 import { isUserPasswordValid } from '@common/validators/isUserPasswordValid';
+import {
+  ArrowLeftCircleIcon,
+  ArrowRightCircleIcon,
+} from '@heroicons/react/24/outline';
 import { Form } from '@heroui/react';
-import { Icon } from '@iconify/react';
+
 import type React from 'react';
 import { useState } from 'react';
 import { useSignupStore } from '../signUpStore';
@@ -76,9 +80,7 @@ export const SignupPasswordStep = () => {
           type="button"
           variant="bordered"
           className="flex-1"
-          startContent={
-            <Icon icon="guidance:right-arrow" className="size-4.5" />
-          }
+          startContent={<ArrowLeftCircleIcon className="size-4.5" />}
           onPress={goBack}
         >
           Email
@@ -86,7 +88,7 @@ export const SignupPasswordStep = () => {
         <Button
           type="submit"
           className="flex-1"
-          endContent={<Icon icon="guidance:left-arrow" className="size-4.5" />}
+          endContent={<ArrowRightCircleIcon className="size-4.5" />}
         >
           Profile
         </Button>

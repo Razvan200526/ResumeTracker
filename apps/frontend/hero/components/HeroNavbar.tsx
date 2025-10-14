@@ -16,8 +16,8 @@ export const HeroNavbar = () => {
       className="rounded flex items-center justify-between p-3 lg:px-8"
     >
       <div className="flex lg:flex-1">
-        <div className="flex items-center">
-          <Logo />
+        <div className="flex items-center gap-2">
+          <Logo className="text-secondary size-8" />
           <H6 className="text-2xl font-title text-light">ResAI</H6>
         </div>
       </div>

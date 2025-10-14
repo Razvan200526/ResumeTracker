@@ -5,8 +5,8 @@ import { Toast } from '@common/components/toast';
 import { H6 } from '@common/components/typography';
 import { isEmailValid } from '@common/validators/isEmailValid';
 import { backend } from '@frontend/shared/backend';
+import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import { Form } from '@heroui/react';
-import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { useSignupStore } from '../signUpStore';
 
@@ -58,7 +58,7 @@ export const SignupEmailStep = () => {
         <Button
           type="submit"
           className="w-full"
-          endContent={<Icon icon="guidance:left-arrow" className="size-4.5" />}
+          endContent={<ArrowRightCircleIcon className="size-4.5" />}
           isLoading={isLoading}
         >
           Password
@@ -67,7 +67,7 @@ export const SignupEmailStep = () => {
 
       <H6 className="flex items-center justify-center gap-2 pt-4 text-small">
         Already have an account?
-        <Link className="text-secondary-text" to="/signin">
+        <Link className="text-secondary-text font-semibold" to="/signin">
           Sign In
         </Link>
       </H6>

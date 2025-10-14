@@ -24,6 +24,7 @@ export class UploadCoverLetterController {
       const data = (await c.req.formData()) as FormData;
       const coverletter = data.get('coverletter') as File;
       const userId = data.get('userId') as string;
+      const name = data.get('name') as string;
 
       if (!coverletter) {
         return c.json(
@@ -61,8 +62,8 @@ export class UploadCoverLetterController {
           400,
         );
       }
-      const filesize = coverletter.size;
       const filename = coverletter.name;
+      const uploadedAt = new Date();
       if (!userId) {
         return c.json(
           {
@@ -85,8 +86,9 @@ export class UploadCoverLetterController {
       const coverletterEntity = repo.create({
         user: { id: userId },
         url,
-        filesize,
+        name,
         filename,
+        uploadedAt,
       });
 
       const savedCoverletter = await repo.save(coverletterEntity);

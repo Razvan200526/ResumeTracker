@@ -3,7 +3,7 @@ import { Modal, type ModalRefType } from '@common/components/Modal';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useRef } from 'react';
 import { CreateCoverLetterCard } from '../cover-letter/CreateCoverLetterCard';
-import { CreatePortfolioCard } from '../portfolio/CreatePortfolioCard';
+// import { CreatePortfolioCard } from '../portfolio/CreatePortfolioCard';
 import { CreateResumeCard } from './CreateResumeCard';
 
 export const CreateResourceModal = () => {
@@ -26,10 +26,10 @@ export const CreateResourceModal = () => {
         modalRef={ref}
         hideCloseButton={true}
       >
-        <div className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="p-8 grid grid-cols-1 sm:grid-cols-2  gap-4">
           <CreateResumeCard />
           <CreateCoverLetterCard />
-          <CreatePortfolioCard />
+          {/*<CreatePortfolioCard />*/}
         </div>
       </Modal>
     </>

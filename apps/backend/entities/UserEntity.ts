@@ -11,7 +11,11 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import type { UserAccountEntity, UserSessionEntity } from './index';
+import type {
+  ChatSessionEntity,
+  UserAccountEntity,
+  UserSessionEntity,
+} from './index';
 
 @Entity({
   name: 'users',
@@ -30,6 +34,9 @@ export class UserEntity {
     (resume) => resume.user,
   )
   resumes: ResumeEntity[];
+
+  @OneToMany('ChatSessionEntity', 'user')
+  chatSessions: ChatSessionEntity[];
 
   @Column({ name: 'email', type: 'varchar', length: 255 })
   email: string;

@@ -1,7 +1,8 @@
 import { backend } from '@frontend/shared/backend';
 import { queryClient } from '@frontend/shared/QueryClient';
-import type { CoverLetterType, ResumeType } from '@sdk/types';
+import type { CoverLetterType, ResponseType, ResumeType } from '@sdk/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router';
 
 export const useResumes = (userId: string) => {
   return useQuery({
@@ -29,13 +30,42 @@ export const useAddResume = (userId: string) => {
 
 export const useCoverLetters = (userId: string) => {
   return useQuery({
-    queryKey: ['coverletter', userId],
+    queryKey: ['coverletters', userId],
     queryFn: async () => {
       const response = await backend.coverLetter.coverletter.retrieve({
         userId,
       });
       return response.data as CoverLetterType[];
     },
+  });
+};
+export const useGetCoverLetter = (userId: string) => {
+  const { id } = useParams<{ id: string }>();
+  return useQuery({
+    queryKey: ['coverletter', userId],
+    queryFn: async () => {
+      const response = await backend.coverLetter.coverletter.get({
+        id: id || '',
+      });
+      return response.data as CoverLetterType;
+    },
+    enabled: !!id && !!userId,
+  });
+};
+
+export const useCoverLetterSuggestions = () => {
+  const { id } = useParams<{ id: string }>();
+  return useQuery({
+    queryKey: ['coverletterSuggestions', id],
+    queryFn: async () => {
+      const response = await backend.coverLetter.coverletter.getSuggestions({
+        id: id || '',
+      });
+      return response;
+    },
+    enabled: false,
+    staleTime: 5 * 6 * 1000,
+    gcTime: 10 * 60 * 1000,
   });
 };
 export const useAddCoverLetter = (userId: string) => {
@@ -45,18 +75,18 @@ export const useAddCoverLetter = (userId: string) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['coverletter', userId],
+        queryKey: ['coverletters', userId],
       });
     },
   });
 };
+
 export const useDeleteResumes = (userId: string) => {
   return useMutation({
     mutationFn: async (ids: string[]) => {
       // Convert string IDs to numbers for the backend
-      const resumeIds = ids.map((id) => Number.parseInt(id, 10));
       return backend.resume.resumes.delete({
-        resumeIds: resumeIds,
+        resumeIds: ids,
         userId: userId,
       });
     },
@@ -74,16 +104,67 @@ export const useDeleteResumes = (userId: string) => {
 export const useDeleteCoverLetters = (userId: string) => {
   return useMutation({
     mutationFn: async (ids: string[]) => {
-      const coverLetterIds = ids.map((id) => Number.parseInt(id, 10));
       return backend.coverLetter.coverletter.delete({
-        coverletterIds: coverLetterIds,
+        coverletterIds: ids,
         userId: userId,
       });
     },
     onSuccess: (response) => {
       if (response.success) {
         queryClient.invalidateQueries({
-          queryKey: ['coverletter', userId],
+          queryKey: ['coverletters', userId],
+        });
+      }
+    },
+  });
+};
+
+export const useGetResume = (userId: string) => {
+  const { id } = useParams<{ id: string }>();
+  return useQuery({
+    queryKey: ['resume', id],
+    queryFn: async () => {
+      const response = await backend.resume.resumes.get({
+        id: id || '',
+      });
+      return response.data as ResumeType;
+    },
+    enabled: !!id && !!userId,
+  });
+};
+
+export const useResumeSuggestions = () => {
+  const { id } = useParams<{ id: string }>();
+  return useQuery({
+    queryKey: ['resumeSuggestions', id],
+    queryFn: async () => {
+      const response = await backend.resume.resumes.getSuggestions({
+        id: id || '',
+      });
+      return response;
+    },
+    enabled: false,
+    staleTime: 5 * 6 * 1000,
+    gcTime: 10 * 60 * 1000,
+  });
+};
+
+export const useSendMessage = (type: 'resume' | 'coverletter') => {
+  const { id } = useParams<{ id: string }>();
+  return useMutation({
+    mutationFn: async (message: string) => {
+      const res = await backend.message[type].message({
+        question: message,
+        id: id || '',
+      });
+      return res as ResponseType<{
+        ai_response: { text: string };
+      }>;
+    },
+    onSuccess: (response) => {
+      if (response.success) {
+        queryClient.invalidateQueries({
+          queryKey: ['resumes'],
         });
       }
     },

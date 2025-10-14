@@ -23,12 +23,12 @@ export const Header = () => {
     <div className="flex items-center justify-between pt-2 pr-2">
       <div className="flex items-center gap-2 px-2">
         <div className="bg-background flex h-8 w-8 items-center justify-center rounded-full">
-          <Logo className="size-7 text-primary " />
+          <Logo className="size-8 text-primary" />
         </div>
       </div>
       <div className="flex items-center justify-end gap-1.5">
         {isMinimized ? (
-          <Tooltip content="Expand sidebar">
+          <Tooltip content="Minimize sidebar">
             <Button
               isIconOnly={true}
               className="rounded-full"

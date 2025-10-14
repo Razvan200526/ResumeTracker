@@ -93,6 +93,7 @@ export const InputConfirmPassword = ({
           variant="light"
           size="sm"
           isIconOnly={true}
+          radius="full"
           onPress={() => handleClick()}
         >
           {isVisible ? (

@@ -6,7 +6,7 @@ import {
 } from '@backend/shared/database/PrimaryDatabase';
 import type { Context } from 'hono';
 
-@Route('GET', '/api/coverletter/:id', 'Get all cover letters')
+@Route('GET', '/api/coverletters/:id', 'Get all cover letters')
 export class GetUserCoverlettersController {
   private database: PrimaryDatabase;
   constructor() {

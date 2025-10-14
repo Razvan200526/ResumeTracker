@@ -1,4 +1,6 @@
 import {
+  ChatMessageEntity,
+  ChatSessionEntity,
   UserAccountEntity,
   UserEntity,
   UserSessionEntity,
@@ -14,4 +16,6 @@ export const PrimaryEntities = [
   UserVerificationEntity,
   ResumeEntity,
   CoverletterEntity,
+  ChatMessageEntity,
+  ChatSessionEntity,
 ];

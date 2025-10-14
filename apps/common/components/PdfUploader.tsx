@@ -1,4 +1,6 @@
 import { PdfIcon } from '@common/icons/PdfIcon';
+import { isFileNameValid } from '@common/validators/isFileNameValid';
+
 import {
   useAddCoverLetter,
   useAddResume,
@@ -8,6 +10,7 @@ import { cn, Progress, ScrollShadow } from '@heroui/react';
 import * as React from 'react';
 import { useState } from 'react';
 import { Button } from './button';
+import { InputText } from './input/InputText';
 import { PdfPreviewImage } from './PDFPreviewImage';
 import { Toast } from './toast';
 
@@ -21,7 +24,7 @@ export type PdfUploaderProps = React.HTMLAttributes<HTMLDivElement> & {
   autoUpload?: boolean;
   endpoint?: string;
   multiple?: boolean;
-  type: 'resume' | 'coverLetter'; //TODO implement cover letter the same
+  type: 'resume' | 'coverLetter';
 };
 
 export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
@@ -45,11 +48,10 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [name, setName] = useState<string>('');
     const { data: user } = useAuth();
-    // biome-ignore lint/style/noNonNullAssertion: <trust me but fix later>
-    const { mutateAsync: addResume } = useAddResume(user!.id);
-    // biome-ignore lint/style/noNonNullAssertion: <trust me but fix later>
-    const { mutateAsync: addCoverLetter } = useAddCoverLetter(user!.id);
+    const { mutateAsync: addResume } = useAddResume(user?.id || '');
+    const { mutateAsync: addCoverLetter } = useAddCoverLetter(user?.id || '');
     if (!user || !user.id) {
       Toast.error({ description: 'Please login to upload files' });
       return null;
@@ -107,6 +109,10 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
     };
 
     const savePdf = async (files: File[]) => {
+      if (!isFileNameValid(name)) {
+        Toast.error({ description: 'Invalid name' });
+        return;
+      }
       clearTimeout(timeout);
       setIsLoading(true);
       timeout = setTimeout(async () => {
@@ -116,6 +122,7 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
               const formData = new FormData();
               formData.append('resume', file);
               formData.append('userId', user.id);
+              formData.append('name', name);
               const data = await addResume(formData);
               if (data.success) {
                 Toast.success({ description: 'Resume uploaded successfully' });
@@ -127,6 +134,7 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
               const formData = new FormData();
               formData.append('coverletter', file);
               formData.append('userId', user.id);
+              formData.append('name', name);
               const data = await addCoverLetter(formData);
               if (data.success) {
                 Toast.success({
@@ -169,56 +177,62 @@ export const PdfUploader = React.forwardRef<HTMLDivElement, PdfUploaderProps>(
             </ul>
           </ScrollShadow>
         ) : (
-          <div
-            ref={ref}
-            className={cn(
-              'relative flex flex-col items-center justify-center w-full p-2 py-10 max-h-[500px] overflow-auto',
-              'border-2 border-dashed rounded transition-all duration-200 cursor-pointer',
-              isDragging
-                ? 'border-border-hover bg-primary-50'
-                : 'border-primary/15 hover:border-border-hover',
-              loading ? 'opacity-50 cursor-not-allowed' : '',
-              className,
-            )}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
-            {...props}
-          >
-            <input
-              ref={fileInputRef}
-              type="file"
-              className="hidden"
-              accept={accept.join(',')}
-              multiple={multiple}
-              onChange={(e) => {
-                handleFiles(Array.from(e.target.files || []));
-              }}
-              disabled={loading}
+          <>
+            <InputText
+              placeholder="Enter file name"
+              onChange={(e) => setName(e)}
             />
+            <div
+              ref={ref}
+              className={cn(
+                'relative flex flex-col items-center justify-center w-full p-2 py-10 max-h-[500px] overflow-auto',
+                'border-2 border-dashed rounded transition-all duration-200 cursor-pointer',
+                isDragging
+                  ? 'border-border-hover bg-primary-50'
+                  : 'border-primary/15 hover:border-border-hover',
+                loading ? 'opacity-50 cursor-not-allowed' : '',
+                className,
+              )}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={() => fileInputRef.current?.click()}
+              {...props}
+            >
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                accept={accept.join(',')}
+                multiple={multiple}
+                onChange={(e) => {
+                  handleFiles(Array.from(e.target.files || []));
+                }}
+                disabled={loading}
+              />
 
-            <div className="flex flex-col items-center gap-2 text-center">
-              <PdfIcon className="text-primary/50 size-10" />
-              <div className="flex flex-col items-start">
-                <span className="text-sm font-medium text-primary flex items-center gap-2">
-                  <span>Drop your PDFs here, or</span>
-                  <Button
-                    color="primary"
-                    variant="flat"
-                    size="sm"
-                    onPress={() => fileInputRef.current?.click()}
-                  >
-                    Browse
-                  </Button>
-                </span>
-                <span className="text-xs font-medium text-primary/40">
-                  Max size : {maxSize / (1024 * 1024)}MB
-                </span>
+              <div className="flex flex-col items-center gap-2 text-center">
+                <PdfIcon className="text-primary/50 size-10" />
+                <div className="flex flex-col items-start">
+                  <span className="text-sm font-medium text-primary flex items-center gap-2">
+                    <span>Drop your PDFs here, or</span>
+                    <Button
+                      color="primary"
+                      variant="flat"
+                      size="sm"
+                      onPress={() => fileInputRef.current?.click()}
+                    >
+                      Browse
+                    </Button>
+                  </span>
+                  <span className="text-xs font-medium text-primary/40">
+                    Max size : {maxSize / (1024 * 1024)}MB
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          </>
         )}
 
         {errorMessage ? (

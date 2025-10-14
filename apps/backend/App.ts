@@ -8,8 +8,15 @@ import { SignInController } from './auth/controllers/SigninController';
 import { SignoutController } from './auth/controllers/SignoutController';
 import { SignupCheckOtpController } from './auth/controllers/SignupCheckOtpController';
 import { SignupEmailController } from './auth/controllers/SignupEmailController';
+import { CreateChatMessageController } from './controllers/CreateChatMessageController';
+import { CreateChatSessionController } from './controllers/CreateChatSessionController';
 import { DeleteCoverletterController } from './controllers/DeleteCoverletterController';
 import { DeleteResumeController } from './controllers/DeleteResumesController';
+import { GetChatMessagesController } from './controllers/GetChatMessagesController';
+import { GetChatSessionByResourceController } from './controllers/GetChatSessionByResourceController';
+import { GetChatSessionsController } from './controllers/GetChatSessionController';
+import { GetCoverletterController } from './controllers/GetCoverletterController';
+import { GetResumeController } from './controllers/GetResumeController';
 import { GetUserCoverlettersController } from './controllers/GetUserCoverlettersController';
 import { GetUserResumeController } from './controllers/GetUserResumesController';
 import { UploadAvatarController } from './controllers/UploadAvatarController';
@@ -18,6 +25,7 @@ import { UploadResumeController } from './controllers/UploadResumeController';
 import { CheckUserExistsController } from './controllers/UserExistsController';
 import { authMiddleware } from './middleware/authMiddleware';
 import { registerController } from './shared/registerController';
+
 export const app = new Hono();
 app.use(logger());
 app.use(
@@ -42,6 +50,13 @@ app.use('/api/auth/session', authMiddleware);
 registerController(app, RetrieveSessionController);
 registerController(app, CreateUserSessionController);
 registerController(app, SignoutController);
+
+// Protected routes (require authentication)
+app.use('/api/chat/*', authMiddleware);
+app.use('/api/resumes/*', authMiddleware);
+app.use('/api/coverletter/*', authMiddleware);
+app.use('/api/coverletters/*', authMiddleware);
+
 //@ts-ignore trust-me
 registerController(app, UploadAvatarController);
 registerController(app, UploadResumeController);
@@ -50,6 +65,16 @@ registerController(app, DeleteResumeController);
 registerController(app, GetUserCoverlettersController);
 registerController(app, UploadCoverLetterController);
 registerController(app, DeleteCoverletterController);
+registerController(app, GetCoverletterController);
+registerController(app, GetResumeController);
+
+// Chat controllers
+registerController(app, GetChatSessionsController);
+registerController(app, CreateChatSessionController);
+registerController(app, GetChatSessionByResourceController);
+registerController(app, GetChatMessagesController);
+registerController(app, CreateChatMessageController);
+
 app.post('/api/auth/signup', async (c) => {
   const ctrl = new SignupEmailController();
   return await ctrl.handler(c);

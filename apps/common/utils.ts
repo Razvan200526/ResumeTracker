@@ -102,3 +102,84 @@ export const random = {
 // Example:
 // const id: string = random.nanoid(15);
 // console.log(id, id.length); // -> e.g. "x3mAq2_-W0n9ZpL", 15
+// timeAgo.ts
+
+/**
+ * Returns a compact relative string like "12m ago", "2h ago", "3d ago".
+ * - Input can be Date, ISO string, or timestamp (ms).
+ * - Uses "now" when within 30 seconds by default.
+ * - Handles future dates (returns "in 5m", "in 2h", etc).
+ */
+export function formatDate(
+  input: Date | string | number,
+  options?: {
+    now?: Date | number; // override current time, useful for SSR/tests
+    nowThresholdSeconds?: number; // default 30
+  },
+): string {
+  const nowInput = options?.now ?? Date.now();
+  const now = nowInput instanceof Date ? nowInput.getTime() : Number(nowInput);
+
+  const date =
+    input instanceof Date
+      ? input
+      : typeof input === 'string'
+        ? new Date(input)
+        : new Date(input);
+
+  const target = date.getTime();
+  if (Number.isNaN(target)) return '';
+
+  const diffMs = now - target; // positive => past
+  const future = diffMs < 0;
+  const absSec = Math.abs(diffMs) / 1000;
+
+  const threshold = options?.nowThresholdSeconds ?? 30;
+  if (absSec <= threshold) return 'now';
+
+  // Unit boundaries (approximate):
+  const MINUTE = 60;
+  const HOUR = 60 * MINUTE;
+  const DAY = 24 * HOUR;
+  const WEEK = 7 * DAY;
+  const MONTH = 30 * DAY; // approximation
+  const YEAR = 365 * DAY; // approximation
+
+  let value: number;
+  let unit: string;
+
+  if (absSec < HOUR) {
+    value = Math.floor(absSec / MINUTE);
+    unit = 'm';
+  } else if (absSec < DAY) {
+    value = Math.floor(absSec / HOUR);
+    unit = 'h';
+  } else if (absSec < WEEK) {
+    value = Math.floor(absSec / DAY);
+    unit = 'd';
+  } else if (absSec < MONTH) {
+    value = Math.floor(absSec / WEEK);
+    unit = 'w';
+  } else if (absSec < YEAR) {
+    value = Math.floor(absSec / MONTH);
+    unit = 'mo';
+  } else {
+    value = Math.floor(absSec / YEAR);
+    unit = 'y';
+  }
+
+  return future ? `in ${value}${unit}` : `${value}${unit} ago`;
+}
+
+/**
+ * Examples:
+ */
+// console.log(timeAgo(new Date(Date.now() - 12 * 60 * 1000))); // "12m ago"
+// console.log(timeAgo("2025-10-08T20:59:00+03:00")); // "1m ago" (depending on now)
+// console.log(timeAgo(Date.now() + 2 * 60 * 60 * 1000)); // "in 2h"
+// console.log(
+//   timeAgo(Date.now() - 3 * 24 * 60 * 60 * 1000, { nowThresholdSeconds: 10 })
+// ); // "3d ago"
+// console.log(
+//   timeAgo("invalid-date") // ""
+// );

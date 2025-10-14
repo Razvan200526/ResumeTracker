@@ -16,7 +16,7 @@ export const CoverLetterCard = ({ coverLetter }: CoverLetterCardProps) => {
       <div className="h-[250px] w-full border border-border-hover rounded p-2 flex items-center justify-center">
         {state && (
           <Checkbox
-            className="absolute top-7 right-5 z-10"
+            className="absolute top-7 right-5 z-50"
             color="danger"
             onValueChange={(isSelected) => {
               if (isSelected) {

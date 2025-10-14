@@ -14,7 +14,6 @@ export class DeleteResumeController {
     try {
       const { resumeIds, userId } = await c.req.json();
 
-      // Validate input
       if (!resumeIds || !Array.isArray(resumeIds) || resumeIds.length === 0) {
         return c.json(
           {
@@ -53,11 +52,11 @@ export class DeleteResumeController {
         );
       }
 
-      // First, find the resumes and verify they belong to the user
       const resumes = await this.resumeRepository.findByIds(resumeIds);
 
-      // Verify all resumes belong to the requesting user
-      const unauthorized = resumes.some((resume) => resume.user.id !== userId);
+      const unauthorized = resumes.some((resume) => {
+        return resume.user.id !== userId;
+      });
       if (unauthorized) {
         return c.json(
           {
@@ -78,7 +77,6 @@ export class DeleteResumeController {
         );
       }
 
-      // Delete the resumes
       const result = await this.resumeRepository.deleteByIds(resumeIds);
 
       return c.json(
