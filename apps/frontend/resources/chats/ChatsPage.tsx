@@ -45,7 +45,7 @@ export const ChatsPage = () => {
               icon="heroicons:exclamation-triangle"
               className="mx-auto h-12 w-12 text-danger"
             />
-            <h3 className="mt-2 text-sm font-medium text-primary">
+            <h3 className="mt-2 text-sm font-medium text-chats">
               Failed to load chats
             </h3>
             <p className="mt-1 text-sm text-muted">Please try again later.</p>
@@ -63,11 +63,12 @@ export const ChatsPage = () => {
             icon={AiChatIcon}
             title="No chats yet"
             description="Start chatting with your resumes or cover letters to see them here."
+            className="text-chats"
             action={
               <Button
                 onPress={() => navigate('/home/resources')}
                 variant="solid"
-                color="primary"
+                className="bg-chats"
               >
                 Go to Resources
               </Button>

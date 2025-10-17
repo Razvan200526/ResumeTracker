@@ -1,4 +1,7 @@
 import { ErrorFallback } from '@common/components/ErrorFallback';
+import { NotFoundPage } from '@common/NotFoundPage';
+import { ApplicationsLayout } from '@frontend/applications/ApplicationsLayout';
+import { DashboardLayout } from '@frontend/dashboard/DashboardLayout';
 import { HeroPage } from '@frontend/hero/HeroPage';
 import { ChatsPage } from '@frontend/resources/chats/ChatsPage';
 import { CoverLettersPage } from '@frontend/resources/cover-letter/CoverLettersPage';
@@ -42,6 +45,10 @@ export const router = createBrowserRouter([
             element: <p>Lorem Ipsum</p>,
           },
           {
+            path: 'dashboard',
+            element: <DashboardLayout />,
+          },
+          {
             path: 'resources',
             element: <ResourceLayout />,
             children: [
@@ -74,7 +81,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'applications',
-            element: <h1>Applications</h1>,
+            element: <ApplicationsLayout />,
           },
         ],
       },
@@ -82,6 +89,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/*',
-    element: <h1>Page Not Found</h1>,
+    element: <NotFoundPage />,
   },
 ]);
