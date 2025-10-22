@@ -1,5 +1,6 @@
 import { AiChatIcon } from '@common/icons/AiChatIcon';
-import { FolderIcon } from '@common/icons/FolderIcon';
+import { ApplicationsIcon } from '@common/icons/ApplicationsIcon';
+import { DashboardIcon } from '@common/icons/DashboardIcon';
 import { ResourceIcon } from '@common/icons/ResourceIcon';
 import { SettingsIcon } from '@common/icons/SettingsIcon';
 
@@ -7,6 +8,12 @@ export const useSideBarItems = () => {
   // const { id } = useParams();
 
   const mainItems = [
+    {
+      key: 'Dashboard',
+      icon: DashboardIcon,
+      href: 'dashboard',
+      title: 'Dashboard',
+    },
     {
       key: 'Resources',
       icon: ResourceIcon,
@@ -16,7 +23,7 @@ export const useSideBarItems = () => {
     {
       key: 'applications',
       href: 'applications',
-      icon: FolderIcon,
+      icon: ApplicationsIcon,
       title: 'Applications',
     },
     {
